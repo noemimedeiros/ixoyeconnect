@@ -12,18 +12,16 @@ def floating_fields(self):
         
     field_layout = []
     for field_name, field in self.fields.items():
-        if isinstance(field, (forms.ModelChoiceField, forms.FileField, forms.ImageField)):
-            field_layout.append(Field(field_name))
-        else:
-            field_layout.append(FloatingField(field_name))  
-
-    self.helper.layout = Layout(*field_layout)
-
-    for field_name, field in self.fields.items():
-        field.widget.attrs['class'] = 'form-primary'
         if isinstance(field, forms.ModelChoiceField):
             field.empty_label = field.label
 
+        field_classes = f'form-primary {field.widget.attrs.get('class')}'
+        if isinstance(field, (forms.ModelChoiceField, forms.FileField, forms.ImageField)):
+            field_layout.append(Field(field_name, css_class=field_classes))
+        else:
+            field_layout.append(FloatingField(field_name, css_class=field_classes))  
+
+    self.helper.layout = Layout(*field_layout)
 
 class FormBaseIxoye(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -44,31 +42,35 @@ class EnderecoForm(FormBaseIxoye):
     class Meta:
         model = Endereco
         fields = '__all__'
+        widgets = {
+            'cep': forms.TextInput(attrs={'class': 'cep'})
+        }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper.layout = Layout(
             Row(
                 Column(
-                    FloatingField('cep'), css_class='col-lg-4 col-12'
+                    FloatingField('cep', css_class='form-primary cep'), css_class='col-lg-4 col-12'
                 ),
                 Column(
-                    FloatingField('rua'), css_class='col-lg-8 col-12'
+                    FloatingField('rua', css_class='form-primary'), css_class='col-lg-8 col-12'
                 )
             ),
             Row(
                 Column(
-                    FloatingField('bairro'), css_class='col-lg-6 col-12'
+                    FloatingField('bairro', css_class='form-primary'), css_class='col-lg-6 col-12'
                 ),
                 Column(
-                    FloatingField('cidade'), css_class='col-lg-6 col-12'
+                    FloatingField('cidade', css_class='form-primary'), css_class='col-lg-6 col-12'
                 ),
             ),
             Row(
                 Column(
-                    Field('uf'), css_class='col-lg-6 col-12'
+                    Field('uf', css_class='form-primary'), css_class='col-lg-6 col-12'
                 ),
                 Column(
-                    FloatingField('numero'), css_class='col-lg-6 col-12'
+                    FloatingField('numero', css_class='form-primary'), css_class='col-lg-6 col-12'
                 )
             )
         )

@@ -95,6 +95,9 @@ input[type=file]::file-selector-button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.section-2-login *{
     font-weight: 200;
 }
 

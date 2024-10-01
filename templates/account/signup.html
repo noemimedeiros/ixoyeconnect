@@ -23,20 +23,27 @@
                 <button type="button" class="button button-primary"><i class="fa-solid fa-circle-user mr-1"></i> Membro</button>
                 <button type="button" class="button button-secondary"><i class="fa-solid fa-church mr-1"></i> Igreja</button>
             </div>
-            <div>
-                <div>
-                    <h6>Dados Pessoais</h6><br>
-                    {% crispy usuario_form %}
-                    {% crispy form %}
+            <div style="min-height: 400px">
+                <div id="pages-singup" >
+                    <div class="page-singup">
+                        <h6>Dados Pessoais</h6><br>
+                        {% crispy usuario_form %}
+                    </div>
+                    <div class="page-singup">
+                        {% crispy form %}
+                    </div>
+                    <div class="page-singup">
+                        <h6>Endereço</h6><br>
+                        {% crispy endereco_form %}
+                        <div>
+                            <button type="submit" class="button button-primary">Finalizar Cadastro</button>
+                        </div>
+                    </div>
                 </div>
-                <br>
-                <div>
-                    <h6>Endereço</h6><br>
-                    {% crispy endereco_form %}
+                <div class="py-2 text-center">
+                    <div id="pagination-div"></div>
                 </div>
-                <div>
-                    <button type="submit" class="button button-primary">Finalizar Cadastro</button>
-                </div>
+                
             </div>
         </form>
     </div>
@@ -53,4 +60,16 @@
 </section>
 {% endblock content %}
 
-{% block scripts %}{% endblock scripts %}
+{% block scripts %}
+<script>
+    const items = $(".page-singup").toArray();
+    $("#pagination-div").pagination({
+        dataSource: items,
+        pageSize: 1,
+        callback: function(data, pagination) {
+          const html = data.map(item => $(item).show().prop('outerHTML')).join('');
+          $("#pages-singup").html(html);
+        }
+      });
+</script>
+{% endblock scripts %}

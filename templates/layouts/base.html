@@ -27,6 +27,8 @@
     <link href="{% static 'public/libs/bootstrap/css/bootstrap-grid.min.css' %}" rel="stylesheet" />
     <link href="{% static 'public/libs/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css" integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="{% static 'public/css/main.css' %}">
     {% block css %}{% endblock css %}
 </head>
@@ -39,6 +41,8 @@
     <script src="{% static 'public/libs/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'public/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'public/js/jquery.min.js' %}"></script>
+    <script src="{% static 'public/js/jquery.mask.js' %}"></script>
+    <script src="{% static 'public/js/pagination.min.js' %}"></script>
     {% block scripts %}{% endblock scripts %}
 </body>
 </html>
