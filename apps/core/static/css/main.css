@@ -1,0 +1,42 @@
+.top-nav{
+    fill: linear-gradient(270deg, #3DBD90 0.48%, #2C868C 99.84%);
+    filter: drop-shadow(0px 2px 32.3px rgba(0, 0, 0, 0.20));
+}
+
+.bottom-nav{
+    border-radius: var(--rounded-pill, 1000px);
+    opacity: 0.96;
+    background: linear-gradient(90deg, #3DBD90 0%, #2C868C 100%);
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.30);
+}
+
+.bottom-nav-items{
+    display: flex;
+    width: 288px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottom-nav-item{
+    fill: rgba(0, 0, 0, 0.00);
+    opacity: 0.8;
+}
+
+.card-mobile{
+    border-radius: 20px;
+    background: #FFF;
+}
+
+.card-mobile-img{
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.46) 68%), url(<path-to-image>) lightgray 50% / cover no-repeat;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.agenda-semanal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}

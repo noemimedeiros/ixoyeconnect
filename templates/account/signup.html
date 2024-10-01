@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load allauth %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<section class="section-login section-signup">
+    <div class="card-login card-signup">
+        <div class="retornar">
+            <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> Retornar a página inicial</a>
+        </div>
+        <form class="login-form" method="POST" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            <div>
+                <h2>Cadastro</h2>
+                <h6>Preencha os dados abaixo</h6>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="button" class="button button-primary"><i class="fa-solid fa-circle-user mr-1"></i> Membro</button>
+                <button type="button" class="button button-secondary"><i class="fa-solid fa-church mr-1"></i> Igreja</button>
+            </div>
+            <div>
+                <div>
+                    <h6>Dados Pessoais</h6><br>
+                    {% crispy usuario_form %}
+                    {% crispy form %}
+                </div>
+                <br>
+                <div>
+                    <h6>Endereço</h6><br>
+                    {% crispy endereco_form %}
+                </div>
+                <div>
+                    <button type="submit" class="button button-primary">Finalizar Cadastro</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="section-2-login">
+        <div>
+            <img class="logo-login" src="{% static 'public/img/Logo.png' %}" alt="">
+            <h2>Ixoye Connect</h2>
+        </div>
+        <div>
+            <h1>Bem-Vindo!</h1>
+            <h3>Escolha uma forma de login <br> ou cadastre-se</h3>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block scripts %}{% endblock scripts %}

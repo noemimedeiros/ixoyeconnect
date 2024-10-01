@@ -1,0 +1,60 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load allauth %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<section class="section-login">
+    <div class="card-login">
+        <form class="login-form" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+            {% if form.errors %}
+            {% for error in form.non_field_errors %}
+            <div class="alert-danger">
+                <span>{{ error|escape }}</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <h3>Fazer Login</h3>
+            <div class="div-input-email">
+                {{ form.login }}
+            </div>
+            <div class="div-input-senha">
+                {{ form.password }}
+                <span><a href="{% url 'account_reset_password' %}">{% trans "Forgot your password?" %}</a></span>
+            </div>
+            <div>
+                <button type="submit" class="button button-primary">Entrar</button>
+            </div>
+            <div class="divisor-login">
+                <hr>
+                <span>Ou</span>
+                <hr>
+            </div>
+            <div class="div-login-google">
+                <button class="button button-secondary">
+                    <div>
+                        <i class="fa-brands fa-google fa-2xl"></i> <span>Conectar-se com Google</span>
+                    </div>
+                </button>
+            </div>
+            <div class="text-center">
+                <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
+            </div>
+        </form>
+    </div>
+    <div class="section-2-login">
+        <div>
+            <img class="logo-login" src="{% static 'public/img/Logo.png' %}" alt="">
+            <h2>Ixoye Connect</h2>
+        </div>
+        <div>
+            <h1>Bem-Vindo!</h1>
+            <h3>Escolha uma forma de login <br> ou cadastre-se</h3>
+        </div>
+    </div>
+</section>
+{% endblock content %}
