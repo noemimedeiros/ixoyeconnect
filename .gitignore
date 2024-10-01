@@ -4,10 +4,6 @@
 # __pycache__/
 .vscode/
 # ./.vscode/
-.idea/
-# .idea/workspace.xml
-./sistema/local.py
-./sistema/productions.py
 
 ### Django ###
 *.log
