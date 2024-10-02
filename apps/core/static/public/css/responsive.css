@@ -1,0 +1,69 @@
+@media (max-width: 768px) {
+    .logo-login {
+        width: 115px;
+    }
+    .section-login{
+        grid-template-columns: 1fr;
+        grid-template-rows: 40% 1fr;
+        background: linear-gradient(180deg, #3DBD90 0%, #2C868C 30%)
+    }
+    .login-logo-content{
+        justify-content: space-between;
+    }
+    .section-signup{
+        grid-template-rows: 20vh 1fr;
+        height: unset;
+        overflow-y: scroll;
+        background: linear-gradient(180deg, #3DBD90 0%, #2C868C 15%)
+    }
+    .section-signup .login-logo-content{
+        display: none;
+    }
+    .login-logo-texto{
+        padding-inline: 5%;
+    }
+    .section-signup .signup-title-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-inline: 6%;
+        color: white;
+        height: 100%;
+    }
+    .signup-title-content{
+        text-align: start;
+    }
+    .card-login{
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+    }
+    .card-login-logo{
+        margin: 0;
+        background: none;
+        border-radius: 0;
+        position: relative;
+    }
+    
+    .card-login-logo div:first-child {
+        margin: 0;
+    }
+    .wave-divisor{
+        /* display: none; */
+        width: 100%;
+        height: 100px;
+        top: unset;
+        bottom: -20px;
+    }
+    .section-signup .wave-divisor{
+        display: none;
+    }
+    .login-form{
+        padding-inline: 6%;
+    }
+    .signup-desktop-title{
+        display: none;
+    }
+    .retornar{
+        display: none;
+    }
+}

@@ -9,6 +9,19 @@
 
 {% block content %}
 <section class="section-login">
+    <div class="card-login-logo">
+        <div class="login-logo-content">
+            <div>
+                <img class="logo-login" src="{% static 'public/img/Logo.png' %}" alt="">
+                <h2>Ixoye Connect</h2>
+            </div>
+            <div class="login-logo-texto">
+                <h1>Bem-Vindo!</h1>
+                <h3>Por favor, preencha seus dados para continuar.</h3>
+            </div>
+        </div>
+        <div class="wave-divisor"></div>
+    </div>
     <div class="card-login">
         <div class="login-form">
             {% csrf_token %}
@@ -41,16 +54,6 @@
             <div class="text-center">
                 <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
             </div>
-        </div>
-    </div>
-    <div class="section-2-login">
-        <div>
-            <img class="logo-login" src="{% static 'public/img/Logo.png' %}" alt="">
-            <h2>Ixoye Connect</h2>
-        </div>
-        <div>
-            <h1>Bem-Vindo!</h1>
-            <h3>Escolha uma forma de login <br> ou cadastre-se</h3>
         </div>
     </div>
 </section>

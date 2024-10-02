@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load allauth %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<section class="section-login">
+    <div class="card-login-logo">
+        {% block logo_content %}{% endblock logo_content %}
+        <div class="wave-divisor"></div>
+    </div>
+    {% block side_content %}{% endblock side_content %}
+</section>
+{% endblock content %}
