@@ -76,7 +76,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_FORMS = {
-    'login': 'core.forms.LoginForm',
+    'login': 'core.forms.MyLoginForm',
+    'signup': 'core.forms.MySignUpForm',
 }
 
 SOCIALACCOUNT_PROVIDERS = {

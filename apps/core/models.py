@@ -11,11 +11,11 @@ class UnidadeFederativa(models.Model):
         db_table = 'unidadefederativa'
 
 class Endereco(models.Model):
-    uf= models.ForeignKey(UnidadeFederativa, on_delete=models.CASCADE, null=False, blank=False, verbose_name="Unidade Federativa")
+    uf = models.ForeignKey(UnidadeFederativa, on_delete=models.CASCADE, null=False, blank=False, verbose_name="Unidade Federativa")
     cidade = models.CharField(max_length=60, null=False, blank=False)
     bairro = models.CharField(max_length=60, null=False, blank=False)
     rua = models.CharField(max_length=60, null=False, blank=False)
-    complemento = models.CharField(max_length=60, null=False, blank=False)
+    complemento = models.CharField(max_length=60, null=True, blank=True)
     numero = models.IntegerField(null=False, blank=False)
     cep = models.CharField(max_length=9, null=False, blank=False)
 

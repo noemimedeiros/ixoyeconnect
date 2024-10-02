@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% load allauth %}
+{% load crispy_forms_tags %}
 
 {% block css %}
 {% endblock css %}
@@ -9,8 +10,8 @@
 {% block content %}
 <section class="section-login">
     <div class="card-login">
-        <form class="login-form" method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}
+        <div class="login-form">
+            {% csrf_token %}
             {% if form.errors %}
             {% for error in form.non_field_errors %}
             <div class="alert-danger">
@@ -19,12 +20,8 @@
             {% endfor %}
             {% endif %}
             <h3>Fazer Login</h3>
-            <div class="div-input-email">
-                {{ form.login }}
-            </div>
-            <div class="div-input-senha">
-                {{ form.password }}
-                <span><a href="{% url 'account_reset_password' %}">{% trans "Forgot your password?" %}</a></span>
+            <div>
+                {% crispy form %}
             </div>
             <div>
                 <button type="submit" class="button button-primary">Entrar</button>
@@ -44,7 +41,7 @@
             <div class="text-center">
                 <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
             </div>
-        </form>
+        </div>
     </div>
     <div class="section-2-login">
         <div>
