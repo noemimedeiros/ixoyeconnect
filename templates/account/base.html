@@ -9,10 +9,28 @@
 
 {% block content %}
 <section class="section-login">
-    <div class="card-login-logo">
-        {% block logo_content %}{% endblock logo_content %}
+    <div class="card-login-logo {% block card_login_classes %}{% endblock card_login_classes %}">
+        {% block logo_content %}
+            <div class="login-logo-content">
+                <div>
+                    <div class="logo-login mx-auto mb-3">
+                        <i class="fa-solid text-white fa-fish text-center"></i>
+                    </div>
+                    <h2>Ixoye Connect</h2>
+                </div>
+                <div class="login-logo-texto">
+                    <h1>Bem-Vindo!</h1>
+                    <h3>Por favor, preencha seus dados para continuar.</h3>
+                </div>
+            </div>
+            {% endblock logo_content %}
         <div class="wave-divisor"></div>
     </div>
-    {% block side_content %}{% endblock side_content %}
+    <div class="card-login">
+        {% block card_content %}{% endblock card_content %}
+    </div>
 </section>
+<div id="dark-mode">
+    <i role="button" class="fa-regular fa-moon fa-2xl" onclick="darkMode()"></i>
+</div>
 {% endblock content %}

@@ -78,6 +78,10 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_FORMS = {
     'login': 'core.forms.MyLoginForm',
     'signup': 'core.forms.MySignUpForm',
+    'change_password': 'core.forms.MyChangePasswordForm',
+    'set_password': 'core.forms.MySetPasswordForm',
+    'reset_password': 'core.forms.MyResetPasswordForm',
+    'add_email': 'core.forms.MyAddEmailForm'
 }
 
 SOCIALACCOUNT_PROVIDERS = {

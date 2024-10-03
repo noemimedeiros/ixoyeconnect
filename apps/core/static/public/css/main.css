@@ -1,4 +1,6 @@
 :root{
+    --body-bg: white;
+
     --red-1: #ef6464;
 
     --green: #3DBD90;
@@ -6,9 +8,34 @@
 
     --gray-1: #F1F4F8;
     --gray-2: #A7AEB6;
+
+    --black-1: #212224;
+
     --aqua-blue: #2C868C;
 
     --rounded-pill: 50rem !important;
+}
+
+.darkmode:root{
+    --body-bg: #212224;
+
+    --green: #287e60;
+    --aqua-blue: #1a4f53;
+
+    --gray-1: #1E1E1E;
+    --black-1: white;
+    
+    --bs-body-bg: #212224;
+    --bs-heading-color: white;
+    --bs-body-color: #A7AEB6;
+    --bs-secondary-color: #A7AEB6
+}
+
+#dark-mode{
+    position: fixed;
+    top: 5%;
+    right: 2%;
+    color: var(--gray-2);
 }
 
 * {
@@ -19,6 +46,7 @@
 
 html{
     font-size: 82%;
+    color: var(--body-bg);
 }
 
 html, body{
@@ -54,21 +82,19 @@ input[type=file]::file-selector-button {
     margin-bottom: auto;
     padding-left: 1.5rem;
     height: 100%;
+    background-color: var(--gray-1);
+    color: var(--black-1);
 }
 
 /* Tela Login */
 .card-login{
     width: 100%;
-    background-color: white;
-}
-
-.card-signup{
-    background: white;
+    background-color: var(--body-bg);
     display: grid;
 }
 
 .section-login{
-    background-color: white;
+    background-color: var(--body-bg);
     display: grid;
     grid-template-columns: 1fr 1fr;
     box-sizing: border-box;
@@ -89,7 +115,7 @@ input[type=file]::file-selector-button {
 .card-login-logo{
     margin: 1%; 
     border-radius: 40px;
-    background: linear-gradient(180deg, #3DBD90, #2C868C);
+    background: linear-gradient(180deg, var(--green), var(--aqua-blue));
 }
 
 .login-logo-content{
@@ -100,7 +126,7 @@ input[type=file]::file-selector-button {
     align-items: center;
     padding: 10%;
     text-align: center;
-    color: white;
+    color: var(--body-bg);
 }
 .login-logo-texto{
     padding-inline: 20%;
@@ -131,7 +157,14 @@ input[type=file]::file-selector-button {
     background-repeat: no-repeat; 
     background-size: 170% 71px;
     background-position: 27% 100%;    
-    background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none"><path d="M35.28 1.67c-3.07-.55-9.27.41-16.15 0-6.87-.4-13.74-.58-19.13.1v.4h35.28z" fill="%23ffffff"/><path d="M35.28 1.16c-3.17-.8-7.3.4-10.04.56-2.76.17-9.25-1.47-12.68-1.3-3.42.16-4.64.84-7.04.86C3.12 1.31 0 .4 0 .4v1.77h35.28z" opacity=".5" fill="%23ffffff"/><path d="M35.28.31c-2.57.84-7.68.3-11.8.43-4.1.12-6.85.61-9.57.28C11.18.69 8.3-.16 5.3.02 2.3.22.57.85 0 .87v1.2h35.28z" opacity=".5" fill="%23ffffff"/></svg>'); 
+    background-image: url('../svg/mobile-login-wave.svg'); 
+}
+.darkmode .wave-divisor::before{
+    background-image: url('../svg/mobile-login-wave-dark.svg'); 
+}
+
+.svg-wave-divisor{
+    fill: red
 }
     
 @media (min-width:768px){
@@ -149,7 +182,10 @@ input[type=file]::file-selector-button {
         top: -0.1vw; 
         background-size: 94px 116%;
         background-position: 100% 50%;  
-        background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.17 35.28" preserveAspectRatio="none"><path d="M1.67 0c-.55 3.07.41 9.27 0 16.14-.4 6.88-.58 13.75.1 19.14h.4V0z" fill="%23ffffff"/><path d="M1.16 0c-.8 3.17.4 7.29.56 10.04C1.89 12.8.25 19.3.42 22.71c.16 3.43.84 4.65.86 7.05.03 2.4-.88 5.52-.88 5.52h1.77V0z" opacity=".5" fill="%23ffffff"/><path d="M.31 0c.84 2.56.3 7.68.43 11.79.12 4.1.61 6.86.28 9.58-.33 2.73-1.18 5.61-1 8.61.19 3 .82 4.73.84 5.3h1.2V0z" opacity=".5" fill="%23ffffff"/></svg>'); 
+        background-image: url('../svg/login-wave.svg'); 
+    }
+    .darkmode .wave-divisor::before{
+        background-image: url('../svg/login-wave-dark.svg'); 
     }
 }
     
@@ -166,8 +202,17 @@ input[type=file]::file-selector-button {
 }
 
 .logo-login{
+    height: 130px;
     width: 130px;
-    object-fit: contain;
+    background-color: var(--green);
+    border-radius: var(--rounded-pill);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-login i{
+    font-size: 87px;
 }
 
 /* Forms */
@@ -212,18 +257,18 @@ input[type=file]::file-selector-button {
     transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
 }
 .button-primary{
-    background-color: #3DBD90;
+    background-color: var(--green);
     color: white;
 }
 
 .button-primary:hover{
-    background-color: #2C868C;
+    background-color: var(--aqua-blue);
 }
 
 .button-secondary{
-    background-color: white;
+    background-color: var(--body-bg);
     color: var(--green);
-    border: 1px solid #3DBD90;
+    border: 1px solid var(--green);
 }
 
 .button-secondary:hover{
@@ -308,4 +353,13 @@ input[type=file]::file-selector-button {
     justify-content: space-between;
     padding-top: 5%;
     padding-bottom: 10%;
+}
+
+.div-password-reset{
+    padding-inline: 15%;
+    padding-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+    justify-content: center;
 }

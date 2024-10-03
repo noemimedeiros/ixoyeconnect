@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "account/base.html" %}
 {% load static %}
 {% load i18n %}
 {% load allauth %}
@@ -7,54 +7,37 @@
 {% block css %}
 {% endblock css %}
 
-{% block content %}
-<section class="section-login">
-    <div class="card-login-logo">
-        <div class="login-logo-content">
-            <div>
-                <img class="logo-login mb-2" src="{% static 'public/img/Logo.png' %}" alt="">
-                <h2>Ixoye Connect</h2>
-            </div>
-            <div class="login-logo-texto">
-                <h1>Bem-Vindo!</h1>
-                <h3>Por favor, preencha seus dados para continuar.</h3>
-            </div>
-        </div>
-        <div class="wave-divisor"></div>
+{% block card_content %}
+<div class="login-form">
+    {% csrf_token %}
+    {% if form.errors %}
+    {% for error in form.non_field_errors %}
+    <div class="alert-danger">
+        <span>{{ error|escape }}</span>
     </div>
-    <div class="card-login">
-        <div class="login-form">
-            {% csrf_token %}
-            {% if form.errors %}
-            {% for error in form.non_field_errors %}
-            <div class="alert-danger">
-                <span>{{ error|escape }}</span>
-            </div>
-            {% endfor %}
-            {% endif %}
-            <h3>Fazer Login</h3>
-            <div>
-                {% crispy form %}
-            </div>
-            <div>
-                <button type="submit" class="button button-primary">Entrar</button>
-            </div>
-            <div class="divisor-login">
-                <hr>
-                <span>Ou</span>
-                <hr>
-            </div>
-            <div class="div-login-google">
-                <button type="button" class="button button-secondary">
-                    <div>
-                        <i class="fa-brands fa-google fa-2xl"></i> <span>Conectar-se com Google</span>
-                    </div>
-                </button>
-            </div>
-            <div class="text-center">
-                <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
-            </div>
-        </div>
+    {% endfor %}
+    {% endif %}
+    <h3>Fazer Login</h3>
+    <div>
+        {% crispy form %}
     </div>
-</section>
-{% endblock content %}
+    <div>
+        <button type="submit" class="button button-primary">Entrar</button>
+    </div>
+    <div class="divisor-login">
+        <hr>
+        <span>Ou</span>
+        <hr>
+    </div>
+    <div class="div-login-google">
+        <button type="button" class="button button-secondary">
+            <div>
+                <i class="fa-brands fa-google fa-2xl"></i> <span>Conectar-se com Google</span>
+            </div>
+        </button>
+    </div>
+    <div class="text-center">
+        <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
+    </div>
+</div>
+{% endblock card_content %}

@@ -1,7 +1,7 @@
-from allauth.account.forms import LoginForm, SignupForm
+from allauth.account.forms import LoginForm, SignupForm, ChangePasswordForm, AddEmailForm, ConfirmLoginCodeForm, ResetPasswordForm
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row, Column, Div
+from crispy_forms.layout import Layout, Row, Column, Div, Submit
 from crispy_bootstrap5.bootstrap5 import FloatingField, Field, Switch
 
 from core.models import Endereco
@@ -43,6 +43,28 @@ class MySignUpForm(SignupForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         floating_fields(self)
+
+class MyChangePasswordForm(ChangePasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        floating_fields(self)
+
+class MyAddEmailForm(AddEmailForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        floating_fields(self)
+
+class MyConfirmLoginCodeForm(ConfirmLoginCodeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        floating_fields(self)
+
+class MyResetPasswordForm(ResetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        floating_fields(self)
+        self.helper.form_tag = True
+        self.helper.add_input(Submit('submit', 'Redefinir minha senha', css_class='button button-primary'))
 
 class EnderecoForm(FormBaseIxoye):
     class Meta:
