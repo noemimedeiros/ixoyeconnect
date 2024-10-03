@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from core.models import Endereco
 
 class Usuario(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
+    user = models.OneToOneField(User, related_name='usuario_user', on_delete=models.CASCADE, null=False, blank=False)
     nome = models.CharField(max_length=60, null=False, blank=False)
     celular = models.CharField(max_length=16, null=False, blank=False)
     data_nascimento = models.DateField(null=False, blank=False)

@@ -8,6 +8,7 @@
 
     --gray-1: #F1F4F8;
     --gray-2: #A7AEB6;
+    --gray-3: #51565C;
 
     --black-1: #212224;
 
@@ -19,22 +20,25 @@
 .darkmode:root{
     --body-bg: #212224;
 
-    --green: #287e60;
-    --aqua-blue: #1a4f53;
+    /* --green: #287e60;
+    --aqua-blue: #1a4f53; */
 
     --gray-1: #1E1E1E;
+    --gray-2: white;
+    --gray-3: #A7AEB6;
     --black-1: white;
     
     --bs-body-bg: #212224;
     --bs-heading-color: white;
     --bs-body-color: #A7AEB6;
-    --bs-secondary-color: #A7AEB6
+    --bs-secondary-color: #A7AEB6;
+    --bs-body-color-rgb: rgba(255, 255, 255, 0.678);
 }
 
 #dark-mode{
     position: fixed;
-    top: 5%;
-    right: 2%;
+    top: 3%;
+    right: 1.5%;
     color: var(--gray-2);
 }
 
@@ -42,6 +46,7 @@
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+    transition: background-color 200ms linear, color 200ms linear !important;
 }
 
 html{
@@ -157,7 +162,8 @@ input[type=file]::file-selector-button {
     background-repeat: no-repeat; 
     background-size: 170% 71px;
     background-position: 27% 100%;    
-    background-image: url('../svg/mobile-login-wave.svg'); 
+    background-image: url('../svg/mobile-login-wave.svg');
+    transition: background-image 200ms linear
 }
 .darkmode .wave-divisor::before{
     background-image: url('../svg/mobile-login-wave-dark.svg'); 
@@ -236,8 +242,8 @@ input[type=file]::file-selector-button {
 }
 
 .form-primary:focus{
-    color: #212529;
-    background-color: #fff;
+    color: var(--black-1);
+    background-color: var(--bs-body-bg);
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25)
@@ -329,9 +335,15 @@ input[type=file]::file-selector-button {
 }
 
 .retornar{
-    padding: 20px;
+    position: fixed;
+    left: calc(50% + 10px);
+    top: calc(1% + 10px);
+    padding: 10px;
+    border-radius: var(--rounded-pill);
+    z-index: 9000;
     a{
-        color: var(--gray-2);
+        color: var(--green);
+        font-weight: 300;
     }
 }
 
@@ -350,16 +362,16 @@ input[type=file]::file-selector-button {
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: space-between;
+    justify-content: center;
     padding-top: 5%;
     padding-bottom: 10%;
 }
 
 .div-password-reset{
-    padding-inline: 15%;
+    padding-inline: 20%;
     padding-bottom: 5%;
     display: flex;
     flex-direction: column;
-    gap: 10%;
+    gap: 5%;
     justify-content: center;
 }

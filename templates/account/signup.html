@@ -47,9 +47,6 @@
 {% endblock logo_content %}
 
 {% block card_content %}
-    <div class="retornar">
-        <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> Retornar a página inicial</a>
-    </div>
     <form class="login-form" method="POST" action="{% url 'account_signup' %}">
         {% csrf_token %}
         <div class="pages-signup">

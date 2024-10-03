@@ -8,7 +8,7 @@
 {% endblock css %}
 
 {% block card_content %}
-<div class="login-form">
+<form class="login-form" method="POST">
     {% csrf_token %}
     {% if form.errors %}
     {% for error in form.non_field_errors %}
@@ -39,5 +39,5 @@
     <div class="text-center">
         <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
     </div>
-</div>
+</form>
 {% endblock card_content %}

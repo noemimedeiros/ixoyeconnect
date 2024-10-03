@@ -24,6 +24,9 @@ class DashboradView(TemplateView):
 class MyLoginView(LoginView):
     form_class = MyLoginForm
 
+    def get_success_url(self):
+        return reverse('core:dashboard')
+
 class MyCadastroView(SignupView):
     form_class = MySignUpForm
 

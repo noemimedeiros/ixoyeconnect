@@ -1,0 +1,37 @@
+{% load static %}
+<nav class="top-nav">
+    <div class="top-nav-left">
+        
+        <div class="search-input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input class="form-primary form-search" type="text" placeholder="Pesquisar">
+        </div>
+    </div>
+    <div class="top-nav-items">
+        <a href="#" class="top-nav-item">
+            <i class="fa-solid fa-house"></i>
+        </a href="#">
+        <a href="#" class="top-nav-item">
+            <i class="fa-solid fa-church"></i>
+        </a href="#">
+        <a href="#" class="top-nav-item">
+            <i class="fa-solid fa-bell"></i>
+        </a href="#">
+        <div class="user-infos">
+            <a class="user-infos" href="#">
+                {% if request.user.usuario_user.foto %}
+                <img src="{% if request.user.usuario.foto %}{{ request.user.usuario_user.foto.url }}{% endif %}" class="user-profile"></img>
+                {% else %}
+                <div class="user-profile"><h2>{{ request.user.usuario_user.nome.0 }}</h2></div>
+                {% endif %}
+                <div class="user-name">
+                    <div>{{ request.user.usuario_user.nome }}</div>
+                    <div>{{ request.user.email }}</div>
+                </div>
+            </a>
+            <div class="user-configs">
+                <i role="button" class="fa-solid fa-chevron-down fa-lg"></i>
+            </div>
+        </div>
+    </div>
+</nav>

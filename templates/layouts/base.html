@@ -35,20 +35,18 @@
 </head>
 
 <script>
-    function darkMode(){
+    function darkMode(btn){
         const isDarkMode = document.querySelector('html').classList.toggle('darkmode');
         localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
     }
     var darkModeStatus = localStorage.getItem('darkMode');
-
+    
     if (darkModeStatus === 'enabled') {
         document.querySelector('html').classList.add('darkmode');
     }
 </script>
 <body>
-    {% include "partials/_navbar.html" %}
     {% block content %}{% endblock content %}
-    {% include "partials/_footer.html" %}
 
     <!-- Scripts -->
     <script src="{% static 'public/libs/bootstrap/js/bootstrap.min.js' %}"></script>

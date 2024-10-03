@@ -10,6 +10,11 @@
 {% block content %}
 <section class="section-login">
     <div class="card-login-logo {% block card_login_classes %}{% endblock card_login_classes %}">
+        {% if '/login/' not in request.path %}
+        <div class="retornar">
+            <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> Retornar a página inicial</a>
+        </div>
+        {% endif %}
         {% block logo_content %}
             <div class="login-logo-content">
                 <div>
@@ -31,6 +36,6 @@
     </div>
 </section>
 <div id="dark-mode">
-    <i role="button" class="fa-regular fa-moon fa-2xl" onclick="darkMode()"></i>
+    <i role="button" class="fa-regular fa-moon fa-2xl" onclick="darkMode(this)"></i>
 </div>
 {% endblock content %}

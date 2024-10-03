@@ -1,0 +1,41 @@
+{% load static %}
+<nav class="side-nav">
+    <div class="side-nav-logo">
+        <img class="side-nav-icon" src="{% static 'public/img/Logo.png' %}" alt="">
+        Ixoye Connect
+    </div>
+    <div class="side-nav-items">
+        <a href="#" class="side-nav-item">
+            <div class="side-nav-icon">{% include "core/includes/icons/sidebar.svg" %}</div>
+            <div class="side-nav-text">Menu</div>
+        </a>
+        <a href="#" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="side-nav-text">Eventos</div>
+        </a>
+        <a href="#" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-book-bible"></i></div>
+            <div class="side-nav-text">Devocionais</div>
+        </a>
+        <a href="#" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="side-nav-text">Contribuições</div>
+        </a>
+        <a href="#" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="side-nav-text">Lista de Membros</div>
+        </a>
+        <a href="#" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div class="side-nav-text">Escalas</div>
+        </a>
+        <a href="/logout/" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+            <div class="side-nav-text">Sair</div>
+        </a>
+        <div role="button" onclick="darkMode()" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-moon"></i></div>
+            <div class="side-nav-text">Modo Escuro</div>
+        </div>
+    </div>
+</nav>
