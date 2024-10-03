@@ -2,15 +2,19 @@
 <nav class="side-nav">
     <div class="side-nav-logo">
         <img class="side-nav-icon" src="{% static 'public/img/Logo.png' %}" alt="">
-        Ixoye Connect
+        <span class="side-nav-icon-text">Ixoye Connect</span>
     </div>
     <div class="side-nav-items">
-        <a href="#" class="side-nav-item">
+        <div role="button" onclick="menu_collapse()" class="side-nav-item">
             <div class="side-nav-icon">{% include "core/includes/icons/sidebar.svg" %}</div>
             <div class="side-nav-text">Menu</div>
+        </div>
+        <a href="{% url 'agenda:agendas_list_view' %}" class="side-nav-item">
+            <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="side-nav-text">Agenda Semanal</div>
         </a>
         <a href="#" class="side-nav-item">
-            <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="side-nav-icon"><i class="fa-solid fa-calendar-day"></i></div>
             <div class="side-nav-text">Eventos</div>
         </a>
         <a href="#" class="side-nav-item">

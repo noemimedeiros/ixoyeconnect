@@ -46,7 +46,7 @@
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
-    transition: background-color 200ms linear, color 200ms linear !important;
+    transition: background-color 200ms linear !important;
 }
 
 html{
@@ -262,11 +262,11 @@ input[type=file]::file-selector-button {
     font-weight: 500;
     transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
 }
+
 .button-primary{
     background-color: var(--green);
     color: white;
 }
-
 .button-primary:hover{
     background-color: var(--aqua-blue);
 }

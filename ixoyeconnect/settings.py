@@ -75,6 +75,8 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend"
 )
 
+ACCOUNT_EMAIL_REQUIRED = True
+
 ACCOUNT_FORMS = {
     'login': 'core.forms.MyLoginForm',
     'signup': 'core.forms.MySignUpForm',

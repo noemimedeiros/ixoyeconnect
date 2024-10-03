@@ -11,8 +11,25 @@
     <section class="dashboard-content">
         {% include "core/partials/_topnav.html" %}
         <div class="dashboard-card">
+            <div class="dashboard-head">
+                <h3><b>{% block app_title %}{% endblock app_title %}</b></h3>
+                <div>
+                    <div class="search-input">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input class="form-primary" type="text" placeholder="Pesquisar">
+                    </div>
+                </div>
+            </div>
             {% block dashboard_content %}{% endblock dashboard_content %}
         </div>
     </section>
 </section>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    function menu_collapse(){
+        $('.side-nav-text, .side-nav-icon-text').toggleClass("d-none")
+    }
+</script>
+{% endblock scripts %}
