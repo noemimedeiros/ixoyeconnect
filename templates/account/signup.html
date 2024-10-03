@@ -58,8 +58,8 @@
                         <h6>Preencha os dados abaixo</h6>
                     </div>
                     <div class="d-flex gap-2 mb-3">
-                        <button onclick="mudar_formulario(this.dataset.value)" type="button" class="button button-primary" data-value="membro"><i class="fa-solid fa-circle-user mr-1"></i> Membro</button>
-                        <button onclick="mudar_formulario(this.dataset.value)" type="button" class="button button-secondary" data-value="igreja"><i class="fa-solid fa-church mr-1"></i> Igreja</button>
+                        <button onclick="mudar_formulario(this.dataset.value)" type="button" class="button button-filled" data-value="membro"><i class="fa-solid fa-circle-user mr-1"></i> Membro</button>
+                        <button onclick="mudar_formulario(this.dataset.value)" type="button" class="button button-outlined" data-value="igreja"><i class="fa-solid fa-church mr-1"></i> Igreja</button>
                     </div>
                     <h6 class="mb-3" id="dados-titulo">Dados Pessoais</h6>
                     <div id="cadastro-membro">
@@ -77,7 +77,7 @@
                     <h6 class="mb-3"><b>Endereço</b></h6>
                     {% crispy endereco_form %}
                     <div>
-                        <button type="submit" class="button button-primary">Finalizar Cadastro</button>
+                        <button type="submit" class="button button-filled">Finalizar Cadastro</button>
                     </div>
                 </div>
             </div>
@@ -136,8 +136,8 @@
         $('[id^=cadastro-]').find('input, select').prop('disabled', true)
         $(`#cadastro-${value}`).find('input, select').prop('disabled', false)
 
-        $('button[data-value="membro"], button[data-value="igreja"]').removeClass('button-primary').addClass('button-secondary')
-        $(`button[data-value="${value}"]`).removeClass('button-secondary').addClass('button-primary')
+        $('button[data-value="membro"], button[data-value="igreja"]').removeClass('button-filled').addClass('button-outlined')
+        $(`button[data-value="${value}"]`).removeClass('button-outlined').addClass('button-filled')
     }
 
 

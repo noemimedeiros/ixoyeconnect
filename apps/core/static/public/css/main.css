@@ -250,7 +250,9 @@ input[type=file]::file-selector-button {
 }
 
 .button{
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: calc(3.5rem + calc(var(--bs-border-width)* 2));
     min-height: calc(3.5rem + calc(var(--bs-border-width)* 2));
@@ -263,24 +265,34 @@ input[type=file]::file-selector-button {
     transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
 }
 
-.button-primary{
+.button-filled{
     background-color: var(--green);
     color: white;
 }
-.button-primary:hover{
+.button-filled:hover{
     background-color: var(--aqua-blue);
 }
 
-.button-secondary{
+.button-outlined{
     background-color: var(--body-bg);
     color: var(--green);
     border: 1px solid var(--green);
 }
 
-.button-secondary:hover{
+.button-outlined:hover{
     background-color: var(--gray-1);
     color: var(--aqua-blue);
     border-color: var(--aqua-blue);
+}
+
+.button-filled-tonal{
+    background-color: var(--green-transparent);
+    color: var(--green);
+}
+
+.button-filled-tonal:hover{
+    background-color: var(--green-transparent);
+    color: var(--aqua-blue);
 }
 
 .alert-danger{

@@ -35,9 +35,20 @@
 </head>
 
 <script>
-    function darkMode(btn){
+    function darkMode(){
+        const btnDarkmode = document.querySelector('.icon-dark-mode');
+        const textDarkmode = document.querySelector('.text-dark-mode');
         const isDarkMode = document.querySelector('html').classList.toggle('darkmode');
         localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        if (isDarkMode){
+            btnDarkmode.classList.remove('fa-moon')
+            btnDarkmode.classList.add('fa-sun')
+            textDarkmode.innerText = 'Modo Claro';
+        }else{
+            btnDarkmode.classList.remove('fa-sun')
+            btnDarkmode.classList.add('fa-moon')
+            textDarkmode.innerText = 'Modo Escuro';
+        }
     }
     var darkModeStatus = localStorage.getItem('darkMode');
     
@@ -47,13 +58,21 @@
 </script>
 <body>
     {% block content %}{% endblock content %}
-
-    <!-- Scripts -->
-    <script src="{% static 'public/libs/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'public/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'public/js/jquery.min.js' %}"></script>
-    <script src="{% static 'public/js/jquery.mask.js' %}"></script>
-    <script src="{% static 'public/libs/pagination/pagination.min.js' %}"></script>
-    {% block scripts %}{% endblock scripts %}
 </body>
+<!-- Scripts -->
+<script src="{% static 'public/libs/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'public/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'public/js/jquery.min.js' %}"></script>
+<script src="{% static 'public/js/jquery.mask.js' %}"></script>
+<script src="{% static 'public/libs/pagination/pagination.min.js' %}"></script>
+{% block scripts %}{% endblock scripts %}
+<script>
+    if (darkModeStatus === 'enabled') {
+        $('.icon-dark-mode').removeClass('fa-moon').addClass('fa-sun')
+        $('.text-dark-mode').html('Modo Claro')
+    }else{
+        $('.icon-dark-mode').removeClass('fa-sun').addClass('fa-moon')
+        $('.text-dark-mode').html('Modo Escuro')
+    }
+</script>
 </html>

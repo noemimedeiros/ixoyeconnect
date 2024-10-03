@@ -5,6 +5,12 @@
 Agenda Semanal
 {% endblock app_title %}
 
+{% block dashboard_actions %}
+<a href="{% url 'agenda:agendas_create_view' %}" class="button button-filled">
+    <i class="fa-solid fa-plus me-3"></i> Adicionar
+</a>
+{% endblock dashboard_actions %}
+
 {% block dashboard_content %}
 <section>
 

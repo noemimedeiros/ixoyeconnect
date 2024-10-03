@@ -9,5 +9,6 @@ from . import views
 app_name = 'agenda'
 
 urlpatterns = [
-    path('agendas/', views.AgendaSemanal.as_view(), name="agendas_list_view"),
+    path('agendas/', views.AgendaSemanalListView.as_view(), name="agendas_list_view"),
+    path('criar_agenda/', views.AgendaSemanalCreateView.as_view(), name="agendas_create_view")
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

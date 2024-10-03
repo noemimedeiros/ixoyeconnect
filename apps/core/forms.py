@@ -15,7 +15,7 @@ def floating_fields(self):
     for field_name, field in self.fields.items():
         field_widget = field.widget.__class__.__name__
         field_classes = f'form-primary {field.widget.attrs.get('class')}'
-        if field_widget in ['TextInput', 'NumberInput', 'EmailInput', 'URLInput', 'DateInput', 'Select', 'PasswordInput']:
+        if field_widget in ['TimeInput', 'TextInput', 'NumberInput', 'EmailInput', 'URLInput', 'DateInput', 'Select', 'PasswordInput']:
             layout_fields.append(FloatingField(field_name, css_class=field_classes))
         elif field_widget in ['ClearableFileInput', 'FileInput', 'Textarea']:
             layout_fields.append(Field(field_name, css_class=field_classes))
@@ -64,7 +64,7 @@ class MyResetPasswordForm(ResetPasswordForm):
         super().__init__(*args, **kwargs)
         floating_fields(self)
         self.helper.form_tag = True
-        self.helper.add_input(Submit('submit', 'Redefinir minha senha', css_class='button button-primary'))
+        self.helper.add_input(Submit('submit', 'Redefinir minha senha', css_class='button button-filled'))
 
 class EnderecoForm(FormBaseIxoye):
     class Meta:
