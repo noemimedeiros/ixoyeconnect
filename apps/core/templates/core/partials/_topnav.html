@@ -1,5 +1,20 @@
 {% load static %}
 <nav class="top-nav">
+    <div class="top-nav-mobile">
+        <div>
+            <a href="javascript:void(0);" onclick="history.back();">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div>
+            {{ titulo|default:'Página Inicial' }}
+        </div>
+        <div>
+            <a href="#" onclick="menu_collapse()">
+                <i class="fa-solid fa-bars"></i>
+            </a>
+        </div>
+    </div>
     <div class="top-nav-left">
         <div class="search-input">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -7,7 +22,7 @@
         </div>
     </div>
     <div class="top-nav-items">
-        <a href="{% url 'core:dashboard' %}" class="top-nav-item button-filled-tonal">
+        <a href="{% url 'core:dashboard' %}" class="top-nav-item button-filled-tonal {% if 'dashboard/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-house"></i>
         </a href="#">
         <a href="#" class="top-nav-item button-filled-tonal">
@@ -15,6 +30,9 @@
         </a href="#">
         <a href="#" class="top-nav-item button-filled-tonal">
             <i class="fa-solid fa-bell"></i>
+        </a href="#">
+        <a href="#" class="top-nav-item button-filled-tonal top-nav-user">
+            <i class="fa-solid fa-user"></i>
         </a href="#">
         <div class="user-infos">
             <a class="user-infos" href="#">

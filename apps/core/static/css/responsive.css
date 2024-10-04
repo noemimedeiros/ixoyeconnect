@@ -1,0 +1,96 @@
+@media (max-width: 768px) {
+    .main-dashboard{
+        padding: 0;
+    }
+    .side-nav{
+        position: fixed;
+        background-color: var(--body-bg);
+        right: -70%;
+        padding: 5%;
+        width: 70%;
+        overflow: hidden;
+        z-index: 9999;
+        transition: all 300ms linear;
+        transform: translateX(0);
+        height: 100%;
+    }
+    .side-nav.collapsed{
+        transform: translateX(-100%);
+    }
+    .side-nav-logo{
+        display: none;
+    }
+    
+    .side-nav.collapsed .side-nav-text,
+    .side-nav.collapsed .side-nav-icon-text{
+        display: flex;
+    }
+    .main-dashboard{
+        background-color: var(--body-bg);
+        position: relative;
+    }
+    .dashboard-card{
+        background: none;
+        box-shadow: none;
+    }
+
+    .top-nav-mobile{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        color: white;
+    }
+    .top-nav{
+        background-image: url('../img/top-nav-mobile.svg'), url('../img/top-nav-mobile-2.svg');
+        height: 105px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding-inline: 20px;
+        font-size: 2rem;
+        padding-bottom: 25px;
+    }
+    .top-nav a{
+        color: white;
+        font-size: 2rem;
+    }
+    .top-nav-left{
+        display: none;
+    }
+    .top-nav-items{
+        position: fixed;
+        bottom: 15px;
+        width: calc(100% - 25px);
+        left: 0;
+        right: 0;
+        margin-inline: auto;
+        z-index: 999;
+        background-image: linear-gradient(to right, var(--green), var(--aqua-blue));
+        border-radius: var(--rounded-pill);
+        height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .top-nav-item{
+        background: none;
+        color: white;
+    }
+    .top-nav-item i{
+        font-size: 30px;
+        opacity: 0.8;
+    }
+    .top-nav-item.active i{
+        opacity: 1;
+    }
+    .top-nav-user{
+        display: flex;
+    }
+    .user-infos{
+        display: none;
+    }
+
+    .dashboard-card{
+        padding: 5%;
+    }
+}

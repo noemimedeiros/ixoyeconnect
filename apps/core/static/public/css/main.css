@@ -46,7 +46,7 @@
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
-    transition: background-color 200ms linear !important;
+    transition: background-color 200ms linear;
 }
 
 html{
@@ -334,6 +334,7 @@ input[type=file]::file-selector-button {
 .div-login-google div{
     display: flex;
     align-items: center;
+    width: 100%;
 }
 .div-login-google span{
     text-align: center;
