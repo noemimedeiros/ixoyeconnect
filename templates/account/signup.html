@@ -21,6 +21,17 @@
         flex: 0 0 100%;
         padding-inline: 1%;
     }
+
+    @media (max-width: 768px) {
+        #pages-singup{
+            overflow-x: hidden;
+            flex-direction: column;
+            row-gap:20px;
+        }
+        .page-singup{
+            flex: unset;
+        }
+    }
 </style>
 {% endblock css %}
 
@@ -39,7 +50,6 @@
     </div>
 </div>
 <div class="signup-title-content">
-    <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left fa-2xl text-white mr-1"></i></a>
     <div class="signup-title">
         <h1>Cadastro</h1>
         <h3>Preencha os dados abaixo</h3>

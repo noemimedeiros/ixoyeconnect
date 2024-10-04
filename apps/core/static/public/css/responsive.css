@@ -1,15 +1,27 @@
 @media (max-width: 768px) {
     .logo-login {
-        width: 115px;
+        width: 6rem;
+        height: 6rem;
+    }
+    #dark-mode{
+        margin-right: 3%;
+        color: white;
+    }
+    .login-logo-texto h1{
+        font-size: 1.5rem;
+    }
+    .login-logo-texto h3{
+        font-size: 1rem;
     }
     .section-login{
         grid-template-columns: 1fr;
-        grid-template-rows: 40% 1fr;
+        grid-template-rows: 30% 1fr;
         background: linear-gradient(180deg, #3DBD90 0%, #2C868C 30%)
     }
-    .login-logo-content{
-        justify-content: space-between;
+    .titulo-app{
+        display: none;
     }
+
     .section-signup{
         grid-template-rows: 20vh 1fr;
         height: unset;
@@ -33,6 +45,7 @@
     .signup-title-content{
         text-align: start;
     }
+    
     .card-login{
         border-top-right-radius: 20px;
         border-top-left-radius: 20px;
@@ -52,7 +65,7 @@
         width: 100%;
         height: 100px;
         top: unset;
-        bottom: -20px;
+        bottom: -2.3rem;
     }
     .section-signup .wave-divisor{
         display: none;
@@ -64,6 +77,17 @@
         display: none;
     }
     .retornar{
+        left: 0;
+        top: 0;
+    }
+    .retornar a{
+        color: white;
+        font-size: 2rem;
+    }
+    .retornar a span{
         display: none;
+    }
+    .div-password-reset{
+        padding-inline: 10%;
     }
 }

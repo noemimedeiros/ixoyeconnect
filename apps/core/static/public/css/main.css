@@ -20,8 +20,8 @@
 .darkmode:root{
     --body-bg: #212224;
 
-    /* --green: #287e60;
-    --aqua-blue: #1a4f53; */
+    --green: #287e60;
+    --aqua-blue: #1a4f53;
 
     --gray-1: #1E1E1E;
     --gray-2: white;
@@ -37,7 +37,7 @@
 
 .darkmode input {
     color-scheme: dark;
-  }
+}
 
 #dark-mode{
     position: fixed;
@@ -47,7 +47,7 @@
 }
 
 * {
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", sans-serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
     font-optical-sizing: auto;
     font-style: normal;
     transition: background-color 200ms linear;
@@ -107,8 +107,8 @@ input[type=file]::file-selector-button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     box-sizing: border-box;
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
 }
 #id_password_helptext{
     text-align: end;
@@ -214,12 +214,13 @@ input[type=file]::file-selector-button {
 .logo-login{
     height: 130px;
     width: 130px;
-    background-color: var(--green);
+    object-fit: cover;
+    /* background-color: var(--green); */
     border-radius: var(--rounded-pill);
-    text-align: center;
-    display: flex;
+    /* text-align: center; */
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 }
 .logo-login i{
     font-size: 87px;
@@ -256,7 +257,7 @@ input[type=file]::file-selector-button {
 .button{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     width: 100%;
     height: calc(3.5rem + calc(var(--bs-border-width)* 2));
     min-height: calc(3.5rem + calc(var(--bs-border-width)* 2));

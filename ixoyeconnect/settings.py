@@ -17,7 +17,7 @@ SECRET_KEY = env("DJ_SECRET_KEY", default="")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 sys.path.append(
     os.path.join(BASE_DIR, "apps")
@@ -95,6 +95,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+LOGIN_URL = '/login/'
 
 SILENCED_SYSTEM_CHECKS = ['models.W036']
 

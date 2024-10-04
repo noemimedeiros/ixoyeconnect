@@ -12,16 +12,14 @@
     <div class="card-login-logo {% block card_login_classes %}{% endblock card_login_classes %}">
         {% if '/login/' not in request.path %}
         <div class="retornar">
-            <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> Retornar a página inicial</a>
+            <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> <span>Retornar a página inicial</span></a>
         </div>
         {% endif %}
         {% block logo_content %}
             <div class="login-logo-content">
                 <div>
-                    <div class="logo-login mx-auto mb-3">
-                        <i class="fa-solid text-white fa-fish text-center"></i>
-                    </div>
-                    <h2>Ixoye Connect</h2>
+                    <img src="{% static 'public/img/Logo.png' %}" class="logo-login mx-auto mb-3"/>
+                    <h2 class="titulo-app">Ixoye Connect</h2>
                 </div>
                 <div class="login-logo-texto">
                     <h1>Bem-Vindo!</h1>
