@@ -21,10 +21,6 @@ def floating_fields(self):
             layout_fields.append(Field(field_name, css_class=field_classes))
         else:
             layout_fields.append(Field(field_name))
-        
-        if field_widget == 'Select':
-            field.empty_label = field.label
-            field.label = ''
 
     # Aplica o layout
     self.helper.layout = Layout(*layout_fields)
@@ -90,7 +86,7 @@ class EnderecoForm(FormBaseIxoye):
             FloatingField('cidade', css_class='form-primary'),
             Row(
                 Column(
-                    Field('uf', css_class='form-primary'), css_class='col-lg-6 col-12'
+                    FloatingField('uf', css_class='form-primary'), css_class='col-lg-6 col-12'
                 ),
                 Column(
                     FloatingField('numero', css_class='form-primary'), css_class='col-lg-6 col-12'

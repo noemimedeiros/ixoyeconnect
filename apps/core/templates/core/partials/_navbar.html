@@ -6,7 +6,7 @@
     </a>
     <div class="side-nav-items">
         <a href="#" onclick="menu_collapse()" class="side-nav-item side-nav-menu">
-            <div class="side-nav-icon">{% include "core/includes/icons/sidebar.svg" %}</div>
+            <div class="side-nav-icon"><i class="fa-solid fa-bars"></i></div>
             <div class="side-nav-text">Menu</div>
         </a>
         <a href="{% url 'agenda:agendas_list_view' %}" class="side-nav-item {% if '/agenda/' in request.path %}active{% endif %}">

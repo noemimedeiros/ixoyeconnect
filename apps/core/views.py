@@ -63,6 +63,15 @@ class MyCadastroView(SignupView):
             endereco_form = endereco_form.save()
         else:
             return self.form_invalid(form)
+
+        usuario_form = UsuarioForm(request.POST)
+        if usuario_form.is_valid():
+            usuario_form = usuario_form.save(commit=False)
+            usuario_form.user = user
+            usuario_form.endereco = endereco_form
+            usuario_form = usuario_form.save()
+        else:
+            return self.form_invalid(form)
         
         if request.POST.get('instituicao'):
             instituicao_form = InstituicaoSedeForm(request.POST)
@@ -73,15 +82,7 @@ class MyCadastroView(SignupView):
                 instituicao_form = instituicao_form.save()
             else:
                 return self.form_invalid(form)
-        else:
-            usuario_form = UsuarioForm(request.POST)
-            if usuario_form.is_valid():
-                usuario_form = usuario_form.save(commit=False)
-                usuario_form.user = user
-                usuario_form.endereco = endereco_form
-                usuario_form = usuario_form.save()
-            else:
-                return self.form_invalid(form)
+                
         return self.get_success_url()
     
     def form_invalid(self, form):

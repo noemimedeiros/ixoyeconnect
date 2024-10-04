@@ -1,3 +1,7 @@
+.darkmode:root{
+    --body-bg: #1E1E1E;
+    --gray-1: #212224;
+}
 
 .main-dashboard{
     height: 100vh;
@@ -27,6 +31,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.top-nav-item.active{
+    color: var(--black-1);
+    background-color: var(--green);
 }
 .user-infos{
     display: flex;
@@ -122,6 +130,10 @@
     padding-right: 10px;
     position: relative;
 }
+.side-nav-icon-text{
+    color: var(--black-1);
+}
+
 @media (min-width: 1025px) {
     .side-nav{
         transition: max-width 0.3s ease;

@@ -1,0 +1,10 @@
+<div id="div_id_icone" class="form-floating mb-3">
+  <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-primary select form-select">
+      {% for choice in field.field.queryset %}
+        <option value="{{ choice.pk }}">
+          &#x{{ choice.icone }}; - {{ choice.descricao }}
+        </option>
+      {% endfor %}
+  </select>
+  <label for="id_icone">Icone</label>
+</div>

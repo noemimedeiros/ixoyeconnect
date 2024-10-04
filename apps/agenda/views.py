@@ -26,3 +26,4 @@ class AgendaSemanalCreateView(LoginRequiredMixin, CreateView):
         context["titulo"] = "Criar Agenda"
         return context
     
+    
