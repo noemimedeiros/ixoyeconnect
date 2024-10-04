@@ -33,7 +33,9 @@
             if($('#overlay-sidenav').length > 0){
                 $('#overlay-sidenav').remove()
             }else{
-                $('body').append('<div id="overlay-sidenav" class="overlay-sidenav fade show" onclick="menu_collapse()"></div>')
+                if($('.side-nav').hasClass('collapsed')){
+                    $('body').append('<div id="overlay-sidenav" class="overlay-sidenav fade show" onclick="menu_collapse()"></div>')
+                }
             }
         }
     }

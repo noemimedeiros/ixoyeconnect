@@ -98,7 +98,7 @@
     margin-top: 10px;
     border-radius: 40px;
     background-color: var(--body-bg);
-    padding: 2%;
+    padding: 20px;
     box-shadow: rgba(99, 99, 99, 0.055) 0px 0px 5px 0px;
     margin-bottom: 20px;
 }
@@ -115,12 +115,43 @@
 }
 .side-nav-item{
     width: 100%;
-    height: 50px;
     display: flex;
+    height: 50px;
     align-items: center;
     border-radius: var(--rounded-pill);
     padding-right: 10px;
+    position: relative;
 }
+@media (min-width: 1025px) {
+    .side-nav{
+        transition: max-width 0.3s ease;
+        max-width: 200px;
+        overflow: hidden;
+    }
+    .side-nav-text{
+        margin-left: 40px;
+    }
+    .side-nav-icon:not(.side-logo-icon){
+        position: absolute;
+    }
+    .side-nav.collapsed .side-nav-item{
+        padding-right: 0;
+    }
+    .side-nav-text,
+    .side-nav-icon-text{
+        transition: opacity 0.3s ease;
+        white-space: nowrap;
+    }
+    .side-nav.collapsed .side-nav-text,
+    .side-nav.collapsed .side-nav-icon-text{
+        opacity: 0;
+        visibility: hidden;
+    }
+    .side-nav.collapsed{
+        max-width: 40px;
+    }
+}
+
 .side-nav-item:hover, .side-nav-item.active{
     background-color: var(--green-transparent);
     color: var(--green);
@@ -141,13 +172,6 @@
     height: 15px;
     width: 15px;
     object-fit: contain;
-}
-.side-nav.collapsed .side-nav-item{
-    padding-right: 0;
-}
-.side-nav.collapsed .side-nav-text,
-.side-nav.collapsed .side-nav-icon-text{
-    display: none;
 }
 .overlay-sidenav {
     position: fixed;

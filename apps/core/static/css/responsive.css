@@ -89,7 +89,9 @@
     .user-infos{
         display: none;
     }
-
+    .dashboard-head h3{
+        display: none;
+    }
     .dashboard-card{
         padding: 5%;
     }
