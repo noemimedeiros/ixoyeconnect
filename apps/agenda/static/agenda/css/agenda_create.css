@@ -1,0 +1,66 @@
+.agenda-form-section{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.agenda-preview{
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    padding: 20px;
+}
+.card-agenda{
+    border-radius: var(--rounded-pill);
+    background-color: var(--gray-1);
+    border: none;
+    width: 100%;
+    padding: 0;
+}
+.card-agenda[aria-expanded="true"]{
+    border-radius: 30px;
+}
+.card-agenda-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+.card-agenda-infos{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.div-icone-agenda{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    background-color: var(--green);
+    color: var(--body-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.div-icone-agenda i{
+    font-size: 1.25rem;
+    line-height: normal;
+}
+.dia-hora-agenda{
+    font-size: 1rem;
+    text-align: start;
+}
+.titulo-agenda{
+    font-size: 1.25rem;
+    text-align: start;
+}
+.agenda-collapse i {
+    color: var(--gray-2);
+}
+.descricao-agenda{
+    padding: 15px;
+    text-align: start;
+}
+.show .descricao-agenda{
+    border-top: 1px solid var(--gray-3) ;
+}

@@ -21,23 +21,26 @@
     .titulo-app{
         display: none;
     }
-
     .section-signup{
+        grid-template-rows: 20% 1fr;
+    }
+    .card-signup{
         grid-template-rows: 20vh 1fr;
         height: unset;
         overflow-y: scroll;
         background: linear-gradient(180deg, #3DBD90 0%, #2C868C 15%)
     }
-    .section-signup .login-logo-content{
+    .card-signup .login-logo-content{
         display: none;
     }
     .login-logo-texto{
         padding-inline: 5%;
     }
-    .section-signup .signup-title-content{
+    .card-signup .signup-title-content{
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: end;
+        padding-bottom: 2rem;
         padding-inline: 6%;
         color: white;
         height: 100%;
@@ -62,12 +65,13 @@
     }
     .wave-divisor{
         /* display: none; */
+        z-index: 1;
         width: 100%;
         height: 100px;
         top: unset;
         bottom: -2.3rem;
     }
-    .section-signup .wave-divisor{
+    .card-signup .wave-divisor{
         display: none;
     }
     .login-form{

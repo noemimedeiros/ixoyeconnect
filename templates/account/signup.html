@@ -35,13 +35,13 @@
 </style>
 {% endblock css %}
 
-{% block card_login_classes %}section-signup {% endblock card_login_classes %}
+{% block card_login_classes %}card-signup{% endblock card_login_classes %}
+{% block section_login_classes %}section-signup{% endblock section_login_classes %}
+
 {% block logo_content %}
 <div class="login-logo-content">
     <div>
-        <div class="logo-login mx-auto mb-3">
-            <i class="fa-solid text-white fa-fish text-center"></i>
-        </div>
+        <img src="{% static 'public/img/Logo.png' %}" class="logo-login mx-auto mb-3"/>
         <h2>Ixoye Connect</h2>
     </div>
     <div class="login-logo-texto">

@@ -101,5 +101,6 @@
     }
     .dashboard-card{
         padding: 5%;
+        padding-bottom: 100px;
     }
 }

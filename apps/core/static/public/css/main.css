@@ -20,8 +20,8 @@
 .darkmode:root{
     --body-bg: #212224;
 
-    --green: #287e60;
-    --aqua-blue: #1a4f53;
+    /* --green: #287e60;
+    --aqua-blue: #1a4f53; */
 
     --gray-1: #1E1E1E;
     --gray-2: white;
@@ -35,7 +35,7 @@
     --bs-body-color-rgb: rgba(255, 255, 255, 0.678);
 }
 
-.darkmode input {
+.darkmode {
     color-scheme: dark;
 }
 
@@ -114,10 +114,10 @@ input[type=file]::file-selector-button {
     text-align: end;
 }
 
-.section-signup{
+.card-signup{
     grid-template-columns: 1fr 1fr;
 }
-.section-signup .signup-title-content{
+.card-signup .signup-title-content{
     display: none;
 }
 
@@ -254,6 +254,10 @@ input[type=file]::file-selector-button {
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25)
 }
 
+textarea.form-primary{
+    border-radius: 40px;
+}
+
 .button{
     display: flex;
     align-items: center;
@@ -268,6 +272,10 @@ input[type=file]::file-selector-button {
     padding: .375rem 1.5rem;
     font-weight: 500;
     transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.button i {
+    font-size: 1.5rem;
 }
 
 .button-filled{
@@ -353,7 +361,7 @@ input[type=file]::file-selector-button {
 }
 
 .retornar{
-    position: fixed;
+    position: absolute;
     left: calc(50% + 10px);
     top: calc(1% + 10px);
     padding: 10px;
@@ -381,7 +389,7 @@ input[type=file]::file-selector-button {
     flex-direction: column;
     height: 100%;
     justify-content: center;
-    padding-top: 5%;
+    padding-top: 10%;
     padding-bottom: 10%;
 }
 

@@ -3,19 +3,65 @@
 {% load crispy_forms_tags %}
 
 {% block style %}
-<style>
-
-</style>
+<link rel="stylesheet" href="{% static 'agenda/css/agenda_create.css' %}">
+<link rel="stylesheet" href="{% static 'agenda/css/agenda_responsive.css' %}">
 {% endblock style %}
 
 {% block app_title %}
-Agenda Semanal
+Criar Agenda
 {% endblock app_title %}
 
 {% block dashboard_actions %}{% endblock %}
 
 {% block dashboard_content %}
-<section class="py-3">
-    {% crispy form %}
+<small>Preencha os dados abaixo</small>
+<section class="agenda-form-section">
+    <div>
+        {% crispy form %}
+    </div>
+    <div>
+        <div class="agenda-preview">
+            <div class="mb-4"><small>Pré-Visualização</small></div>
+            <button type="button" class="card-agenda" data-bs-toggle="collapse" data-bs-target="#descricao-agenda" aria-controls="descricao-agenda">
+                <div class="card-agenda-content">
+                    <div class="card-agenda-infos">
+                        <div class="div-icone-agenda">
+                            <i></i>
+                        </div>
+                        <div class="texto-agenda">
+                            <div class="dia-hora-agenda"></div>
+                            <div class="titulo-agenda"></div>
+                        </div>
+                    </div>
+                    <div class="agenda-collapse">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="collapse" id="descricao-agenda">
+                    <div class="descricao-agenda">
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
 </section>
 {% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    function cardAgenda(){
+        let titulo = $('#id_titulo').val();
+        let icone = $('#id_icone').find('option:selected').data('icone');
+        let descricao = $('#id_descricao').val();
+        let dia_semana =  $('#id_dia_semana').find('option:selected').text();
+        let hora = $('#id_hora').val();
+        
+        icone ? $('.div-icone-agenda i').prop('class', `fa-solid ${icone}`) : '';
+        titulo ? $('.titulo-agenda').html(titulo) : '';
+        (dia_semana || hora) ? $('.dia-hora-agenda').html(`${dia_semana} às ${hora}`) : '';
+        descricao ? $('.descricao-agenda').html(descricao): '';
+    }
+    $('input, select, textarea').on('change input', () => cardAgenda());
+
+</script>
+{% endblock _scripts %}

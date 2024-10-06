@@ -109,6 +109,7 @@
     padding: 20px;
     box-shadow: rgba(99, 99, 99, 0.055) 0px 0px 5px 0px;
     margin-bottom: 20px;
+    overflow-y: scroll;
 }
 
 .side-nav-items{

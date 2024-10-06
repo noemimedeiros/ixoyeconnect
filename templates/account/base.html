@@ -8,7 +8,7 @@
 {% endblock css %}
 
 {% block content %}
-<section class="section-login">
+<section class="section-login {% block section_login_classes %}{% endblock section_login_classes %}">
     <div class="card-login-logo {% block card_login_classes %}{% endblock card_login_classes %}">
         {% if '/login/' not in request.path %}
         <div class="retornar">
