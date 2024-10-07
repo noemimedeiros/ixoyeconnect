@@ -53,6 +53,7 @@ Criar Agenda
     function cardAgenda(){
         let titulo = $('#id_titulo').val();
         let icone = $('#id_icone').data('icone');
+        !icone ? icone = $('#id_icone').find('option:selected').data('icone') : '';
         let descricao = $('#id_descricao').val();
         let dia_semana =  $('#id_dia_semana').find('option:selected').text();
         let hora = $('#id_hora').val();
@@ -63,7 +64,6 @@ Criar Agenda
         descricao ? $('.descricao-agenda').html(descricao): '';
     }
     $('input, select, textarea').on('change input', () => cardAgenda());
-
-
+ 
 </script>
 {% endblock _scripts %}

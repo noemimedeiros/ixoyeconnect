@@ -1,31 +1,47 @@
 from typing import Any
 from django import forms
 from core.forms import FormBaseIxoye
-from .models import Instituicao, InstituicaoSede, Membro
+from .models import Denominacao, Instituicao, InstituicaoSede, Membro
 from crispy_forms.layout import Submit, Layout, Row, Column
 from crispy_bootstrap5.bootstrap5 import FloatingField, Field
+
+class DenominacaoForm(FormBaseIxoye):
+    class Meta:
+        model = Denominacao
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper.form_tag = True
+        self.helper.form_action = '/usuario/cadastrar_denominacao/'
+        self.helper.add_input(Submit('adicionar-denominacao', 'Adicionar Denominação', css_class='button button-filled w-100'))
 
 class InstituicaoForm(FormBaseIxoye):
     class Meta:
         model = Instituicao
         fields = "__all__"
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper.form_tag = True
         self.helper.form_action = '/usuario/cadastrar_instituicao/'
-        self.helper.add_input(Submit('submit', 'Cadastrar Instituicao', css_class="button button-filled w-100"))
+        self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="button button-filled w-100"))
+
+        for id, field in enumerate(self.helper.layout.fields):
+            if field.get_field_names()[0].name == 'denominacao':
+                self.helper.layout.fields[id] = FloatingField('denominacao', template="usuario/custom_denominacao_select.html")
 
 class InstituicaoSedeForm(FormBaseIxoye):
     class Meta:
         model = InstituicaoSede
         fields = "__all__"
-        exclude = ('user', 'instituicao', 'endereco', 'capa', 'codigo', )
+        exclude = ('user', 'endereco', 'capa', 'codigo', )
         widgets = {
-            'telefone': forms.TextInput(attrs={'class': 'phone'}),
-            'cnpj': forms.TextInput(attrs={'class': 'cnpj'})
+            'celular': forms.TextInput(attrs={'class': 'phone'}),
+            'cnpj': forms.TextInput(attrs={'class': 'cnpj'}),
+            'instituicao': forms.HiddenInput()
         }
         error_messages = {
-            
             'cnpj': {
                 'unique': "Já existe um cadastro com esse cnpj. Por favor, verifique se você inseriu corretamente.",
             }

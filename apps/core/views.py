@@ -10,7 +10,7 @@ from django.db import transaction, IntegrityError
 from core.messages_utils import *
 from posts.models import CategoriaPost
 from usuario.models import Instituicao, InstituicaoSede
-from usuario.forms import MembroForm
+from usuario.forms import DenominacaoForm, MembroForm
 from usuario.forms import InstituicaoForm, InstituicaoSedeForm
 from core.forms import EnderecoForm, MySignUpForm, MyLoginForm
 
@@ -65,18 +65,19 @@ class MyCadastroView(SignupView):
         context = super().get_context_data(**kwargs)
         context["instituicoes"] = Instituicao.objects.all()
         context["instituicao_form"] = InstituicaoForm(prefix="instituicao")
+        context["denominacao_form"] = DenominacaoForm(prefix="denominacao")
 
         if self.request.POST:
             context["endereco_form"] = EnderecoForm(self.request.POST)
 
             if self.request.POST.get('instituicao'):
-                context["instituicaosede_form"] = InstituicaoSedeForm(self.request.POST)
+                context["instituicaosede_form"] = InstituicaoSedeForm(self.request.POST, prefix="sede")
                 context["membro_form"] = MembroForm()
             else:
                 context["membro_form"] = MembroForm(self.request.POST)
-                context["instituicaosede_form"] = InstituicaoSedeForm()
+                context["instituicaosede_form"] = InstituicaoSedeForm(prefix="sede")
         else:
-            context["instituicaosede_form"] = InstituicaoSedeForm()
+            context["instituicaosede_form"] = InstituicaoSedeForm(prefix="sede")
             context["membro_form"] = MembroForm()
             context["endereco_form"] = EnderecoForm()
         return context
@@ -88,10 +89,10 @@ class MyCadastroView(SignupView):
     def post(self, request):
         form = MySignUpForm(request.POST)
         endereco_form = EnderecoForm(request.POST)
-        instituicao_form = InstituicaoSedeForm(request.POST)
+        instituicao_form = InstituicaoSedeForm(request.POST, prefix="sede")
         membro_form = MembroForm(request.POST)
 
-        if request.POST.get('instituicao'):
+        if request.POST.get('sede-instituicao'):
             membro_instituicao_form = instituicao_form.is_valid()
         else:
             membro_instituicao_form = membro_form.is_valid()
@@ -100,11 +101,11 @@ class MyCadastroView(SignupView):
             user = form.save(request=request)
             endereco_form = endereco_form.save()
             
-            if request.POST.get('instituicao'):
+            if request.POST.get('sede-instituicao'):
                 instituicao_form = instituicao_form.save(commit=False)
                 instituicao_form.user = user
                 instituicao_form.endereco = endereco_form
-                instituicao_form.instituicao_id = request.POST.get('instituicao')
+                instituicao_form.instituicao_id = request.POST.get('sede-instituicao')
                 instituicao_form = instituicao_form.save()
             else:
                 membro_form = membro_form.save(commit=False)

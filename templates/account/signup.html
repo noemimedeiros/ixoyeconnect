@@ -74,14 +74,18 @@
                         <button onclick="mudar_formulario(this.dataset.value)" type="button" class="button button-filled w-100" data-value="membro"><i class="fa-solid fa-circle-user align-middle me-2"></i> Membro</button>
                         <button onclick="mudar_formulario(this.dataset.value)" type="button" class="button button-outlined w-100" data-value="igreja"><i class="fa-solid fa-church align-middle me-2"></i> Igreja</button>
                     </div>
-                    <h6 class="mb-3" id="dados-titulo">Dados Pessoais</h6>
+                    <h6 class="mb-3" id="titulo-membro">
+                        <b>Dados Pessoais</b>
+                    </h6>
+                    <h6 class="mb-3" id="titulo-igreja">
+                        <b>Dados da Igreja (Sede) <i class="fa-solid fa-circle-question text-muted ms-1" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Sua sede precisa estar associada a uma Instituição. Se a Instituição não existir ainda, você pode cadastrá-la facilmente e seguir com o registro da sede." data-bs-placement="left" data-bs-trigger="hover focus" ></i></b>
+                    </h6>
                     <div>
                         <div id="cadastro-membro">
                             {% crispy membro_form %}
                         </div>
                         <div id="cadastro-igreja" style="display: none;">
                             <div class="mb-3">
-                                <input type="hidden" name="instituicao" id="id_instituicao">
                                 <button  type="button" id="btn-selecionar-instituicao" class="button button-filled w-100" data-bs-toggle="modal" data-bs-target="#selecionar-instituicao">Selecione uma Instituicao</button>
                             </div>
                             {% crispy instituicaosede_form %}
@@ -116,8 +120,8 @@
                     </div>
                     <div class="pt-4">
                         {% for instituicao in instituicoes %}
-                            <div class="mb-3" role="button" data-instituicaopk="{{ instituicao.pk }}" data-instituicao="{{ instituicao.razao_social }}" onclick="selecionar_instituicao('{{ instituicao.pk }}')">
-                                <b>{{ instituicao.razao_social }}</b>
+                            <div class="mb-3" role="button" data-instituicaopk="{{ instituicao.pk }}" data-instituicao="{{ instituicao.nome }}" onclick="selecionar_instituicao('{{ instituicao.pk }}')">
+                                <b>{{ instituicao.nome }}</b>
                             </div>
                         {% empty %}
                             <span class="text-muted">Ainda não há Instituições cadastradas.</span>
@@ -134,12 +138,32 @@
     <div class="modal" id="adicionar-instituicao" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
-                <div class="p-4">
-                    <div class="mb-4">
+                <div class="modal-header p-4 border-0">
+                    <div>
                         <h4><b>Nova Instituição</b></h4>
                         <small>Preencha os dados abaixo</small>
                     </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="p-4 pt-0">
                     {% crispy instituicao_form %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="criar-denominacao">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-4 border-0">
+                    <div>
+                        <h4><b>Nova Denominação</b></h4>
+                        <small>Preencha os dados abaixo</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="p-4 pt-0">
+                    {% crispy denominacao_form %}
                 </div>
             </div>
         </div>
@@ -187,7 +211,9 @@
     });
 
     function mudar_formulario(value){
-        value == "igreja" ? $('#dados-titulo').html('<b>Dados da Igreja</b>') : $('#dados-titulo').html('<b>Dados pessoais</b>')
+        $('[id^=titulo-]').css('display', 'none');
+        $(`#titulo-${value}`).removeAttr('style')
+
         $('[id^=cadastro-]').css('display', 'none')
         $(`#cadastro-${value}`).removeAttr('style')
 
@@ -215,7 +241,7 @@
         let instituicao_id = item.data('instituicaopk');
         let instituicao = item.data('instituicao');
 
-        $('#id_instituicao').val(instituicao_id);
+        $('#id_sede-instituicao').val(instituicao_id);
         $('#btn-selecionar-instituicao').text(instituicao).removeClass('button-filled').addClass('button-outlined');
         $('#selecionar-instituicao').modal('hide')
     }

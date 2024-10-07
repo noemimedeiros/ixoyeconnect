@@ -6,11 +6,8 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
 
     def __str__(self):
-        if self.is_admin:
-            return self.conta.razao_social
-        else:
-            return self.conta.nome
-    
+        return self.conta.nome
+            
     @property
     def is_admin(self):
         if hasattr(self, 'instituicaosede'):
@@ -39,36 +36,47 @@ class User(AbstractUser):
         else:
             return self.conta.sede
 
+class Denominacao(models.Model):
+    nome = models.CharField(max_length=120, null=False, blank=False)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        db_table = 'denominacao'
+
 class Instituicao(models.Model):
-    razao_social = models.CharField(max_length=120, null=False, blank=False, verbose_name="Razão Social")
-    denominacao = models.CharField(max_length=120, null=False, blank=False)
+    nome = models.CharField(max_length=120, null=False, blank=False)
+    denominacao = models.ForeignKey(Denominacao, on_delete=models.CASCADE, null=False, blank=False)
     sigla = models.CharField(max_length=10, null=True, blank=True)
     logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/')
 
     class Meta:
         db_table = "instituicao"
 
-class InstituicaoSede(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+class UsuarioAbstract(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True)
+    nome = models.CharField(max_length=60, null=False, blank=False)
+    celular = models.CharField(max_length=16, null=True, blank=True)
+    endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, null=False, blank=False, verbose_name="Endereço")
+
+    class Meta:
+        abstract = True
+
+class InstituicaoSede(UsuarioAbstract):
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE, null=False, blank=False)
     cnpj = models.CharField(max_length=20, null=False, blank=False, unique=True)
-    razao_social = models.CharField(max_length=120, null=False, blank=False, verbose_name="Razão Social")
     sigla = models.CharField(max_length=10, null=False, blank=False)
-    endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, null=False, blank=False)
     codigo = models.CharField(max_length=8, null=False, blank=False, unique=True)
 
     class Meta:
         db_table = "instituicaosede"
 
-class Membro(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True)
-    nome = models.CharField(max_length=60, null=False, blank=False)
+class Membro(UsuarioAbstract):
     sede = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
     ano_ingressao = models.IntegerField(null=True, blank=True)
-    celular = models.CharField(max_length=16, null=False, blank=False)
     data_nascimento = models.DateField(null=False, blank=False)
     foto = models.ImageField(upload_to='usuario/perfil', max_length=255, null=True, blank=True)
-    endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, null=False, blank=False, verbose_name="Endereço")
 
     class Meta:
         db_table = 'membro'

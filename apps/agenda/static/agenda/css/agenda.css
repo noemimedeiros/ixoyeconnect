@@ -24,7 +24,9 @@
 .card-agenda[aria-expanded="true"] .fa-chevron-down{
     rotate: 180deg;
 }
-
+.agenda-collapse{
+    padding-right: 10px;
+}
 .card-agenda-content{
     display: flex;
     flex-direction: row;
