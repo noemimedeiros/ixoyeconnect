@@ -10,4 +10,5 @@ urlpatterns = [
     path('', include('core.urls', 'core'), name="core"),
     path('', include('allauth.urls')),
     path('agenda/', include('agenda.urls')),
+    path('usuario/', include('usuario.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()

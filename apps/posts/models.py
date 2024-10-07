@@ -1,7 +1,5 @@
 from django.db import models
-
-from usuario.models import Usuario
-from instituicao.models import Instituicao
+from usuario.models import User, InstituicaoSede
 
 class CategoriaPost(models.Model):
     nome = models.CharField(max_length=50 , null=False, blank=False)
@@ -10,7 +8,7 @@ class CategoriaPost(models.Model):
         db_table = 'categoriapost'
 
 class Post(models.Model):
-    instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE, null=False, blank=False)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
     titulo = models.CharField(max_length=50, null=False, blank=False)
     descricao =  models.TextField(null=True, blank=True)
     capa = models.CharField(max_length=255, null=True, blank=True)
@@ -32,7 +30,7 @@ class ArquivoPost(models.Model):
 
 class Salvo(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False)
-    user = models.ForeignKey(Usuario, on_delete=models.PROTECT, null=False, blank=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False)
     data = models.DateField(null=False, blank=False)
 
     class Meta:
@@ -40,7 +38,7 @@ class Salvo(models.Model):
 
 class Curtida(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False)
-    user = models.ForeignKey(Usuario, on_delete=models.PROTECT, null=False, blank=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False)
     data = models.DateField(null=False, blank=False)
 
     class Meta:

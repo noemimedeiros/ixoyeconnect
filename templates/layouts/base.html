@@ -57,6 +57,7 @@
     }
 </script>
 <body>
+    {% include "core/messages/messages_toast.html" %}
     {% block content %}{% endblock content %}
 </body>
 <!-- Scripts -->
@@ -75,5 +76,11 @@
         $('.icon-dark-mode').removeClass('fa-sun').addClass('fa-moon')
         $('.text-dark-mode').html('Modo Escuro')
     }
+
+    {% if messages %}
+        $(function() {
+            $(".toast").toast('show');
+        });
+    {% endif %}
 </script>
 </html>

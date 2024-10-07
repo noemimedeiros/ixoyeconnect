@@ -16,6 +16,8 @@
     border: none;
     width: 100%;
     padding: 0;
+    height: fit-content;
+
 }
 .card-agenda[aria-expanded="true"]{
     border-radius: 30px;
@@ -26,6 +28,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    width: 100%;
 }
 .card-agenda-infos{
     display: flex;
@@ -57,10 +60,18 @@
 .agenda-collapse i {
     color: var(--gray-2);
 }
+
 .descricao-agenda{
     padding: 15px;
     text-align: start;
 }
 .show .descricao-agenda{
     border-top: 1px solid var(--gray-3) ;
+}
+
+.agendas-section{
+    margin-top: 20px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
 }

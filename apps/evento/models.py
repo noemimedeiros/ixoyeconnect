@@ -2,9 +2,8 @@ from django.db import models
 
 from django.utils import timezone
 
-from membro.models import Membro
+from usuario.models import Membro, Instituicao
 from core.models import Endereco
-from instituicao.models import Instituicao
 
 class Evento(models.Model):
     nome = models.CharField(max_length=50, null=False, blank=False)

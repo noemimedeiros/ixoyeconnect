@@ -36,13 +36,13 @@
         </a href="#">
         <div class="user-infos">
             <a class="user-infos" href="#">
-                {% if request.user.usuario_user.foto %}
-                <img src="{% if request.user.usuario.foto %}{{ request.user.usuario_user.foto.url }}{% endif %}" class="user-profile"></img>
+                {% if request.user.profile_picture %}
+                <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% endif %}" class="user-profile"></img>
                 {% else %}
-                <div class="user-profile"><h2>{{ request.user.usuario_user.nome.0 }}</h2></div>
+                <div class="user-profile"><h2>{{ request.user.0 }}</h2></div>
                 {% endif %}
                 <div class="user-name">
-                    <div>{{ request.user.usuario_user.nome }}</div>
+                    <div>{{ request.user }}</div>
                     <div>{{ request.user.email }}</div>
                 </div>
             </a>

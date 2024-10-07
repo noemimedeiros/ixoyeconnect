@@ -6,9 +6,8 @@ from ixoyeconnect import settings
 
 from . import views
 
-app_name = 'agenda'
+app_name = 'usuario'
 
 urlpatterns = [
-    path('agendas/<int:instituicao_pk>/', views.AgendaSemanalListView.as_view(), name="agendas_list_view"),
-    path('criar_agenda/', views.AgendaSemanalCreateView.as_view(), name="agendas_create_view")
+    path('cadastrar_instituicao/', views.cadastrar_instituicao, name="cadastrar_instituicao"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

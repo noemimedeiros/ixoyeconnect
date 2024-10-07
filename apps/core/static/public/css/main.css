@@ -259,10 +259,8 @@ textarea.form-primary{
 }
 
 .button{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
     height: calc(3.5rem + calc(var(--bs-border-width)* 2));
     min-height: calc(3.5rem + calc(var(--bs-border-width)* 2));
     border-radius: var(--rounded-pill);
@@ -272,6 +270,11 @@ textarea.form-primary{
     padding: .375rem 1.5rem;
     font-weight: 500;
     transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
+}
+a.button{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button i {
@@ -306,6 +309,10 @@ textarea.form-primary{
 .button-filled-tonal:hover{
     background-color: var(--green-transparent);
     color: var(--aqua-blue);
+}
+
+.toast{
+    margin: 20px;
 }
 
 .alert-danger{
@@ -363,10 +370,10 @@ textarea.form-primary{
 .retornar{
     position: absolute;
     left: calc(50% + 10px);
-    top: calc(1% + 10px);
+    top: 1%;
     padding: 10px;
     border-radius: var(--rounded-pill);
-    z-index: 9000;
+    z-index: 3;
     a{
         color: var(--green);
         font-weight: 300;
@@ -400,4 +407,32 @@ textarea.form-primary{
     flex-direction: column;
     gap: 5%;
     justify-content: center;
+}
+
+.search-input{
+    position: relative;
+}
+.search-input input{
+    text-indent: 30px;
+}
+.search-input i{
+    position: absolute;
+    left: 25px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    color: var(--gray-2);
+    font-size: 18px;
+}
+
+.modal-content{
+    border-radius: 30px;
+}
+
+.text-bg-success{
+    background-color: var(--green) !important;
+}
+.toast{
+    font-size: 1rem;
+    border-radius: 20px;
+    z-index: 5;
 }

@@ -32,6 +32,7 @@
     .dashboard-card{
         background: none;
         box-shadow: none;
+        width: 100dvw;
     }
 
     .top-nav-mobile{
@@ -93,8 +94,12 @@
     .top-nav-user{
         display: flex;
     }
-    .user-infos{
+    .top-nav .user-infos{
         display: none;
+    }
+    .side-nav .user-infos{
+        display: flex;
+        padding-bottom: 20px;
     }
     .dashboard-head h3{
         display: none;
@@ -102,5 +107,20 @@
     .dashboard-card{
         padding: 5%;
         padding-bottom: 100px;
+    }
+    .dashboard-head-actions{
+        width: 100%;
+    }
+    .dashboard-head-actions .search-input{
+        flex: 1;
+    }
+    .dashboard-head-actions .search-input input{
+        width: 100%;
+    }
+    .button-adicionar {
+        text-align: center;
+    }
+    .button-adicionar span{
+        display: none;
     }
 }

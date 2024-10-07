@@ -49,8 +49,6 @@ INSTALLED_APPS = [
     'devocional',
     'escala',
     'evento',
-    'instituicao',
-    'membro',
     'usuario',
     'posts'
 ]
@@ -97,6 +95,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 LOGIN_URL = '/login/'
+
+AUTH_USER_MODEL = "usuario.User" 
 
 SILENCED_SYSTEM_CHECKS = ['models.W036']
 

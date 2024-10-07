@@ -1,0 +1,10 @@
+<div class="search-input">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input class="form-primary" type="text" placeholder="Pesquisar">
+</div>
+<button type="button" class="button button-filled-tonal">
+    <i class="fa-solid fa-filter fa-2xl"></i>
+</button>
+<a role="button" href="{% if create_link %}{% url create_link %}{% else %}#{% endif %}" class="button button-filled button-adicionar gap-2">
+    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
+</a>

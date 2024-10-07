@@ -60,7 +60,7 @@ class MyResetPasswordForm(ResetPasswordForm):
         super().__init__(*args, **kwargs)
         floating_fields(self)
         self.helper.form_tag = True
-        self.helper.add_input(Submit('submit', 'Redefinir minha senha', css_class='button button-filled'))
+        self.helper.add_input(Submit('submit', 'Redefinir minha senha', css_class='button button-filled w-100'))
 
 class EnderecoForm(FormBaseIxoye):
     class Meta:

@@ -1,7 +1,6 @@
 from django.db import models
 
-from instituicao.models import Instituicao
-from membro.models import Departamento
+from usuario.models import Instituicao, Departamento
 
 class MetodoContribuicao(models.Model):
     nome = models.CharField(max_length=50, null=False, blank=False)

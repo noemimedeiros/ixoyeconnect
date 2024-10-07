@@ -4,12 +4,25 @@
         <img class="side-nav-icon side-logo-icon" src="{% static 'public/img/Logo.png' %}" alt="">
         <span class="side-nav-icon-text">Ixoye Connect</span>
     </a>
+    <div class="user-infos">
+        <a class="user-infos" href="#">
+            {% if request.user.profile_picture %}
+            <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% endif %}" class="user-profile"></img>
+            {% else %}
+            <div class="user-profile"><h2>{{ request.user.0 }}</h2></div>
+            {% endif %}
+            <div class="user-name">
+                <div>{{ request.user }}</div>
+                <div>{{ request.user.email }}</div>
+            </div>
+        </a>
+    </div>
     <div class="side-nav-items">
         <a href="#" onclick="menu_collapse()" class="side-nav-item side-nav-menu">
             <div class="side-nav-icon"><i class="fa-solid fa-bars"></i></div>
             <div class="side-nav-text">Menu</div>
         </a>
-        <a href="{% url 'agenda:agendas_list_view' %}" class="side-nav-item {% if '/agenda/' in request.path %}active{% endif %}">
+        <a href="{% url 'agenda:agendas_list_view' request.user.conta.pk %}" class="side-nav-item {% if '/agenda/' in request.path %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="side-nav-text">Agenda Semanal</div>
         </a>

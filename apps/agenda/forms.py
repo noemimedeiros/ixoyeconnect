@@ -1,36 +1,32 @@
 from django import forms
-from .models import AgendaSemanal, IconeAgendaSemanal
+from .models import DIAS_SEMANA, AgendaSemanal, IconeAgendaSemanal
 from core.forms import FormBaseIxoye
 from crispy_forms.layout import Submit, Layout, Row, Column
 from crispy_bootstrap5.bootstrap5 import FloatingField
 
 class AgendaSemanalForm(FormBaseIxoye):
-    DIAS_SEMANA = (
-        ('domingo', 'Domingo'),
-        ('segunda', 'Segunda-feira'),
-        ('terca', 'Terça-feira'),
-        ('quarta', 'Quarta-feira'),
-        ('quinta', 'Quinta-feira'),
-        ('sexta', 'Sexta-feira'),
-        ('sabado', 'Sábado'),
-    )
     dia_semana = forms.ChoiceField(choices=DIAS_SEMANA, required=True)
     class Meta: 
         model = AgendaSemanal
         fields = '__all__'
-        exclude = ('instituicao', )
         widgets = {
-            'hora': forms.TimeInput(attrs={'type': 'time'})
+            'hora': forms.TimeInput(attrs={'type': 'time'}),
+            'instituicao': forms.HiddenInput()
         }
 
     def __init__(self, *args, **kwargs):
+        instituicao = kwargs.pop('instituicao', None)
         super().__init__(*args, **kwargs)
+
+        if instituicao:
+            self.fields['instituicao'].initial = instituicao
+
         self.helper.form_tag = True
-        self.helper.add_input(Submit('submit', 'Adicionar agenda', css_class='button button-filled'))
+        self.helper.add_input(Submit('submit', 'Adicionar agenda', css_class='button button-filled w-100'))
         
         for id, field in enumerate(self.helper.layout.fields):
             if field.get_field_names()[0].name == 'icone':
-                self.helper.layout.fields[id] = FloatingField('icone', template="partials/custom_icone_select.html")
+                self.helper.layout.fields[id] = FloatingField('icone', template="agenda/partials/custom_icone_select.html")
 
         # self.helper.layout = Layout(
         #     Row(

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'agenda/css/agenda_create.css' %}">
+<link rel="stylesheet" href="{% static 'agenda/css/agenda.css' %}">
 <link rel="stylesheet" href="{% static 'agenda/css/agenda_responsive.css' %}">
 {% endblock style %}
 
@@ -22,29 +22,11 @@ Criar Agenda
     <div>
         <div class="agenda-preview">
             <div class="mb-4"><small>Pré-Visualização</small></div>
-            <button type="button" class="card-agenda" data-bs-toggle="collapse" data-bs-target="#descricao-agenda" aria-controls="descricao-agenda">
-                <div class="card-agenda-content">
-                    <div class="card-agenda-infos">
-                        <div class="div-icone-agenda">
-                            <i></i>
-                        </div>
-                        <div class="texto-agenda">
-                            <div class="dia-hora-agenda"></div>
-                            <div class="titulo-agenda"></div>
-                        </div>
-                    </div>
-                    <div class="agenda-collapse">
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                </div>
-                <div class="collapse" id="descricao-agenda">
-                    <div class="descricao-agenda">
-                    </div>
-                </div>
-            </button>
+            {% include "agenda/partials/card_agenda.html" %}
         </div>
     </div>
 </section>
+
 {% endblock dashboard_content %}
 
 {% block _scripts %}

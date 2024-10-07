@@ -1,0 +1,24 @@
+<button type="button" class="card-agenda" data-bs-toggle="collapse" data-bs-target="#descricao-agenda{{ index|default:"" }}" aria-controls="descricao-agenda">
+    <div class="card-agenda-content">
+        <div class="card-agenda-infos">
+            <div class="div-icone-agenda">
+                <i class="fa-solid {{ agenda.icone.icone|default:"" }}"></i>
+            </div>
+            <div class="texto-agenda">
+                <div class="dia-hora-agenda">{{ agenda.get_dia_semana_display|default:"-----" }} às {{ agenda.hora|default:"--:--" }}</div>
+                <div class="titulo-agenda">{{ agenda.titulo|default:"-----" }}</div>
+            </div>
+        </div>
+        <div class="agenda-collapse">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </div>
+    <div class="collapse" id="descricao-agenda{{ index|default:"" }}">
+        <div class="descricao-agenda">
+            {{ agenda.descricao|default:"" }}
+            {% if agenda and not agenda.descricao %}
+            <i><span class="text-muted">Não possui descrição</span></i>
+            {% endif %}
+        </div>
+    </div>
+</button>

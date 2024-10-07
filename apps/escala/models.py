@@ -1,6 +1,6 @@
 from django.db import models
 
-from membro.models import FuncaoMembro
+from usuario.models import FuncaoMembro
 
 class Escala(models.Model):
     data = models.DateField(null=False, blank=False)
