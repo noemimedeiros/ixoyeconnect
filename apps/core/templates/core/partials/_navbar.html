@@ -22,7 +22,7 @@
             <div class="side-nav-icon"><i class="fa-solid fa-bars"></i></div>
             <div class="side-nav-text">Menu</div>
         </a>
-        <a href="{% url 'agenda:agendas_list_view' request.user.conta.pk %}" class="side-nav-item {% if '/agenda/' in request.path %}active{% endif %}">
+        <a href="{% url 'agenda:agendas_list_view' request.user.instituicao.pk %}" class="side-nav-item {% if '/agenda/' in request.path %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="side-nav-text">Agenda Semanal</div>
         </a>

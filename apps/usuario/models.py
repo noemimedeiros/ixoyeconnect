@@ -32,6 +32,13 @@ class User(AbstractUser):
         else:
             return self.membro
 
+    @property
+    def instituicao(self):
+        if self.is_admin:
+            return self.conta
+        else:
+            return self.conta.sede
+
 class Instituicao(models.Model):
     razao_social = models.CharField(max_length=120, null=False, blank=False, verbose_name="Razão Social")
     denominacao = models.CharField(max_length=120, null=False, blank=False)
