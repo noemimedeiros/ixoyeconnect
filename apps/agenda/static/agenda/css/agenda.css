@@ -11,23 +11,26 @@
     padding: 20px;
 }
 .card-agenda{
-    border-radius: var(--rounded-pill);
+    border-radius: 30px;
     background-color: var(--gray-1);
     border: none;
     width: 100%;
     padding: 0;
     height: fit-content;
+}
+.card-agenda .fa-chevron-down{
+    transition: rotate 200ms ease-in-out;
+}
+.card-agenda[aria-expanded="true"] .fa-chevron-down{
+    rotate: 180deg;
+}
 
-}
-.card-agenda[aria-expanded="true"]{
-    border-radius: 30px;
-}
 .card-agenda-content{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 5px;
     width: 100%;
 }
 .card-agenda-infos{
@@ -46,7 +49,7 @@
     justify-content: center;
 }
 .div-icone-agenda i{
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     line-height: normal;
 }
 .dia-hora-agenda{
@@ -66,12 +69,15 @@
     text-align: start;
 }
 .show .descricao-agenda{
-    border-top: 1px solid var(--gray-3) ;
+    border-top: 1px solid var(--gray-2) ;
 }
 
 .agendas-section{
     margin-top: 20px;
     display: grid;
-    gap: 20px;
+    gap: 10px;
     grid-template-columns: repeat(3, 1fr);
+}
+#div_id_icone_mb{
+    display: none;
 }

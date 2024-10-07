@@ -20,3 +20,6 @@ def message_update_registro(request):
 
 def message_delete_registro(request):
     messages.add_message(request, messages.SUCCESS, 'Registro deletado com sucesso.')
+
+def message_error_registro(request):
+    messages.add_message(request, messages.ERROR, 'Ocorreu um erro durante a operação. Por favor, tente novamente.')

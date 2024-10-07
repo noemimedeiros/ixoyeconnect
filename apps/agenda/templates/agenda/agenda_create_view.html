@@ -26,14 +26,33 @@ Criar Agenda
         </div>
     </div>
 </section>
-
+<div class="modal" tabindex="-1" id="selecionar-icone">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                {% for icone in icones %}
+                    <div role="button" onclick="selecionar_icone('{{ icone.pk }}', '{{ icone.icone }}', '{{ icone.descricao }}')" class="mb-3">
+                        <i class="fa-solid {{ icone.icone }} fa-lg"></i> - {{ icone.descricao }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock dashboard_content %}
 
 {% block _scripts %}
 <script>
+    function selecionar_icone(id_icone, icone, descricao){
+        $('#id_icone').val(id_icone)
+        $('#id_icone').data('icone', icone)
+        $('#selecionar-icone').modal('hide')
+        $('#btn-selecionar-icone').html(`<i class="fa-solid ${icone}"></i> - ${descricao}`)
+        cardAgenda()
+    }
     function cardAgenda(){
         let titulo = $('#id_titulo').val();
-        let icone = $('#id_icone').find('option:selected').data('icone');
+        let icone = $('#id_icone').data('icone');
         let descricao = $('#id_descricao').val();
         let dia_semana =  $('#id_dia_semana').find('option:selected').text();
         let hora = $('#id_hora').val();
@@ -44,6 +63,7 @@ Criar Agenda
         descricao ? $('.descricao-agenda').html(descricao): '';
     }
     $('input, select, textarea').on('change input', () => cardAgenda());
+
 
 </script>
 {% endblock _scripts %}

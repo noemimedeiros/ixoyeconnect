@@ -8,3 +8,10 @@
   </select>
   <label for="id_icone">Icone</label>
 </div>
+<div id="div_id_icone_mb" class="form-floating mb-3">
+  <input type="hidden" name="{{ field.name }}" id="{{ field.id_for_label }}" data-icone="" {% if agenda %}val="{{ agenda.pk }}"{% endif %} >
+  <button id="btn-selecionar-icone" type="button" class="form-primary form-select text-start" data-bs-toggle="modal" data-bs-target="#selecionar-icone">
+      <i class="fa-solid fa-book"></i> - Livro
+  </button>
+  <label for="id_icone">Icone</label>
+</div>

@@ -40,6 +40,23 @@
             }
         }
     }
+
+    $(function(){
+        $('.item-actions').each(function () {
+            $(this).popover({
+                content: `
+                    <div class="item-actions-popover">
+                        <a href="${$(this).data('editlink')}"><i class="fa-solid fa-pen-to-square"></i> <span>Editar</span> </a>
+                        <a href="${$(this).data('deletelink')}"><i class="fa-solid fa-trash-can text-danger"></i> <span>Excluir</span> </a>
+                    </div>
+                `,
+                html: true,
+                placement: 'left',
+                trigger: 'click',
+
+            })
+        })
+    })
 </script>
 {% block _scripts %}{% endblock _scripts %}
 {% endblock scripts %}

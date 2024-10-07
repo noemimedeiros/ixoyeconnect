@@ -6,27 +6,31 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
 
     def __str__(self):
-        if hasattr(self, 'membro'):
-            return self.conta.nome
-        elif hasattr(self, 'instituicaosede'):
+        if self.is_admin:
             return self.conta.razao_social
-        return None
+        else:
+            return self.conta.nome
+    
+    @property
+    def is_admin(self):
+        if hasattr(self, 'instituicaosede'):
+            return True
+        else:
+            return False
     
     @property
     def profile_picture(self):
-        if hasattr(self, 'membro'):
-            return self.conta.foto
-        elif hasattr(self, 'instituicaosede'):
+        if self.is_admin:
             return self.conta.instituicao.logo
-        return None
+        else:
+            return self.conta.foto
 
     @property
     def conta(self):
-        if hasattr(self, 'instituicaosede'):
+        if self.is_admin:
             return self.instituicaosede
-        elif hasattr(self, 'membro'):
+        else:
             return self.membro
-        return None
 
 class Instituicao(models.Model):
     razao_social = models.CharField(max_length=120, null=False, blank=False, verbose_name="Razão Social")

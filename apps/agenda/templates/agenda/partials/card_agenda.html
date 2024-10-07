@@ -5,7 +5,7 @@
                 <i class="fa-solid {{ agenda.icone.icone|default:"" }}"></i>
             </div>
             <div class="texto-agenda">
-                <div class="dia-hora-agenda">{{ agenda.get_dia_semana_display|default:"-----" }} às {{ agenda.hora|default:"--:--" }}</div>
+                <div class="dia-hora-agenda">{{ agenda.get_dia_semana_display|default:"-----" }} às {{ agenda.hora|time:"H:i"|default:"--:--" }}</div>
                 <div class="titulo-agenda">{{ agenda.titulo|default:"-----" }}</div>
             </div>
         </div>

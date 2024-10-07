@@ -17,7 +17,12 @@ Agenda Semanal
 {% block dashboard_content %}
 <section class="agendas-section">
     {% for agenda in agendas %}
-        {% include "agenda/partials/card_agenda.html" with agenda=agenda index=forloop.counter %}
+        <div class="d-flex justify-content-between gap-2 align-items-center">
+            {% include "agenda/partials/card_agenda.html" with agenda=agenda index=forloop.counter %}
+            {% if request.user.is_admin %}
+                {% include "core/includes/default_item_actions.html" with edit_link='agenda:agendas_update_view' delete_link='agenda:agendas_delete_view' item_pk=agenda.pk %}
+            {% endif %}
+        </div>
     {% endfor %}
 </section>
 {% endblock dashboard_content %}

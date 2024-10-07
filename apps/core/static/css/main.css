@@ -211,3 +211,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.item-actions{
+    color: var(--green);
+}
+.item-actions-popover{
+    display: grid;
+    gap: 15px;
+}
+.item-actions-popover a{
+    color: var(--black-1);
+    font-size: 1.1rem;
+}

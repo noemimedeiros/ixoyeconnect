@@ -2,5 +2,10 @@
     .agenda-form-section, .agendas-section{
         grid-template-columns: 1fr;
     }
-
+    #div_id_icone_mb{
+        display: block;
+    }
+    #div_id_icone{
+        display: none;
+    }
 }
