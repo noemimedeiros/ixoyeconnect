@@ -112,6 +112,7 @@
     row-gap: 5px;
     height: calc(100dvh - 60px);
     overflow-y: scroll;
+    grid-auto-rows: min-content;
 }
 .side-nav-items a, .side-nav-logo{
     color: var(--gray-3);
@@ -145,21 +146,37 @@
     color: var(--black-1);
 }
 .side-nav-subitem ul{
-    border-left: 1px solid #e0e0e0;
     padding-left: 0;
-    margin-left: 20px;
 }
 .side-nav-subitem ul li{
+    position: relative;
     list-style-type: none;
-    margin-left: 12px;
     padding: 10px;
+    padding-left: 40px;
     margin-bottom: 5px;
     border-radius: var(--rounded-pill);
 }
-.side-nav-subitem ul li.active{
-    list-style-type: disc;
-}
 
+.side-nav-subitem ul a:not(:last-child) li::after{
+    position: absolute;
+    left: 20px;
+    content: ' ';
+    background-color: #d4d4d4;
+    width: 1px;
+    height: calc(100% + 5px);
+    top: 50%;
+    z-index: 1;
+}
+.side-nav-subitem ul li::before {
+    position: absolute;
+    content: '•';
+    font-size: 1.5rem;
+    color: #d4d4d4;
+    position: absolute;
+    left: calc(20px - .375rem);
+    top: .375rem;
+    z-index: 2;
+}
 @media (min-width: 1025px) {
     .side-nav{
         transition: max-width 0.3s ease;
@@ -173,17 +190,20 @@
     .side-nav-icon:not(.side-logo-icon){
         position: absolute;
     }
-    .side-nav.collapsed .side-nav-item{
+    .side-nav.collapsed .side-nav-item,
+    .side-nav.collapsed .side-nav-subitem ul li{
         padding-right: 0;
+        width: 40px;
     }
     .side-nav-text,
-    .side-nav-icon-text{
+    .side-nav-icon-text,
+    .side-nav-subitem-text{
         transition: opacity 0.3s ease;
         white-space: nowrap;
     }
     .side-nav.collapsed .side-nav-text,
     .side-nav.collapsed .side-nav-icon-text,
-    .side-nav.collapsed .side-nav-subitem{
+    .side-nav.collapsed .side-nav-subitem-text{
         opacity: 0;
         visibility: hidden;
     }
@@ -191,8 +211,12 @@
         max-width: 40px;
     }
 }
-
-.side-nav-item:hover, .side-nav-item.active, .side-nav-subitem ul li:hover, .side-nav-subitem ul li.active{
+.side-nav-subitem ul a:not(:last-child):hover li::before,
+.side-nav-subitem ul a:not(:last-child) li.active::before{
+    color: var(--green);
+}
+.side-nav-item:hover, .side-nav-item.active,
+.side-nav-subitem ul li:hover, .side-nav-subitem ul li.active{
     background-color: var(--green-transparent);
     color: var(--green);
     .side-nav-icon, a{

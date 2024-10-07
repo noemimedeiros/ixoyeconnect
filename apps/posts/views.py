@@ -18,7 +18,7 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(categoria__nome='')
+        return qs.filter(categoria__nome=self.kwargs['tipo'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

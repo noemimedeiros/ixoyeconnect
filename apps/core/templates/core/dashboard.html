@@ -29,8 +29,12 @@
 {% block scripts %}
 <script>
     function menu_collapse(){
-        $('.side-nav').toggleClass("collapsed");
-        $('.side-nav-items .collapse').collapse('hide');
+        let collapsed = $('.side-nav').toggleClass("collapsed");
+        if ($('.side-nav').hasClass('collapsed')){
+            $('.side-nav-subitem a').tooltip('enable')
+        }else{
+            $('.side-nav-subitem a').tooltip('disable')
+        }
         if (window.innerWidth <= 768) {
             if($('#overlay-sidenav').length > 0){
                 $('#overlay-sidenav').remove()
@@ -56,7 +60,10 @@
                 trigger: 'click',
 
             })
-        })
+        });
+
+        $("[data-bs-toggle='tooltip']").tooltip()
+        $('.side-nav-subitem a').tooltip('disable')
     })
 </script>
 {% block _scripts %}{% endblock _scripts %}

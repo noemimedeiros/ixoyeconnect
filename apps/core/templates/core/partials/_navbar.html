@@ -22,7 +22,7 @@
             <div class="side-nav-icon"><i class="fa-solid fa-bars"></i></div>
             <div class="side-nav-text">Menu</div>
         </a>
-        <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="side-nav-item {% if '/agenda/' in request.path %}active{% endif %}">
+        <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="side-nav-item {% if '/agendas/' in request.path %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="side-nav-text">Agenda Semanal</div>
         </a>
@@ -37,8 +37,10 @@
         <div class="collapse side-nav-subitem {% if '/conteudo/' in request.path %}show{% endif %}" id="conteudo-sidenav">
             <ul>
                 {% for conteudo in conteudos %}
-                <a href="{% url 'posts:conteudo_list_view' conteudo.nome|lower instituicao.pk %}">
-                    <li class="{% if conteudo.nome|lower in request.path %}active{% endif %}">{{ conteudo }}</li>
+                <a data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ conteudo }}" href="{% url 'posts:conteudo_list_view' conteudo.nome|lower instituicao.pk %}">
+                    <li class="{% if conteudo.nome|lower in request.path %}active{% endif %}">
+                        <span class="side-nav-subitem-text">{{ conteudo }}</span>
+                    </li>
                 </a>
                 {% endfor %}
             </ul>
