@@ -7,7 +7,8 @@ from django.views.generic import (View, CreateView, DeleteView, DetailView, Form
 from allauth.account.views import SignupView, LoginView
 from django.db import transaction, IntegrityError
 
-from apps.core.messages_utils import *
+from core.messages_utils import *
+from posts.models import CategoriaPost
 from usuario.models import Instituicao, InstituicaoSede
 from usuario.forms import MembroForm
 from usuario.forms import InstituicaoForm, InstituicaoSedeForm
@@ -18,23 +19,37 @@ def index(request):
         return HttpResponseRedirect(reverse('core:dashboard'))
     else:
         return redirect('/login/')
+
+class MyViewIxoyeConnect:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["instituicao"] = self.request.user.instituicao
+        context["conteudos"] = CategoriaPost.objects.all()
+        return context
+
+class MyTemplateViewIxoyeConnect(MyViewIxoyeConnect, TemplateView):
+    pass
     
-class MyCreateView(CreateView):
+class MyListViewIxoyeConnect(MyViewIxoyeConnect, ListView):
+    pass
+    
+class MyCreateViewIxoyeConnect(MyViewIxoyeConnect, CreateView):
     def form_valid(self, form):
         message_create_registro(self.request)
         return super().form_valid(form)
 
-class MyUpdateView(UpdateView):
+class MyUpdateViewIxoyeConnect(MyViewIxoyeConnect, UpdateView):
     def form_valid(self, form):
         message_update_registro(self.request)
         return super().form_valid(form)
 
-class MyDeleteView(DeleteView):
+class MyDeleteViewIxoyeConnect(MyViewIxoyeConnect, DeleteView):
     def form_valid(self, form):
         message_delete_registro(self.request)
         return super().form_valid(form)
     
-class DashboradView(TemplateView):
+    
+class DashboradView(MyTemplateViewIxoyeConnect):
     template_name = 'core/dashboard.html'
 
 class MyLoginView(LoginView):

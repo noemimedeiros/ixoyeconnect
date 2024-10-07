@@ -7,6 +7,9 @@ class CategoriaPost(models.Model):
     class Meta:
         db_table = 'categoriapost'
 
+    def __str__(self):
+        return self.nome
+
 class Post(models.Model):
     instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
     titulo = models.CharField(max_length=50, null=False, blank=False)

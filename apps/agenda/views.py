@@ -1,20 +1,16 @@
-from typing import Any
-from django.db.models.query import QuerySet
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
-from django.views.generic import ListView
 
 from apps.core.messages_utils import message_delete_registro, message_error_registro
-from core.views import MyCreateView, MyDeleteView, MyUpdateView
+from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import AgendaSemanal, IconeAgendaSemanal
 from .forms import AgendaSemanalForm
 
-class AgendaSemanalListView(LoginRequiredMixin, ListView):
+class AgendaSemanalListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'agenda/agenda_list_view.html'
     model = AgendaSemanal
     ordering = ['dia_semana']
@@ -29,7 +25,7 @@ class AgendaSemanalListView(LoginRequiredMixin, ListView):
         context["titulo"] = "Agenda Semanal"
         return context
 
-class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateView):
+class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     template_name = 'agenda/agenda_create_view.html'
     model = AgendaSemanal
     form_class = AgendaSemanalForm
@@ -48,7 +44,7 @@ class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateView):
     def get_success_url(self):
         return reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
     
-class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateView):
+class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     template_name = 'agenda/agenda_create_view.html'
     model = AgendaSemanal
     form_class = AgendaSemanalForm
@@ -56,7 +52,7 @@ class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titulo"] = "Criar Agenda"
+        context["titulo"] = "Editar Agenda"
         context["icones"] = IconeAgendaSemanal.objects.all()
         return context
     

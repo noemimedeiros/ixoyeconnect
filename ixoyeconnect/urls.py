@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls', 'core'), name="core"),
     path('', include('allauth.urls')),
-    path('agenda/', include('agenda.urls')),
+    path('', include('agenda.urls')),
     path('usuario/', include('usuario.urls')),
+    path('', include('posts.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()

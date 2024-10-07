@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'core',
     'agenda',
     'contribuicao',
-    'devocional',
     'escala',
     'evento',
     'usuario',

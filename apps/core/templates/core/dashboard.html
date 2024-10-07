@@ -29,7 +29,8 @@
 {% block scripts %}
 <script>
     function menu_collapse(){
-        $('.side-nav').toggleClass("collapsed")
+        $('.side-nav').toggleClass("collapsed");
+        $('.side-nav-items .collapse').collapse('hide');
         if (window.innerWidth <= 768) {
             if($('#overlay-sidenav').length > 0){
                 $('#overlay-sidenav').remove()
