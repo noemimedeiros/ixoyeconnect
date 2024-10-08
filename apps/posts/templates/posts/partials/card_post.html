@@ -1,0 +1,18 @@
+<a href="#" class="card-post">
+    <img {% if post %}src="{{ post.capa.url }}"{% endif %} class="card-post-capa" alt="">
+    <div class="post-body">
+        <h5 class="card-post-titulo">
+            {{ post.titulo|default:"-----" }}
+        </h5>
+        <span class="card-post-descricao">
+            {{ post.descricao|safe|default:"-----" }}
+        </span>
+        <small class="card-post-info">
+            {% if post %}
+            {{ post.data|date:"d/m/Y" }} às {{ post.hora|default:"--:--" }} - {{ request.user.conta.nome }}
+            {% else %}
+            {% now 'd/m/Y' %} - {{ request.user.conta.nome }}
+            {% endif %}
+        </small>
+    </div>
+</a>

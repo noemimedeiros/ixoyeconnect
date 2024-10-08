@@ -1,0 +1,26 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+
+{% block app_title %}
+{{ titulo|default:"" }}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
+
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% include "core/includes/default_actions.html" %}
+{% if request.user.is_admin %}
+<a role="button" href="{% url 'posts:conteudo_create_view' tipo instituicao.pk %}" class="button button-filled button-adicionar gap-2">
+    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
+</a>
+{% endif %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="posts-section">
+
+</section>
+{% endblock dashboard_content %}

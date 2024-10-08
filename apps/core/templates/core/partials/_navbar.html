@@ -30,11 +30,11 @@
             <div class="side-nav-icon"><i class="fa-solid fa-calendar-day"></i></div>
             <div class="side-nav-text">Eventos</div>
         </a>
-        <a data-bs-toggle="collapse" href="#conteudo-sidenav" role="button" class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#conteudo-sidenav" role="button" class="side-nav-item {% if 'conteudo/' in request.path %}open{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-book"></i></div>
             <div class="side-nav-text"><span>Conteúdo</span> <i class="fa-solid fa-chevron-right"></i></div>
         </a>
-        <div class="collapse side-nav-subitem {% if '/conteudo/' in request.path %}show{% endif %}" id="conteudo-sidenav">
+        <div class="collapse side-nav-subitem {% if 'conteudo/' in request.path %}show{% endif %}" id="conteudo-sidenav">
             <ul>
                 {% for conteudo in conteudos %}
                 <a data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ conteudo }}" href="{% url 'posts:conteudo_list_view' conteudo.nome|lower instituicao.pk %}">

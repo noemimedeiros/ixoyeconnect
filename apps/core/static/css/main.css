@@ -10,6 +10,10 @@
     padding-inline: 15px;
     display: flex;
     column-gap: 20px;
+    background-image: url(../img/bottom-desktop.svg);
+    background-position: 0 105%;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .top-nav{
     width: 100%;
@@ -177,6 +181,13 @@
     top: .375rem;
     z-index: 2;
 }
+.side-nav-text i{
+    transition: rotate 200ms ease-in-out;
+}
+.side-nav-item[aria-expanded="true"] .side-nav-text i,
+.side-nav-item.open .side-nav-text i{
+    rotate: 90deg;
+}
 @media (min-width: 1025px) {
     .side-nav{
         transition: max-width 0.3s ease;
@@ -211,8 +222,8 @@
         max-width: 40px;
     }
 }
-.side-nav-subitem ul a:not(:last-child):hover li::before,
-.side-nav-subitem ul a:not(:last-child) li.active::before{
+.side-nav-subitem ul a:hover li::before,
+.side-nav-subitem ul a li.active::before{
     color: var(--green);
 }
 .side-nav-item:hover, .side-nav-item.active,
@@ -271,6 +282,9 @@
 
 .item-actions{
     color: var(--green);
+    padding-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .item-actions-popover{
     display: grid;
@@ -279,4 +293,63 @@
 .item-actions-popover a{
     color: var(--black-1);
     font-size: 1.1rem;
+}
+#foto-preview-div{
+    height: 200px;
+    width: 100%;
+    border: 1px dashed var(--aqua-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    color: var(--aqua-blue);
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+#foto-preview{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+#foto-preview[src=""]{
+    visibility: hidden;
+}
+.button-upload{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--aqua-blue);
+    border-color: var(--aqua-blue);
+}
+
+.form-check-input:checked{
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+/* Ckeditor personalizado */
+.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all{
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+}
+.ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content{
+    border: 0 !important;
+    border-bottom: 1px solid var(--gray-2) !important;
+}
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners{
+    border: 0 !important;
+}
+.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all,
+.ck.ck-editor__main>.ck-editor__editable{
+    background-color: var(--gray-1) !important;
+}
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable,
+.ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners,
+.ck.ck-reset{
+    border-bottom-left-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
 }

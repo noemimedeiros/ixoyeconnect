@@ -33,6 +33,9 @@
         background: none;
         box-shadow: none;
         width: 100dvw;
+        padding: 5%;
+        padding-bottom: 100px;
+        box-sizing: border-box;
     }
 
     .top-nav-mobile{
@@ -103,10 +106,6 @@
     }
     .dashboard-head h3{
         display: none;
-    }
-    .dashboard-card{
-        padding: 5%;
-        padding-bottom: 100px;
     }
     .dashboard-head-actions{
         width: 100%;

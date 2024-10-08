@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_ckeditor_5',
 
     # Local,
     'core',
@@ -190,3 +191,45 @@ MEDIA_ROOT = env("DJ_MEDIA_ROOT", default=root_path("media"))
 # -----------------------------------------------------------------------------
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# CKEDITOR
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': {
+            'items': [
+                'undo',
+                'redo',
+                '|',
+                'bold',
+                'italic',
+                'underline',
+                'removeFormat',
+                '|',
+                'link',
+                '|',
+                'alignment',
+                '|',
+                'bulletedList',
+                'numberedList'
+            ],
+            'shouldNotGroupWhenFull': False
+        },
+        'language': 'pt-br',
+        'link': {
+            'addTargetToExternalLinks': True,
+            'defaultProtocol': 'https://',
+            'decorators': {
+                'toggleDownloadable': {
+                    'mode': 'manual',
+                    'label': 'Downloadable',
+                    'attributes': {
+                        'download': 'file'
+                    }
+                }
+            }
+        },
+        'width': 'full',
+        'removePlugins': ['WordCount', 'CharCount'],
+    }
+}
+CKEDITOR_UPLOAD_PATH = 'uploads/'

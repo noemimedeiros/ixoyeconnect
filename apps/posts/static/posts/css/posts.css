@@ -1,0 +1,109 @@
+:root{
+    --post-card-height: 250px;
+    --post-card-height-mb: 110px;
+}
+.form-posts{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 20px;
+}
+.posts-section{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.post-preview{
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card-post{
+    border-radius: 20px;
+    background-color: var(--gray-1);
+    text-align: start;
+    position: relative;
+    height: 300px;
+    width: var(--post-card-height);
+    color: var(--black-1);
+}
+
+.card-post-capa{
+    height: 50%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.post-body{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+}
+.card-post-descricao{
+    max-width: var(--post-card-height);
+    max-height: 40px;
+    overflow: hidden;
+}
+.card-post-descricao *:first-child,
+.card-post-titulo, .card-post-info{
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.card-post-titulo, .card-post-info{
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+}
+.card-post-info{
+    color: var(--gray-3)
+}
+
+.item-actions{
+    margin-top: 10px
+}
+
+@media (max-width: 768px) {
+    .form-posts{
+        display: flex;
+        flex-direction: column;
+    }
+    .form-posts > div{
+        width: 100%;
+    }
+    .card-post{
+        display: flex;
+        background: none;
+        height: var(--post-card-height-mb);
+        width: 100%;
+    }
+    .card-post-descricao{
+        max-width: 100%;
+    }
+    .card-post-capa{
+        height: var(--post-card-height-mb);
+        width: var(--post-card-height-mb);
+        border-radius: 20px;
+    }
+    .post-body{
+        width: calc(100% - var(--post-card-height-mb));
+        height: 100%;
+        padding: 0;
+        padding-left: 20px;
+        justify-content: space-evenly;
+    }
+    .item-actions{
+        margin-top:auto
+    }
+}

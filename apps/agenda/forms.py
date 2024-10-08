@@ -24,9 +24,7 @@ class AgendaSemanalForm(FormBaseIxoye):
         self.helper.form_tag = True
         self.helper.add_input(Submit('adicionar-agenda', 'Adicionar agenda', css_class='button button-filled w-100'))
         
-        for id, field in enumerate(self.helper.layout.fields):
-            if field.get_field_names()[0].name == 'icone':
-                self.helper.layout.fields[id] = FloatingField('icone', template="agenda/partials/custom_icone_select.html")
+        self.helper['icone'].wrap(FloatingField, template="agenda/partials/custom_icone_select.html")
 
         # self.helper.layout = Layout(
         #     Row(

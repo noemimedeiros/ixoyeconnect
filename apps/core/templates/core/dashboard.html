@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
 <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 {% block style %}{% endblock style %}
+{% if form %}
+{{ form.media }}
+{% endif %}
+
 {% endblock css %}
 
 {% block content %}
@@ -44,7 +48,7 @@
                 }
             }
         }
-    }
+    };
 
     $(function(){
         $('.item-actions').each(function () {
@@ -64,7 +68,24 @@
 
         $("[data-bs-toggle='tooltip']").tooltip()
         $('.side-nav-subitem a').tooltip('disable')
-    })
+    });
+
+    function fotoPreview(input_id, foto_preview='#foto-preview'){
+        try{
+            const input = document.getElementById(input_id);
+            const file = input.files;
+            if (file && file[0] && input_id) {
+                const fileReader = new FileReader();
+                const preview = document.querySelector(foto_preview);
+                fileReader.onload = function (event) {
+                    preview.setAttribute('src', event.target.result);
+                }
+                fileReader.readAsDataURL(file[0]);
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
 </script>
 {% block _scripts %}{% endblock _scripts %}
 {% endblock scripts %}

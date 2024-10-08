@@ -1,17 +1,52 @@
-{% extends "core/dashboard.html" %}
+{% extends "posts/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block app_title %}
 Criar Devocional
 {% endblock app_title %}
 
-{% block style %}
-{% endblock style %}
-
 {% block dashboard_actions %}
 {% endblock dashboard_actions %}
 
 {% block dashboard_content %}
-<section >
+<span>Preencha os dados abaixo</span>
+<section class="form-posts">
+    <div>
+        {% include "core/includes/foto_preview.html" with img_src=object.capa.url  %}
+        {% crispy form %}
+    </div>
+    <div>
+        <div class="post-preview">
+            <div class="mb-4"><small>Pré-Visualização</small></div>
+            {% include "posts/partials/card_post.html" with post=object %}
+        </div>
+    </div>
 </section>
 {% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    $('#id_capa').change(() => fotoPreview('id_capa'))
+    $('#foto-preview-div').click(() => $('#id_capa').trigger('click'));
+    const usuario = '{{ request.user.conta.nome }}';
+
+    function cardPost(){
+        let hoje = new Date();
+        hoje = hoje.toLocaleDateString();
+
+        let titulo = $('#id_titulo').val();
+        let descricao = editors.id_descricao.getData();
+        fotoPreview('id_capa', '.card-post-capa');
+
+        $('.card-post-titulo').html(titulo)
+        $('.card-post-descricao').html(descricao);
+        $('.card-post-info').html(`${hoje} - ${usuario}`)
+    }
+
+    $('input').on('change input', () => cardPost())
+    $(function(){
+        editors.id_descricao.model.document.on('change:data', () => cardPost())
+    })
+</script>
+{% endblock _scripts %}

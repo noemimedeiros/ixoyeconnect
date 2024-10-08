@@ -1,17 +1,15 @@
-{% extends "core/dashboard.html" %}
+{% extends "posts/base.html" %}
 {% load static %}
 
-{% block app_title %}
-Devocionais
-{% endblock app_title %}
-
-{% block style %}
-{% endblock style %}
-
-{% block dashboard_actions %}
-{% endblock dashboard_actions %}
-
 {% block dashboard_content %}
-<section >
+<section class="posts-section">
+    {% for post in object_list %}
+    <div class="d-flex justify-content-between gap-2 ">
+        {% include "posts/partials/card_post.html" with post=post %}
+        {% if request.user.is_admin %}
+            {% include "core/includes/default_item_actions.html" with edit_link='posts:conteudo_update_view' delete_link='posts:conteudo_delete_view' item_pk=post.pk %}
+        {% endif %}
+    </div>
+    {% endfor %}
 </section>
 {% endblock dashboard_content %}
