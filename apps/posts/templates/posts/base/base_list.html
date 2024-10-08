@@ -2,12 +2,11 @@
 {% load static %}
 
 {% block app_title %}
-{{ titulo|default:"" }}
+{{ titulo|default:"Posts" }}
 {% endblock app_title %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
-
 {% endblock style %}
 
 {% block dashboard_actions %}
@@ -21,6 +20,13 @@
 
 {% block dashboard_content %}
 <section class="posts-section">
-
+    {% for post in object_list %}
+    <div class="d-flex justify-content-between gap-2 ">
+        {% include "posts/partials/card_post.html" with post=post %}
+        {% if request.user.is_admin %}
+            {% include "core/includes/default_item_actions.html" with edit_link='posts:conteudo_update_view' delete_link='posts:conteudo_delete_view' item_pk=post.pk %}
+        {% endif %}
+    </div>
+    {% endfor %}
 </section>
 {% endblock dashboard_content %}

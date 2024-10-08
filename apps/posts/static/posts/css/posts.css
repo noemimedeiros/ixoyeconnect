@@ -1,17 +1,17 @@
 :root{
-    --post-card-height: 250px;
+    --post-card-height: 240px;
     --post-card-height-mb: 110px;
 }
 .form-posts{
     margin-top: 20px;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: calc(50% - 10px) calc(50% - 10px);
     gap: 20px;
 }
 .posts-section{
     margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
 }
 .post-preview{
@@ -27,9 +27,10 @@
     background-color: var(--gray-1);
     text-align: start;
     position: relative;
-    height: 300px;
-    width: var(--post-card-height);
+    height: var(--post-card-height);
+    width: 100%;
     color: var(--black-1);
+    object-fit: cover;
 }
 
 .card-post-capa{
@@ -70,10 +71,6 @@
     color: var(--gray-3)
 }
 
-.item-actions{
-    margin-top: 10px
-}
-
 @media (max-width: 768px) {
     .form-posts{
         display: flex;
@@ -102,8 +99,5 @@
         padding: 0;
         padding-left: 20px;
         justify-content: space-evenly;
-    }
-    .item-actions{
-        margin-top:auto
     }
 }

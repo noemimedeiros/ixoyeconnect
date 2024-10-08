@@ -1,4 +1,4 @@
-<a href="#" class="card-post">
+<a href="{% if post %} {% url 'posts:conteudo_detail_view' post.pk %}{% else %}#{% endif %}" class="card-post">
     <img {% if post %}src="{{ post.capa.url }}"{% endif %} class="card-post-capa" alt="">
     <div class="post-body">
         <h5 class="card-post-titulo">

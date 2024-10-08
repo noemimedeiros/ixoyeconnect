@@ -1,19 +1,30 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
+from django.template import TemplateDoesNotExist
 from django.urls import reverse
+from django.template.loader import get_template
 
 from apps.core.messages_utils import message_delete_registro, message_error_registro
-from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import CategoriaPost, Post
 from .forms import NewPostForm
 
 class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     model = Post
+    ordering = ['-data', '-hora']
+    search_fields =  ['titulo', 'descricao']
 
-    def get_template_names(self):
-        return [f'posts/{self.kwargs['tipo']}/{self.kwargs['tipo']}_list_view.html']
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.template_name = f'posts/{self.kwargs['tipo']}/{self.kwargs['tipo']}_list_view.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
+        except TemplateDoesNotExist:
+            self.template_name = 'posts/base/base_list.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -25,17 +36,28 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(categoria__nome=self.kwargs['tipo'], instituicao_id=self.kwargs['instituicao_pk'])
+        qs = qs.filter(categoria__nome=self.kwargs['tipo'], instituicao_id=self.kwargs['instituicao_pk'])
+        return qs
+    
 
 class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     model = Post
     form_class = NewPostForm
 
-    def get_template_names(self):
-        return [f'posts/{self.kwargs['tipo']}/{self.kwargs['tipo']}_create_view.html']
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.template_name = f'posts/{self.kwargs['tipo']}/{self.kwargs['tipo']}_create_view.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
+        except TemplateDoesNotExist:
+            self.template_name = 'posts/base/base_create.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        tipo = self.kwargs['tipo']
+        context["titulo"] = f'Criar {tipo}'
         return context
     
     def form_invalid(self, form):
@@ -55,12 +77,21 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     model = Post
     form_class = NewPostForm
 
-    def get_template_names(self):
+    def dispatch(self, request, *args, **kwargs):
         tipo = self.get_object().categoria.nome
-        return [f'posts/{tipo}/{tipo}_create_view.html']
+        try:
+            self.template_name = f'posts/{tipo}/{tipo}_create_view.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
+        except TemplateDoesNotExist:
+            self.template_name = 'posts/base/base_create.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        tipo = self.get_object().categoria.nome
+        context["titulo"] = f'Editar {tipo}'
         return context
     
     def get_form_kwargs(self):
@@ -70,7 +101,34 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         return kwargs
     
     def get_success_url(self):
-        return reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        tipo = self.get_object().categoria.nome
+        return reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk, 'tipo': tipo})
+
+class PostDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
+    model = Post
+
+    def dispatch(self, request, *args, **kwargs):
+        tipo = self.get_object().categoria.nome
+        try:
+            self.template_name = f'posts/{tipo}/{tipo}_detail_view.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
+        except TemplateDoesNotExist:
+            self.template_name = 'posts/base/base_detail.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        context["titulo"] = post.titulo
+        return context
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        post = self.get_object()
+        kwargs.update({'instituicao': post.instituicao.pk, 'categoria': post.categoria.pk, 'user': post.user.pk})
+        return kwargs
 
 @login_required(login_url="/login/")
 def PostDeleteView(request, pk):

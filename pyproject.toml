@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ixoyeconnect"
+version = "0.1.0"
+description = ""
+authors = ["noemimedeiros <noemimedeiros.acc@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.2"
+django-crispy-forms = "^2.3"
+crispy-bootstrap5 = "^2024.10"
+django-ckeditor-5 = "^0.2.13"
+mysqlclient = "^2.2.4"
+pillow = "^10.4.0"
+django-extra-views = "^0.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

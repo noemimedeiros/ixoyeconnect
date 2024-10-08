@@ -15,6 +15,7 @@ class AgendaSemanalListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     model = AgendaSemanal
     ordering = ['dia_semana']
     context_object_name = 'agendas'
+    search_fields = ['titulo', 'descricao']
 
     def get_queryset(self):
         qs = super().get_queryset()

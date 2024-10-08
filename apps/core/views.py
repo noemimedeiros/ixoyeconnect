@@ -6,6 +6,7 @@ from django.views.generic import (View, CreateView, DeleteView, DetailView, Form
                                   ListView, TemplateView, UpdateView)
 from allauth.account.views import SignupView, LoginView
 from django.db import transaction, IntegrityError
+from extra_views import SearchableListMixin
 
 from core.messages_utils import *
 from posts.models import CategoriaPost
@@ -29,8 +30,11 @@ class MyViewIxoyeConnect:
 
 class MyTemplateViewIxoyeConnect(MyViewIxoyeConnect, TemplateView):
     pass
+
+class MyDetailViewIxoyeConnect(MyViewIxoyeConnect, DetailView):
+    pass
     
-class MyListViewIxoyeConnect(MyViewIxoyeConnect, ListView):
+class MyListViewIxoyeConnect(MyViewIxoyeConnect, SearchableListMixin, ListView):
     pass
     
 class MyCreateViewIxoyeConnect(MyViewIxoyeConnect, CreateView):
@@ -47,7 +51,6 @@ class MyDeleteViewIxoyeConnect(MyViewIxoyeConnect, DeleteView):
     def form_valid(self, form):
         message_delete_registro(self.request)
         return super().form_valid(form)
-    
     
 class DashboradView(MyTemplateViewIxoyeConnect):
     template_name = 'core/dashboard.html'

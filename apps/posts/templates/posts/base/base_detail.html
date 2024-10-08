@@ -1,0 +1,40 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+
+{% block app_title %}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
+<link rel="stylesheet" href="{% static 'posts/css/post_aberto.css' %}">
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="post-detail">
+    <div class="post-aberto-header">
+        <img class="card-post" src="{{ object.capa.url }}" alt="">
+    </div>
+    <div class="card-post-aberto">
+        <div class="post-aberto-content">
+            <div class="post-aberto-title">
+                <h1 class="mb-2">{{ object.titulo }}</h1>
+                <h5 class="text-muted">{{ post.data|date:"d/m/Y" }} às {{ post.hora|default:"--:--" }} - {{ request.user.conta.nome }}</h5>
+            </div>
+            {{ object.descricao|safe }}
+        </div>
+        <div class="post-aberto-acoes">
+            <button class="button-post-acoes">
+                <i class="fa-regular fa-heart fa-2xl me-2"></i>
+                Curtir
+            </button>
+            <button class="button-post-acoes">
+                <i class="fa-regular fa-bookmark fa-2xl me-2"></i>
+                Salvar
+            </button>
+        </div>
+    </div>
+</section>
+{% endblock dashboard_content %}
