@@ -39,8 +39,8 @@ class ArquivoPost(models.Model):
         db_table = 'arquivopost'
 
 class Salvo(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="salvo")
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False, related_name="salvos")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="salvo")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, related_name="salvos")
     data = models.DateField(null=False, blank=False, auto_now=True)
 
     class Meta:
@@ -48,10 +48,12 @@ class Salvo(models.Model):
         unique_together = ['post', 'user']
 
 class Curtida(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="curtida")
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False, related_name="curtidas")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="curtida")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, related_name="curtidas")
     data = models.DateField(null=False, blank=False, auto_now=True)
 
     class Meta:
         db_table = 'curtida'
-        unique_together = ['post', 'user']
+        constraints = [
+            models.UniqueConstraint(fields=('post', 'user'), name="un_post_user")
+        ]
