@@ -31,5 +31,8 @@ class AgendaSemanal(models.Model):
     icone = models.ForeignKey(IconeAgendaSemanal, on_delete=models.CASCADE, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
 
+    def __str__(self):
+        return f'{self.get_dia_semana_display()} - {self.titulo}'
+
     class Meta:
         db_table = "agendasemanal"

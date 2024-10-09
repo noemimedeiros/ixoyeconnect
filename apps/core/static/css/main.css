@@ -358,7 +358,7 @@
 
 .modal-excluir-body{
     display: grid;
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 80px 1fr;
     gap: 20px;
     align-items: center;
 }
@@ -366,14 +366,14 @@
     font-weight: 500;
 }
 .modal-excluir-body i{
-    height: 70px;
-    width: 70px;
+    height: 65px;
+    width: 65px;
     background-color: rgb(255, 230, 230);
     color: brown;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 2.25rem;
     border-radius: 50%;
     margin-left: auto;
     margin-right: auto;
