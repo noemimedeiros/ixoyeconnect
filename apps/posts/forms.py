@@ -1,8 +1,20 @@
 from core.forms import FormBaseIxoye
-from .models import CategoriaPost, Post
+from .models import Post, ArquivoPost
 from django import forms
 from crispy_bootstrap5.bootstrap5 import Switch
 from crispy_forms.layout import Submit, Field
+
+class ArquivoPostForm(FormBaseIxoye):
+    class Meta:
+        model = ArquivoPost
+        fields = '__all__'
+        widgets = {
+            'post': forms.HiddenInput()
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+ArquivoPostFormSet = forms.modelformset_factory(ArquivoPost, fields=('arquivo',), extra=1)
 
 class NewPostForm(FormBaseIxoye):
     class Meta:
@@ -10,7 +22,6 @@ class NewPostForm(FormBaseIxoye):
         fields = '__all__'
         widgets = {
             'instituicao': forms.HiddenInput(),
-            'categoria': forms.HiddenInput(),
             'user': forms.HiddenInput()
         }
     
@@ -20,13 +31,10 @@ class NewPostForm(FormBaseIxoye):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
-        self.helper.form_tag = True
-        self.helper.add_input(Submit('adicionar-post', 'Postar', css_class='button button-filled w-100'))
-
         if instituicao:
             self.fields['instituicao'].initial = instituicao
         if categoria:
-            self.fields['categoria'].initial = categoria
+            self.helper['categoria'].wrap(Field, type="hidden", value=categoria)
         if user:
             self.fields['user'].initial = user
 

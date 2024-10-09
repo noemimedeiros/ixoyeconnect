@@ -1,5 +1,7 @@
 {% extends "core/dashboard.html" %}
 {% load static %}
+{% load file_ext %}
+{% load icons_arquivos %}
 
 {% block app_title %}
 {% endblock app_title %}
@@ -20,21 +22,48 @@
     <div class="card-post-aberto">
         <div class="post-aberto-content">
             <div class="post-aberto-title">
-                <h1 class="mb-2">{{ object.titulo }}</h1>
+                <h2 class="mb-2">{{ object.titulo }}</h2>
                 <h5 class="text-muted">{{ post.data|date:"d/m/Y" }} às {{ post.hora|default:"--:--" }} - {{ request.user.conta.nome }}</h5>
             </div>
             {{ object.descricao|safe }}
         </div>
+        <div class="post-arquivos" id="div_arquivospost">
+            {% for arquivo in object.arquivos.all %}
+            <a href="{{ arquivo.arquivo.url }}" class="arquivopost_card" download="{{ arquivo.arquivo.url }}">
+                <div class="arquivopost_body">
+                    <i class="fa-solid {{ arquivo.arquivo|file_ext|icons_arquivos }}"></i>
+                    <span class="arquivopost_nome">
+                        {{ arquivo }}
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
         <div class="post-aberto-acoes">
-            <button class="button-post-acoes">
-                <i class="fa-regular fa-heart fa-2xl me-2"></i>
+            <button id="btn-curtir" class="button-post-acoes">
+                <i class="{% if object.curtida %}fas{% else %}far{% endif %} fa-heart fa-lg me-2"></i>
                 Curtir
             </button>
-            <button class="button-post-acoes">
-                <i class="fa-regular fa-bookmark fa-2xl me-2"></i>
+            <button id="btn-salvar" class="button-post-acoes">
+                <i class="{% if object.salvo %}fas{% else %}far{% endif %} fa-bookmark fa-lg me-2"></i>
                 Salvar
             </button>
         </div>
     </div>
 </section>
 {% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    const curtir_post_url = '{% url "posts:curtir_post" request.user.pk object.pk %}';
+    const salvar_post_url = '{% url "posts:salvar_post" request.user.pk object.pk %}'
+    $('#btn-curtir').click(function(){
+        $(this).find('i').toggleClass("fas").toggleClass("far")
+        fetch(curtir_post_url)
+    })
+    $('#btn-salvar').click(function(){
+        $(this).find('i').toggleClass("fas").toggleClass("far")
+        fetch(salvar_post_url)
+    })
+</script>
+{% endblock _scripts %}

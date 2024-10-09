@@ -1,7 +1,4 @@
 @media (max-width: 768px) {
-    .agenda-form-section, .agendas-section{
-        grid-template-columns: 1fr;
-    }
     #div_id_icone_mb{
         display: block;
     }

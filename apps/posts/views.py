@@ -1,15 +1,17 @@
+import os
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.template import TemplateDoesNotExist
 from django.urls import reverse
 from django.template.loader import get_template
 
 from apps.core.messages_utils import message_delete_registro, message_error_registro
-from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from ixoyeconnect import settings
 
-from .models import CategoriaPost, Post
-from .forms import NewPostForm
+from .models import ArquivoPost, CategoriaPost, Curtida, Post, Salvo
+from .forms import ArquivoPostForm, ArquivoPostFormSet, NewPostForm
 
 class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     model = Post
@@ -58,7 +60,18 @@ class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         tipo = self.kwargs['tipo']
         context["titulo"] = f'Criar {tipo}'
+        context["arquivos_formset"] = ArquivoPostFormSet()
         return context
+    
+    def form_valid(self, form):
+        form = form.save()
+        arquivos_formset = ArquivoPostFormSet(self.request.POST, self.request.FILES)
+        arquivos = arquivos_formset.save(commit=False)
+        for arquivo in arquivos:
+            arquivo.post = form
+            arquivo.nome
+            arquivo.save()
+        return HttpResponseRedirect(self.get_success_url())
     
     def form_invalid(self, form):
         print(form.errors)
@@ -132,9 +145,33 @@ class PostDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
 
 @login_required(login_url="/login/")
 def PostDeleteView(request, pk):
+    post = Post.objects.get(pk=pk)
+    tipo = post.categoria.nome
     try:
-        Post.objects.get(pk=pk).delete()
+        post.delete()
         message_delete_registro(request)
     except Post.DoesNotExist:
         message_error_registro(request)
-    return HttpResponseRedirect(reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': request.user.conta.pk}))
+    return HttpResponseRedirect(reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': request.user.conta.pk, 'tipo': tipo}))
+
+@login_required(login_url='/login/')
+def curtir_post(request, user, post):
+    curtido = False
+    try:
+        Curtida.objects.create(user_id=user, post_id=post)
+        curtido = True
+    except:
+        Curtida.objects.get(user_id=user, post_id=post).delete()
+        curtido = False
+    return JsonResponse(curtido, safe=False)
+
+@login_required(login_url='/login/')
+def salvar_post(request, user, post):
+    salvo = False
+    try:
+        Salvo.objects.create(user_id=user, post_id=post)
+        salvo = True
+    except:
+        Salvo.objects.get(user_id=user, post_id=post).delete()
+        salvo = False
+    return JsonResponse(salvo, safe=False)

@@ -1,5 +1,5 @@
 :root{
-    --post-card-height: 240px;
+    --post-card-height: 260px;
     --post-card-height-mb: 110px;
 }
 .form-posts{
@@ -69,6 +69,35 @@
 }
 .card-post-info{
     color: var(--gray-3)
+}
+#div_arquivospost{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+.arquivopost_card{
+    height: 30px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: var(--rounded-pill);
+    background-color: var(--gray-1);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.arquivopost_body{
+    display: flex;
+    align-items: center;
+}
+.arquivopost_nome{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    margin-left: 10px;
+    max-width: 100px;
 }
 
 @media (max-width: 768px) {

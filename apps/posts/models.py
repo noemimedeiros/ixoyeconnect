@@ -26,24 +26,29 @@ class Post(models.Model):
         db_table = 'post'
 
 class ArquivoPost(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False)
-    arquivo = models.CharField(max_length=255, null=False, blank=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False, related_name='arquivos')
+    arquivo = models.FileField(upload_to='posts/arquivos/', max_length=255, null=False, blank=False)
+
+    def __str__(self):
+        return f'{self.arquivo}'.replace('posts/arquivos/','')
 
     class Meta:
         db_table = 'arquivopost'
 
 class Salvo(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False)
-    data = models.DateField(null=False, blank=False)
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="salvo")
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False, related_name="salvos")
+    data = models.DateField(null=False, blank=False, auto_now=True)
 
     class Meta:
         db_table = 'salvo'
+        unique_together = ['post', 'user']
 
 class Curtida(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False)
-    data = models.DateField(null=False, blank=False)
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="curtida")
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False, related_name="curtidas")
+    data = models.DateField(null=False, blank=False, auto_now=True)
 
     class Meta:
         db_table = 'curtida'
+        unique_together = ['post', 'user']
