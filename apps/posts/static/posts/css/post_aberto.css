@@ -9,7 +9,7 @@
     font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
 }
 .dashboard-card, .dashboard-content{
-    background-color: var(--gray-1);
+    background-color: transparent;
     box-shadow: none
 }
 .card-post{
@@ -26,6 +26,10 @@
     text-align: center;
 }
 .card-post-aberto{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
     margin-top: 135px;
     width: 100%;
     background-color: var(--body-bg);
@@ -36,6 +40,9 @@
 }
 .post-aberto-content{
     margin-top: 100px;
+}
+.post-aberto-descricao{
+    flex: 1;
 }
 .post-aberto-acoes{
     display: flex;

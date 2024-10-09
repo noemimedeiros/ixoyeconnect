@@ -32,6 +32,9 @@
     color: var(--black-1);
     object-fit: cover;
 }
+.card-post *{
+    font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
+}
 
 .card-post-capa{
     height: 50%;

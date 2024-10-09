@@ -25,7 +25,7 @@ class InstituicaoForm(FormBaseIxoye):
         super().__init__(*args, **kwargs)
         self.helper.form_tag = True
         self.helper.form_action = '/usuario/cadastrar_instituicao/'
-        self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="button button-filled w-100"))
+        self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="btn button-filled w-100"))
 
         for id, field in enumerate(self.helper.layout.fields):
             if field.get_field_names()[0].name == 'denominacao':

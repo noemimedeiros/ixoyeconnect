@@ -28,6 +28,7 @@
         </div>
     </section>
 </section>
+{% include "core/includes/modal_delete.html" %}
 {% endblock content %}
 
 {% block scripts %}
@@ -53,21 +54,34 @@
     $(function(){
         $('.item-actions').each(function () {
             $(this).popover({
+                html: true,
                 content: `
                     <div class="item-actions-popover">
                         <a href="${$(this).data('editlink')}"><i class="fa-solid fa-pen-to-square"></i> <span>Editar</span> </a>
-                        <a href="${$(this).data('deletelink')}"><i class="fa-solid fa-trash-can text-danger"></i> <span>Excluir</span> </a>
+                        <a role="button" data-object="${$(this).data('object')}" data-deletelink="${$(this).data('deletelink')}" data-bs-toggle="modal" href="#" data-bs-target="#delete-modal"><i class="fa-solid fa-trash-can text-danger"></i> <span>Excluir</span> </a>
                     </div>
                 `,
-                html: true,
                 placement: 'left',
                 trigger: 'click',
+                allowList: {
+                    a: ['href', 'role', 'data-object', 'data-deletelink', 'data-bs-toggle', 'data-bs-target'],
+                    i: ['class'],
+                    div: ['class'],
+                    span: []
+                }
 
             })
         });
 
         $("[data-bs-toggle='tooltip']").tooltip()
         $('.side-nav-subitem a').tooltip('disable')
+
+        $("#delete-modal").on("show.bs.modal", event => {
+            $('.item-actions').popover('hide')
+            const button =  event.relatedTarget;
+            $("#form-delete").prop('action',button.dataset.deletelink)
+            $(".object-delete").html(button.dataset.object)
+        })
     });
 
     function fotoPreview(input_id, foto_preview='#foto-preview'){

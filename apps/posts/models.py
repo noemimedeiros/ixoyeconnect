@@ -22,6 +22,9 @@ class Post(models.Model):
     data = models.DateField(null=False, blank=False, auto_now=True)
     categoria = models.ForeignKey(CategoriaPost, on_delete=models.CASCADE, null=False, blank=False)
 
+    def __str__(self):
+        return f'{self.categoria.nome.capitalize()} - {self.titulo}'
+
     class Meta:
         db_table = 'post'
 

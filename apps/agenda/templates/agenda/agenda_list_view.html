@@ -18,7 +18,7 @@ Agenda Semanal
 {% block dashboard_actions %}
 {% include "core/includes/default_actions.html" %}
 {% if request.user.is_admin %}
-<a role="button" href="{% url 'agenda:agendas_create_view' %}" class="button button-filled button-adicionar gap-2">
+<a role="button" href="{% url 'agenda:agendas_create_view' %}" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
 </a>
 {% endif %}
@@ -30,7 +30,7 @@ Agenda Semanal
         <div class="d-flex justify-content-between gap-2 align-items-center">
             {% include "agenda/partials/card_agenda.html" with agenda=agenda index=forloop.counter %}
             {% if request.user.is_admin %}
-                {% include "core/includes/default_item_actions.html" with edit_link='agenda:agendas_update_view' delete_link='agenda:agendas_delete_view' item_pk=agenda.pk %}
+                {% include "core/includes/default_item_actions.html" with object=agenda edit_link='agenda:agendas_update_view' delete_link='agenda:agendas_delete_view' item_pk=agenda.pk %}
             {% endif %}
         </div>
     {% endfor %}

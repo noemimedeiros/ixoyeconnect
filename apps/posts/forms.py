@@ -14,7 +14,7 @@ class ArquivoPostForm(FormBaseIxoye):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-ArquivoPostFormSet = forms.modelformset_factory(ArquivoPost, fields=('arquivo',), extra=1)
+ArquivoPostFormSet = forms.modelformset_factory(ArquivoPost, fields=('arquivo',), extra=0)
 
 class NewPostForm(FormBaseIxoye):
     class Meta:

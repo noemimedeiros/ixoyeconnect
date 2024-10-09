@@ -24,6 +24,7 @@ class AgendaSemanalListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Agenda Semanal"
+        context["active"] = ["agenda"]
         return context
 
 class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
@@ -34,6 +35,7 @@ class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Criar Agenda"
+        context["active"] = ["agenda"]
         context["icones"] = IconeAgendaSemanal.objects.all()
         return context
     
@@ -54,6 +56,7 @@ class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Editar Agenda"
+        context["active"] = ["agenda"]
         context["icones"] = IconeAgendaSemanal.objects.all()
         return context
     

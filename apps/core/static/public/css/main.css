@@ -262,7 +262,7 @@ textarea.form-primary{
     border-radius: 40px;
 }
 
-.button{
+.btn{
     display: inline-block;
     vertical-align: middle;
     height: calc(3.5rem + calc(var(--bs-border-width)* 2));
@@ -275,7 +275,7 @@ textarea.form-primary{
     font-weight: 500;
     transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
 }
-a.button{
+a.btn{
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -314,6 +314,23 @@ a.button{
 .button-filled-tonal:hover{
     background-color: var(--green-transparent);
     color: var(--aqua-blue);
+}
+
+.button-danger{
+    background-color: brown;
+    color: white;
+}
+.button-danger:hover{
+    background-color: rgb(122, 24, 24);
+    color: white;
+}
+.button-danger-outlined{
+    background-color: var(--body-bg);
+    border-color: brown;
+    color: brown;
+}
+.button-danger-outlined:hover{
+    background-color: var(--gray-2);
 }
 
 .toast{

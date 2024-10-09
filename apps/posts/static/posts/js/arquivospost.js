@@ -51,7 +51,7 @@ function adicionar_arquivo(file_name, id=null){
     `;
 
     let new_button = `
-    <label for="adicionar_arquivo_${arquivo_index}" class="button button-outlined button-upload">Anexar arquivo</label>
+    <label for="adicionar_arquivo_${arquivo_index}" class="btn button-outlined button-upload">Anexar arquivo</label>
     `;
 
     div_arquivospost.append(new_field)

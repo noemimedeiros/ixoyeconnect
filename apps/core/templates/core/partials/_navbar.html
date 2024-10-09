@@ -22,38 +22,38 @@
             <div class="side-nav-icon"><i class="fa-solid fa-bars"></i></div>
             <div class="side-nav-text">Menu</div>
         </a>
-        <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="side-nav-item {% if '/agendas/' in request.path %}active{% endif %}">
+        <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="side-nav-item {% if 'agenda' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="side-nav-text">Agenda Semanal</div>
         </a>
-        <a href="#" class="side-nav-item">
+        <a href="#" class="side-nav-item {% if 'eventos' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-calendar-day"></i></div>
             <div class="side-nav-text">Eventos</div>
         </a>
-        <a data-bs-toggle="collapse" href="#conteudo-sidenav" role="button" class="side-nav-item {% if 'conteudo/' in request.path %}open{% endif %}">
+        <a data-bs-toggle="collapse" href="#conteudo-sidenav" role="button" class="side-nav-item {% if 'conteudo' in active %}open{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-book"></i></div>
             <div class="side-nav-text"><span>Conteúdo</span> <i class="fa-solid fa-chevron-right"></i></div>
         </a>
-        <div class="collapse side-nav-subitem {% if 'conteudo/' in request.path %}show{% endif %}" id="conteudo-sidenav">
+        <div class="collapse side-nav-subitem {% if 'conteudo' in active %}show{% endif %}" id="conteudo-sidenav">
             <ul>
                 {% for conteudo in conteudos %}
                 <a data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ conteudo }}" href="{% url 'posts:conteudo_list_view' conteudo.nome|lower instituicao.pk %}">
-                    <li class="{% if conteudo.nome|lower in request.path %}active{% endif %}">
+                    <li class="{% if conteudo.nome|lower in active %}active{% endif %}">
                         <span class="side-nav-subitem-text">{{ conteudo }}</span>
                     </li>
                 </a>
                 {% endfor %}
             </ul>
         </div>
-        <a href="#" class="side-nav-item">
+        <a href="#" class="side-nav-item {% if 'contribuicoes' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="side-nav-text">Contribuições</div>
         </a>
-        <a href="#" class="side-nav-item">
+        <a href="#" class="side-nav-item {% if 'lista-membros' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-users"></i></div>
             <div class="side-nav-text">Lista de Membros</div>
         </a>
-        <a href="#" class="side-nav-item">
+        <a href="#" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-clipboard-list"></i></div>
             <div class="side-nav-text">Escalas</div>
         </a>

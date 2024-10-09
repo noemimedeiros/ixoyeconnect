@@ -25,6 +25,8 @@
                 <h2 class="mb-2">{{ object.titulo }}</h2>
                 <h5 class="text-muted">{{ post.data|date:"d/m/Y" }} às {{ post.hora|default:"--:--" }} - {{ request.user.conta.nome }}</h5>
             </div>
+        </div>
+        <div class="post-aberto-descricao">
             {{ object.descricao|safe }}
         </div>
         <div class="post-arquivos" id="div_arquivospost">

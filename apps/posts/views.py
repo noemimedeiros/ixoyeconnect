@@ -34,6 +34,7 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         instituicao = self.kwargs['instituicao_pk']
         context["titulo"] = tipo.capitalize()
         context["tipo"] = tipo
+        context["active"] = ["conteudo", tipo]
         return context
     
     def get_queryset(self):
@@ -61,6 +62,7 @@ class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         tipo = self.kwargs['tipo']
         context["titulo"] = f'Criar {tipo}'
         context["arquivos_formset"] = ArquivoPostFormSet()
+        context["active"] = ["conteudo", tipo]
         return context
     
     def form_valid(self, form):
@@ -105,6 +107,7 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         tipo = self.get_object().categoria.nome
         context["titulo"] = f'Editar {tipo}'
+        context["active"] = ["conteudo", tipo]
         return context
     
     def get_form_kwargs(self):
@@ -135,6 +138,7 @@ class PostDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         post = self.get_object()
         context["titulo"] = post.titulo
+        context["active"] = ["conteudo", post.categoria.nome]
         return context
     
     def get_form_kwargs(self):

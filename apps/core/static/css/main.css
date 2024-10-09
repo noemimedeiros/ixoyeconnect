@@ -354,3 +354,27 @@
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
 }
+
+
+.modal-excluir-body{
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 20px;
+    align-items: center;
+}
+.modal-excluir-body .modal-title{
+    font-weight: 500;
+}
+.modal-excluir-body i{
+    height: 70px;
+    width: 70px;
+    background-color: rgb(255, 230, 230);
+    color: brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
