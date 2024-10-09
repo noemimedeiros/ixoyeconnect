@@ -14,6 +14,7 @@
 .dashboard-card, .dashboard-content{
     background-color: transparent;
     box-shadow: none;
+    border-radius: 0;
 }
 .card-post{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -27,20 +28,6 @@
     font-weight: 500;
     margin-bottom: 40px;
     text-align: center;
-}
-.card-post-aberto{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 135px;
-    width: 100%;
-    background-color: var(--body-bg);
-    border-radius: 40px;
-    height: 100%;
-    padding-bottom: 20px;
-    padding-top: 50px;;
-    padding-inline: 20%;
 }
 
 .post-aberto-content{

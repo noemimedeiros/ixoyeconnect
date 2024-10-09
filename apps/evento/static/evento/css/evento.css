@@ -1,8 +1,150 @@
+.evento-section{
+    margin-top: 20px;
+}
+.dashboard-head{
+    padding-left: 15px;
+}
+
 .evento-form-section{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: calc(50% - 10px) calc(50% - 10px);
     gap: 20px;
 }
 .evento-form-section{
     margin-top: 1rem;
+}
+
+.eventos-grid{
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    color: inherit;
+}
+.eventos-grid:hover{
+    color: inherit;
+}
+
+.linha-tempo-evento{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.evento-dia{
+    text-align: center;
+    font-weight: 400;
+}
+.evento-dia h6:first-child{
+    color: var(--aqua-blue);
+}
+
+.evento-linha{
+    margin-top: 10px;
+    width: 1px;
+    border: .5px dashed var(--gray-2);
+    height: 100%;
+}
+.linha-porvir{
+    margin-left: 30px;
+    height: 20px;
+    margin-bottom: 1rem;
+}
+
+.card-evento{
+    display: flex;
+    height: 200px;
+    background-color: var(--gray-1);
+    border-radius: 20px;
+    transition: box-shadow 200ms ease-in-out;
+}
+.card-evento:hover{
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+.evento-capa{
+    border-radius: 20px;
+    width: 270px;
+    min-width: 270px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-evento-content{
+    box-sizing: border-box;
+    padding: 15px;
+    padding-inline: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.card-evento-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-evento-header button{
+    margin-bottom: auto;
+    min-height: 40px;
+    height: 40px;
+}
+
+.evento-titulo{
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+
+.evento-infos{
+    width: fit-content;
+    border-radius: var(--rounded-pill);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 5px;
+    padding-inline: 10px;
+}
+
+.evento-pessoas{
+    font-weight: 400;
+}
+.evento-pessoas i {
+    color: var(--gray-2);
+}
+
+.titulo-proximo-evento, .titulo-evento-porvir, .titulo-evento-fim{
+    padding-left: 20px;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+.titulo-proximo-evento{
+    color: var(--aqua-blue);
+}
+.titulo-evento-porvir{
+    color: var(--gray-2);
+}
+
+.evento-component{
+    display: flex;
+    gap: .5rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.evento-descricao{
+    max-height: 40px;
+    overflow: hidden;
+}
+.evento-descricao :first-child{
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

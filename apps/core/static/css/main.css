@@ -3,6 +3,10 @@
     --gray-1: #212224;
 }
 
+.titulo-dashboard{
+    font-weight: 400;
+}
+
 .main-dashboard{
     height: 100dvh;
     width: 100dvw;
@@ -333,27 +337,25 @@
 }
 
 /* Ckeditor personalizado */
-.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all{
+.ck.ck-toolbar {
     border-top-left-radius: 20px !important;
     border-top-right-radius: 20px !important;
 }
-.ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content{
+.ck-content{
+    border: 0 !important;
+}
+.ck-sticky-panel__content{
     border: 0 !important;
     border-bottom: 1px solid var(--gray-2) !important;
 }
-.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners{
-    border: 0 !important;
-}
-.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all,
-.ck.ck-editor__main>.ck-editor__editable{
+.ck-editor__editable, .ck.ck-toolbar{
     background-color: var(--gray-1) !important;
 }
-.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable,
-.ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners,
-.ck.ck-reset{
+.ck-editor__editable{
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
 }
+/* --- */
 
 
 .modal-excluir-body{
@@ -381,4 +383,29 @@
 }
 .darkmode .modal-excluir-body, .darkmode #form-delete .modal-footer *{
     color: white !important;
+}
+
+/* Cards padrões */
+.card-post{
+    border-radius: 20px;
+    background-color: var(--gray-1);
+    position: relative;
+    height: var(--post-card-height);
+    width: 100%;
+    color: var(--black-1);
+    object-fit: cover;
+}
+.card-post-aberto{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 135px;
+    width: 100%;
+    background-color: var(--body-bg);
+    border-radius: 40px;
+    height: 100%;
+    padding-bottom: 20px;
+    padding-top: 50px;;
+    padding-inline: 20%;
 }

@@ -1,0 +1,46 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
+<link rel="stylesheet" href="{% static 'evento/css/evento_detail.css' %}">
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="evento-detail">
+    <div class="evento-aberto-header">
+        <img class="card-post" src="{{ evento.capa.url }}" alt="">
+    </div>
+    <div class="card-post-aberto">
+        <div class="evento-aberto-content">
+            <div class="evento-aberto-title">
+                <div class="evento-infos button-filled-tonal">
+                    <div>
+                        <i class="fa-solid fa-calendar-day me-1"></i>
+                        {{ evento.data|default:"-- de -------" }}
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-clock me-1"></i>
+                        {{ evento.hora|default:"--:--" }}
+                    </div>
+                </div>
+                <h3 class="evento-titulo">{{ evento.titulo|default:"-------" }}</h3>
+            </div>
+        </div>
+        <div class="evento-aberto-descricao">
+            {{ evento.descricao|safe|default:"" }}
+        </div>
+        <div>
+            <div class="evento-pessoas">
+                <i class="fa-solid fa-users"></i>
+                {{ evento.participantes.all.count|default:"0" }} pessoas confirmadas
+            </div>
+            <button class="btn button-filled w-100">Confirmar Participação</button>
+        </div>
+    </div>
+</section>
+{% endblock dashboard_content %}

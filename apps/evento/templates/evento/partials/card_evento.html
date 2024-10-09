@@ -1,0 +1,43 @@
+<a href="{% url 'evento:evento_detail_view' evento.pk %}" class="eventos-grid">
+    <div class="linha-tempo-evento">
+        <div class="evento-dia">
+            <h6>
+                {{ evento.data|date:"d"|default:"--" }}
+            </h6>
+            <h6>
+                {{ evento.data|date:"N"|default:"---" }}
+            </h6>
+        </div>
+        <div class="evento-linha"></div>
+    </div>
+    <div class="card-evento">
+        <img src="{{ evento.capa.url|default:"" }}" class="evento-capa" alt="">
+        <div class="card-evento-content">
+            <div class="card-evento-header">
+                <div>
+                    <h3 class="evento-titulo">{{ evento.titulo|default:"-------" }}</h3>
+                    <div class="evento-infos button-filled-tonal">
+                        <small>
+                            <i class="fa-solid fa-calendar-day me-1"></i>
+                            {{ evento.data|default:"-- de -------" }}
+                        </small>
+                        <small>
+                            <i class="fa-solid fa-clock me-1"></i>
+                            {{ evento.hora|default:"--:--" }}
+                        </small>
+                    </div>
+                </div>
+                {% if not request.user.is_admin %}
+                <button class="btn button-filled btn-sm">Confirmar Participação</button>
+                {% endif %}
+            </div>
+            <div class="evento-descricao">
+                {{ evento.descricao|safe|default:"" }}
+            </div>
+            <div class="evento-pessoas">
+                <i class="fa-solid fa-users"></i>
+                {{ evento.participantes.all.count|default:"0" }} pessoas confirmadas
+            </div>
+        </div>
+    </div>
+</a>

@@ -139,12 +139,6 @@ class PostDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
         context["titulo"] = post.titulo
         context["active"] = ["conteudo", post.categoria.nome]
         return context
-    
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        post = self.get_object()
-        kwargs.update({'instituicao': post.instituicao.pk, 'categoria': post.categoria.pk, 'user': post.user.pk})
-        return kwargs
 
 @login_required(login_url="/login/")
 def PostDeleteView(request, pk):

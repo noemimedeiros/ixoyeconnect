@@ -467,3 +467,12 @@ a.btn{
 .popover-arrow::after, .bs-popover-start>.popover-arrow::after{
     border: 0 !important;
 }
+
+.form-switch .form-check-input{
+    width: 3.5em;
+    height: 2em;
+}
+.form-check-label{
+    line-height: 2.5em;
+    padding-left: .5em;
+}

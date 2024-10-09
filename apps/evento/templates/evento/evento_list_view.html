@@ -8,11 +8,6 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
 <link rel="stylesheet" href="{% static 'evento/css/evento_responsive.css' %}">
-<style>
-    .item-actions{
-        margin-top: auto;
-    }
-</style>
 {% endblock style %}
 
 {% block dashboard_actions %}
@@ -27,12 +22,21 @@
 {% block dashboard_content %}
 <section class="evento-section">
     {% for evento in evento %}
-        <div class="d-flex justify-content-between gap-2 align-items-center">
+        {% if forloop.first %}
+        <h4 class="titulo-proximo-evento">Próximo Evento</h4>
+        {% else %}
+        <h5 class="titulo-evento-porvir">Eventos por vir</h6>
+        <div class="evento-linha linha-porvir"></div>
+        {% endif %}
+        <div class="evento-component">
             {% include "evento/partials/card_evento.html" with evento=evento index=forloop.counter %}
             {% if request.user.is_admin %}
                 {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
             {% endif %}
         </div>
+        {% if forloop.last %}
+        <div class="titulo-evento-fim"><small class=" text-muted">Não há mais eventos agendados após esta data. Fique atento para os próximos anúncios e novidades em breve!</small></div>
+        {% endif %}
     {% endfor %}
 </section>
 {% endblock dashboard_content %}

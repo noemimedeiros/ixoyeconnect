@@ -1,0 +1,34 @@
+@media (max-width: 768px) {
+    .evento-form-section{
+        display: flex;
+        flex-direction: column;
+    }
+    .dashboard-head{
+        padding-left: 0;
+    }
+    .card-evento{
+        position: relative;
+    }
+    .card-evento-content{
+        position: absolute;
+        color: white;
+        height: 100%;
+        justify-content: end;
+        border-radius: 20px;
+        background-image: linear-gradient(to top, black, transparent);
+        gap: 5px;
+    }
+    .evento-infos{
+        padding: 0;
+        background: none;
+        color: white;
+    }
+
+    .evento-descricao{
+        display: none;
+    }
+
+    .evento-titulo{
+        font-size: 2rem;
+    }
+}

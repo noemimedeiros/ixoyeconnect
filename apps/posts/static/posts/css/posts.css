@@ -22,19 +22,6 @@
     flex-direction: column;
     align-items: center;
 }
-.card-post{
-    border-radius: 20px;
-    background-color: var(--gray-1);
-    text-align: start;
-    position: relative;
-    height: var(--post-card-height);
-    width: 100%;
-    color: var(--black-1);
-    object-fit: cover;
-}
-.card-post *{
-    font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
-}
 
 .card-post-capa{
     height: 50%;

@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from core.forms import EnderecoForm
 from core.messages_utils import message_delete_registro, message_error_registro
-from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import Evento
 from .forms import EventoForm
@@ -24,7 +24,7 @@ class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titulo"] = "Evento Semanal"
+        context["titulo"] = "Eventos"
         context["active"] = ["evento"]
         return context
 
@@ -44,6 +44,21 @@ class EventoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
 
         return context
     
+    def form_valid(self, form):
+        endereco_sede = form.cleaned_data["endereco_sede"]
+
+        form = form.save(commit=False)
+        if endereco_sede == False:
+            endereco_form = EnderecoForm(self.request.POST)
+            if endereco_form.is_valid():
+                endereco_form = endereco_form.save()
+                form.endereco = endereco_form
+        else:
+            form.endereco = form.instituicao.endereco
+
+        return super().form_valid(form)
+    
+    
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({'instituicao': self.request.user.conta})
@@ -62,6 +77,11 @@ class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Editar Evento"
         context["active"] = ["evento"]
+        context["endereco_form"] = EnderecoForm()
+
+        if self.request.POST:
+            context["endereco_form"] = EnderecoForm(self.request.POST)
+
         return context
     
     def get_form_kwargs(self):
@@ -71,6 +91,17 @@ class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     
     def get_success_url(self):
         return reverse('evento:evento_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+    
+class EventoDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
+    template_name = "evento/evento_detail_view.html"
+    model = Evento
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        evento = self.get_object()
+        context["titulo"] = evento.titulo.capitalize()
+        context["active"] = ["evento"]
+        return context
 
 @login_required(login_url="/login/")
 def EventoDeleteView(request, pk):
