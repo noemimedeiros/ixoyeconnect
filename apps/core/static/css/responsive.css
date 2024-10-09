@@ -128,4 +128,22 @@
     .button-adicionar span{
         display: none;
     }
+
+    .modal-excluir-body i{
+        height: 80px;
+        width: 80px;
+        font-size: 3rem;
+    }
+    .modal-excluir-body{
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    #form-delete{
+        padding-bottom: 1rem;
+    }
+    #form-delete .modal-footer{
+        justify-content: center;
+    }
 }

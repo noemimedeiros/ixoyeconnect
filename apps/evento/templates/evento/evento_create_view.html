@@ -1,0 +1,42 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
+<link rel="stylesheet" href="{% static 'evento/css/evento_responsive.css' %}">
+{% endblock style %}
+
+{% block app_title %}
+Criar Agenda
+{% endblock app_title %}
+
+{% block dashboard_actions %}{% endblock %}
+
+{% block dashboard_content %}
+<span>Preencha os dados abaixo</span>
+<section class="evento-form-section">
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+            {% include "core/includes/foto_preview.html" with img_src=object.capa.url  %}
+            {% crispy form %}
+        </div>
+        <div>
+            <div class="mb-3"><strong>Endereço do Evento</strong></div>
+            {% crispy endereco_form %}
+        </div>
+        <button class="btn button-filled w-100">Criar Evento</button>
+    </form>
+    <div>
+        <div class="evento-preview">
+            <div class="mb-4"><small>Pré-Visualização</small></div>
+        </div>
+    </div>
+</section>
+{% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    $('#id_capa').change(() => fotoPreview('id_capa'))
+</script>
+{% endblock _scripts %}

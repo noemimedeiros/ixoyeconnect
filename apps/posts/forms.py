@@ -42,4 +42,4 @@ class NewPostForm(FormBaseIxoye):
         self.fields['descricao'].widget.attrs['placeholder'] = "Descrição"
 
         self.helper['fixado'].wrap(Switch)
-        self.helper['capa'].wrap(Field, template="posts/partials/custom_capa_select.html")
+        self.helper['capa'].wrap(Field, template="core/includes/custom_capa_select.html")

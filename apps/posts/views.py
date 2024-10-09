@@ -6,12 +6,11 @@ from django.template import TemplateDoesNotExist
 from django.urls import reverse
 from django.template.loader import get_template
 
-from apps.core.messages_utils import message_delete_registro, message_error_registro
+from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
-from ixoyeconnect import settings
 
-from .models import ArquivoPost, CategoriaPost, Curtida, Post, Salvo
-from .forms import ArquivoPostForm, ArquivoPostFormSet, NewPostForm
+from .models import CategoriaPost, Curtida, Post, Salvo
+from .forms import ArquivoPostFormSet, NewPostForm
 
 class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     model = Post

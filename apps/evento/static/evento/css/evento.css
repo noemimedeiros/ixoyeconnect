@@ -1,0 +1,8 @@
+.evento-form-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.evento-form-section{
+    margin-top: 1rem;
+}

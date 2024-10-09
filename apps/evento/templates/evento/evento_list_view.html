@@ -2,10 +2,37 @@
 {% load static %}
 
 {% block app_title %}
-Eventos
+{{ titulo }}
 {% endblock app_title %}
-{% block dashboard_content %}
-<section>
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
+<link rel="stylesheet" href="{% static 'evento/css/evento_responsive.css' %}">
+<style>
+    .item-actions{
+        margin-top: auto;
+    }
+</style>
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% include "core/includes/default_actions.html" %}
+{% if request.user.is_admin %}
+<a role="button" href="{% url 'evento:evento_create_view' %}" class="btn button-filled button-adicionar gap-2">
+    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
+</a>
+{% endif %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="evento-section">
+    {% for evento in evento %}
+        <div class="d-flex justify-content-between gap-2 align-items-center">
+            {% include "evento/partials/card_evento.html" with evento=evento index=forloop.counter %}
+            {% if request.user.is_admin %}
+                {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
+            {% endif %}
+        </div>
+    {% endfor %}
 </section>
 {% endblock dashboard_content %}

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
-from apps.core.messages_utils import message_delete_registro, message_error_registro
+from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import AgendaSemanal, IconeAgendaSemanal
