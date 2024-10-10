@@ -9,6 +9,9 @@
     .card-evento{
         position: relative;
     }
+    .eventos-grid{
+        flex: 1;
+    }
     .card-evento-content{
         position: absolute;
         color: white;
