@@ -66,9 +66,9 @@
         let descricao = editors.id_descricao.getData();
         fotoPreview('id_capa', '.evento-capa');
 
-        $('.card-post-titulo').html(titulo)
-        $('.card-post-descricao').html(descricao);
-        $('.card-post-info').html(`${hoje} - ${usuario}`)
+        if (titulo) $('.card-post-titulo').html(titulo)
+        if (descricao) $('.card-post-descricao').html(descricao);
+        if (hoje || usuario) $('.card-post-info').html(`${hoje} - ${usuario}`)
     }
 
     $('input').on('change input', () => cardPost())

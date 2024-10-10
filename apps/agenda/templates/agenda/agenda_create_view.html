@@ -53,15 +53,18 @@
     function cardAgenda(){
         let titulo = $('#id_titulo').val();
         let icone = $('#id_icone').data('icone');
-        !icone ? icone = $('#id_icone').find('option:selected').data('icone') : '';
+        if (!icone) icone = $('#id_icone').find('option:selected').data('icone');
         let descricao = $('#id_descricao').val();
         let dia_semana =  $('#id_dia_semana').find('option:selected').text();
         let hora = $('#id_hora').val();
         
-        icone ? $('.div-icone-agenda i').prop('class', `fa-solid ${icone}`) : '';
-        titulo ? $('.titulo-agenda').html(titulo) : '';
-        (dia_semana || hora) ? $('.dia-hora-agenda').html(`${dia_semana} às ${hora}`) : '';
-        descricao ? $('.descricao-agenda').html(descricao): '';
+        if (icone) $('.div-icone-agenda i').prop('class', `fa-solid ${icone}`);
+        if (titulo) $('.titulo-agenda').html(titulo);
+        if (dia_semana || hora) $('.dia-hora-agenda').html(`${dia_semana} às ${hora}`);
+        if (descricao){
+            $('.descricao-agenda').html(descricao);
+            $('#descricao-agenda').collapse('show')
+        };
     }
     $('input, select, textarea').on('change input', () => cardAgenda());
  

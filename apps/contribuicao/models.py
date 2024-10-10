@@ -1,6 +1,6 @@
 from django.db import models
 
-from usuario.models import Instituicao, Departamento
+from usuario.models import Departamento, InstituicaoSede
 
 class MetodoContribuicao(models.Model):
     nome = models.CharField(max_length=50, null=False, blank=False)
@@ -15,7 +15,7 @@ class TipoContribuicao(models.Model):
         db_table = 'tipocontribuicao'
 
 class Contribuicao(models.Model):
-    instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE, null=False, blank=False)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
     metodo = models.ForeignKey(MetodoContribuicao, on_delete=models.CASCADE, null=False, blank=False)
     tipo = models.ForeignKey(TipoContribuicao, on_delete=models.CASCADE, null=False, blank=False)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=False, blank=False)

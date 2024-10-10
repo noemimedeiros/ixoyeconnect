@@ -1,0 +1,33 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'contribuicao/css/contribuicao.css' %}">
+<link rel="stylesheet" href="{% static 'contribuicao/css/contribuicao_responsive.css' %}">
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% include "core/includes/default_actions.html" %}
+{% if request.user.is_admin %}
+<a role="button" href="{% url 'contribuicao:contribuicao_create_view' %}" class="btn button-filled button-adicionar gap-2">
+    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
+</a>
+{% endif %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="contribuicao-section">
+    {% for contribuicao in contribuicao %}
+        <div class="div-items-actions">
+            {% include "contribuicao/partials/card_contribuicao.html" with contribuicao=contribuicao index=forloop.counter %}
+            {% if request.user.is_admin %}
+                {% include "core/includes/default_item_actions.html" with object=contribuicao edit_link='contribuicao:contribuicao_update_view' delete_link='contribuicao:contribuicao_delete_view' item_pk=contribuicao.pk %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</section>
+{% endblock dashboard_content %}

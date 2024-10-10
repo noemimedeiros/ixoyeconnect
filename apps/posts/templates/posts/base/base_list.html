@@ -21,7 +21,7 @@
 {% block dashboard_content %}
 <section class="posts-section">
     {% for post in object_list %}
-    <div class="d-flex justify-content-between gap-2 ">
+    <div class="div-items-actions">
         {% include "posts/partials/card_post.html" with post=post %}
         {% if request.user.is_admin %}
             {% include "core/includes/default_item_actions.html" with object=post edit_link='posts:conteudo_update_view' delete_link='posts:conteudo_delete_view' item_pk=post.pk %}

@@ -1,0 +1,27 @@
+<div class="card-contribuicao-pix">
+    <div>
+        <i class="fa-solid fa-key"></i>
+    </div>
+    <div class="card-cotribuicao-body">
+        <div class="card-contribuicao-metodo">
+            Chave Pix Aleatória:
+        </div>
+        <div class="card-contribuicao-conta">
+            <div>
+                <div class="contribuicao-titulo-conta">Conta Corrente</div>
+                <div class="contribuicao-numconta">{{ contribuicao.conta|default:"-----" }}</div>
+            </div>
+            <div>
+                <div class="contribuicao-titulo-conta">Agência</div>
+                <div class="contribuicao-agencia">{{ contribuicao.agencia|default:"-----" }}</div>
+            </div>
+            <div>
+                <div class="contribuicao-titulo-conta">Banco</div>
+                <div class="contribuicao-banco">{{ contribuicao.banco|default:"-----" }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="card-contribuicao-copy">
+        <i class="fa-solid fa-copy fa-2xl"></i>
+    </div>
+</div>

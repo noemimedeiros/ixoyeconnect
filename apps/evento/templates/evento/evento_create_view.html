@@ -67,12 +67,10 @@
 
         fotoPreview('id_capa', '.evento-capa');
 
-        $('.evento-titulo').html(titulo);
-        $('.evento-data').html(data);
-        $('.evento-hora').html(hora);
-        $('.evento-descricao').html(descricao)
-
-
+        if (titulo) $('.evento-titulo').html(titulo);
+        if (data) $('.evento-data').html(data);
+        if (hora) $('.evento-hora').html(hora);
+        if (descricao) $('.evento-descricao').html(descricao);
     }
 
     $('input, select').on('input change', () => cardEvento())

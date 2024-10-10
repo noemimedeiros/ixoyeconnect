@@ -1,0 +1,42 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'contribuicao/css/contribuicao.css' %}">
+<link rel="stylesheet" href="{% static 'contribuicao/css/contribuicao_responsive.css' %}">
+{% endblock style %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block dashboard_actions %}{% endblock %}
+
+{% block dashboard_content %}
+<span>Preencha os dados abaixo</span>
+<section class="contribuicao-form-section">
+    <div>
+        {% crispy form %}
+    </div>
+    <div>
+        <div class="contribuicao-preview">
+            <div class="mb-4"><small>Pré-Visualização</small></div>
+            {% include "contribuicao/partials/card_contribuicao.html" %}
+        </div>
+    </div>
+</section>
+<div class="modal" tabindex="-1" id="">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+</script>
+{% endblock _scripts %}

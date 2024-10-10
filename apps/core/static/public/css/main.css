@@ -468,11 +468,13 @@ a.btn{
     border: 0 !important;
 }
 
-.form-switch .form-check-input{
-    width: 3.5em;
-    height: 2em;
-}
-.form-check-label{
-    line-height: 2.5em;
-    padding-left: .5em;
+@media (min-width: 768px) {
+    .form-switch .form-check-input{
+        width: 3.5em;
+        height: 2em;
+    }
+    .form-check-label{
+        line-height: 2.5em;
+        padding-left: .5em;
+    }
 }
