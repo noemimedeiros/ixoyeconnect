@@ -1,17 +1,17 @@
-<a href="{% url 'evento:evento_detail_view' evento.pk %}" class="eventos-grid">
+<a href="{% if agenda %}{% url 'evento:evento_detail_view' evento.pk %} {% else %} #{% endif %}" class="eventos-grid">
     <div class="linha-tempo-evento">
         <div class="evento-dia">
-            <h6>
+            <h6 class="evento-dia">
                 {{ evento.data|date:"d"|default:"--" }}
             </h6>
-            <h6>
+            <h6 class="evento-mes">
                 {{ evento.data|date:"N"|default:"---" }}
             </h6>
         </div>
         <div class="evento-linha"></div>
     </div>
     <div class="card-evento">
-        <img src="{{ evento.capa.url|default:"" }}" class="evento-capa" alt="">
+        <img {% if evento %}src="{{ evento.capa.url }}"{% endif %} class="evento-capa" alt="">
         <div class="card-evento-content">
             <div class="card-evento-header">
                 <div>
@@ -19,11 +19,11 @@
                     <div class="evento-infos button-filled-tonal">
                         <small>
                             <i class="fa-solid fa-calendar-day me-1"></i>
-                            {{ evento.data|default:"-- de -------" }}
+                            <span class="evento-data">{{ evento.data|default:"-- de -------" }}</span>
                         </small>
                         <small>
                             <i class="fa-solid fa-clock me-1"></i>
-                            {{ evento.hora|default:"--:--" }}
+                            <span class="evento-hora">{{ evento.hora|default:"--:--" }}</span>
                         </small>
                     </div>
                 </div>

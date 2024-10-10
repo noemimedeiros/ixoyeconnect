@@ -1,8 +1,10 @@
+:root{
+    --card-evento-height: 13rem;
+    --evento-capa-width: 14rem;
+}
+
 .evento-section{
     margin-top: 20px;
-}
-.dashboard-head{
-    padding-left: 15px;
 }
 
 .evento-form-section{
@@ -54,7 +56,7 @@
 
 .card-evento{
     display: flex;
-    height: 200px;
+    height: var(--card-evento-height);
     background-color: var(--gray-1);
     border-radius: 20px;
     transition: box-shadow 200ms ease-in-out;
@@ -65,8 +67,8 @@
 
 .evento-capa{
     border-radius: 20px;
-    width: 270px;
-    min-width: 270px;
+    width: var(--evento-capa-width);
+    min-width: var(--evento-capa-width);
     height: 100%;
     object-fit: cover;
 }
@@ -104,7 +106,7 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    padding: 5px;
+    padding: .25rem;
     padding-inline: 10px;
 }
 
@@ -139,12 +141,18 @@
     max-height: 40px;
     overflow: hidden;
 }
-.evento-descricao :first-child{
+.evento-descricao :first-child,
+.evento-titulo{
     text-overflow: ellipsis;
     word-break: break-all;
     display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.evento-titulo{
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
 }

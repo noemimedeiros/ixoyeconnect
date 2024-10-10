@@ -31,4 +31,8 @@
     .evento-titulo{
         font-size: 2rem;
     }
+
+    .evento-capa{
+        width: 100%;
+    }
 }

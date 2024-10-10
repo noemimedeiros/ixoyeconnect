@@ -5,6 +5,16 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
 <link rel="stylesheet" href="{% static 'evento/css/evento_detail.css' %}">
+<style>
+    .dashboard-card{
+        margin-bottom: 0;
+    }
+    .dashboard-card, .dashboard-content{
+        background-color: transparent;
+        box-shadow: none;
+        border-radius: 0;
+    }
+</style>
 {% endblock style %}
 
 {% block dashboard_actions %}

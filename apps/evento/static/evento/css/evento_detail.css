@@ -1,11 +1,4 @@
-.dashboard-card{
-    margin-bottom: 0;
-}
-.dashboard-card, .dashboard-content{
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: 0;
-}
+
 
 .evento-detail{
     height: 100%;

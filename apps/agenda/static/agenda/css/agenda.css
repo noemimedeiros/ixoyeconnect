@@ -81,6 +81,13 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     align-items: baseline;
 }
-#div_id_icone_mb{
-    display: none;
+
+.icones-agenda-modal{
+    display: grid;
+    grid-template-columns: 2.5em 1fr;
+    align-items: center;
+    margin-bottom: 1rem;
 }
+/* #div_id_icone_mb{
+    display: none;
+} */

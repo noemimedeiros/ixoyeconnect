@@ -15,7 +15,7 @@ class EventoForm(FormBaseIxoye):
         widgets = {
             'instituicao': forms.HiddenInput(),
             'valor': forms.TextInput(attrs={"class": "money"}),
-            'data': forms.DateInput(attrs={"class": "date"}),
+            'data': forms.DateInput(attrs={"class": "date datepicker"}),
             'hora': forms.TimeInput(attrs={'type': 'time'}),
         }
     

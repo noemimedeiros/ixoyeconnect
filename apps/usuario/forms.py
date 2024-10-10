@@ -59,7 +59,7 @@ class MembroForm(FormBaseIxoye):
         fields = '__all__'
         exclude = ('user', 'endereco', 'foto', 'sede', )
         widgets = {
-            'data_nascimento': forms.TextInput(attrs={'class': 'date'}),
+            'data_nascimento': forms.TextInput(attrs={'class': 'datepicker date'}),
             'celular': forms.TextInput(attrs={'class': 'phone'})
         }
 

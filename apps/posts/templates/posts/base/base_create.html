@@ -55,7 +55,6 @@
 <script src="{% static 'posts/js/arquivospost.js' %}"></script>
 <script>
     $('#id_capa').change(() => fotoPreview('id_capa'))
-    $('.input-arquivo-post').change(() => fotoPreview(this.id, '.input-arquivo-post'))
     $('#foto-preview-div').click(() => $('#id_capa').trigger('click'));
     const usuario = '{{ request.user.conta.nome }}';
 
@@ -65,7 +64,7 @@
 
         let titulo = $('#id_titulo').val();
         let descricao = editors.id_descricao.getData();
-        fotoPreview('id_capa', '.card-post-capa');
+        fotoPreview('id_capa', '.evento-capa');
 
         $('.card-post-titulo').html(titulo)
         $('.card-post-descricao').html(descricao);

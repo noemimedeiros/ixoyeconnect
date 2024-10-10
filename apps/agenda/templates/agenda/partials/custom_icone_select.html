@@ -1,10 +1,11 @@
-<div id="div_{{ field.id_for_label }}_mb" class="form-floating mb-3">
+<div id="div_{{ field.id_for_label }}" class="form-floating mb-3">
+  <input type="hidden" name="{{ field.html_name }}" id="{{ field.id_for_label }}">
   <button id="btn-selecionar-icone" type="button" class="form-primary form-select text-start" data-bs-toggle="modal" data-bs-target="#selecionar-icone">
       <i class="fa-solid fa-book"></i> - Livro
   </button>
-  <label for="{{ field.id_for_label }}_mb">{{ field.label }}</label>
+  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
 </div>
-<div id="div_{{ field.id_for_label }}" class="form-floating mb-3">
+{% comment %} <div id="div_{{ field.id_for_label }}" class="form-floating mb-3">
     <select name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="form-primary select form-select">
         {% for choice in field.field.queryset %}
           <option data-icone="{{ choice.icone }}" value="{{ choice.pk }}" {% if agenda and choice.pk == agenda.icone.pk %}selected{% endif %}>
@@ -13,4 +14,4 @@
         {% endfor %}
     </select>
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-</div>
+</div> {% endcomment %}
