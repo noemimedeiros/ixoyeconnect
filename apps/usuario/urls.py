@@ -11,4 +11,5 @@ app_name = 'usuario'
 urlpatterns = [
     path('cadastrar_instituicao/', views.cadastrar_instituicao, name="cadastrar_instituicao"),
     path('cadastrar_denominacao/', views.cadastrar_denominacao, name="cadastrar_denominacao"),
+    path('cadastrar_departamento/', views.cadastrar_departamento, name="cadastrar_departamento"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

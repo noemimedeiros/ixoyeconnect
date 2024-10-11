@@ -81,7 +81,7 @@ class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         categoria = CategoriaPost.objects.get(nome=self.kwargs['tipo'])
-        kwargs.update({'instituicao': self.request.user.conta, 'categoria': categoria.pk, 'user': self.request.user})
+        kwargs.update({'instituicao': self.request.user.instituicao, 'categoria': categoria.pk, 'user': self.request.user})
         return kwargs
     
     def get_success_url(self):

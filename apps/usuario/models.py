@@ -85,15 +85,22 @@ class Membro(UsuarioAbstract):
         return self.eventos_confirmados.values_list("evento", flat=True)
 
 class Funcao(models.Model):
-    funcao = models.CharField(max_length=50, null=False, blank=False)
-    descricao = models.TextField(null=True, blank=True)
+    funcao = models.CharField(max_length=50, null=False, blank=False, verbose_name="Nome da Função")
+    descricao = models.TextField(null=True, blank=True, help_text="Este campo é opcional")
+
+    def __tr__(self):
+        return self.funcao
      
     class Meta:
         db_table = 'funcao'
 
 class Departamento(models.Model):
-    departamento = models.CharField(max_length=50, null=False, blank=False)
-    descricao = models.TextField(null=True, blank=True)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
+    departamento = models.CharField(max_length=50, null=False, blank=False, verbose_name="Nome do Departamento")
+    descricao = models.TextField(null=True, blank=True, help_text="Este campo é opcional")
+
+    def __str__(self):
+        return self.departamento
 
     class Meta:
         db_table = 'departamento'

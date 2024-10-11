@@ -1,3 +1,12 @@
 .contribuicao-form-section{
     margin-top: 1rem;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: calc(50% - 10px) calc(50% - 10px);
+}
+
+.contribuicao-preview{
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    padding: 20px;
 }

@@ -146,4 +146,7 @@
     #form-delete .modal-footer{
         justify-content: center;
     }
+    .card-post-aberto{
+        height: fit-content;
+    }
 }

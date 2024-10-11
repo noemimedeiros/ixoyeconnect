@@ -4,12 +4,13 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
+from usuario.forms import DepartamentoForm
 from core.forms import EnderecoForm
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import Contribuicao
-from .forms import ContribuicaoForm
+from .forms import ContatosContribuicaoForm, ContribuicaoForm
 
 class ContribuicaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'contribuicao/contribuicao_list_view.html'
@@ -33,12 +34,17 @@ class ContribuicaoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        instituicao = self.request.user.instituicao
         context["titulo"] = "Criar Contribuição"
         context["active"] = ["contribuicao"]
         context["endereco_form"] = EnderecoForm()
+        context["contatos_contribuicao_form"] = ContatosContribuicaoForm()
+        context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
 
         if self.request.POST:
             context["endereco_form"] = EnderecoForm(self.request.POST)
+            context["contatos_contribuicao_form"] = ContatosContribuicaoForm(self.request.POST)
+            context["departamentos_form"] = DepartamentoForm(self.request.POST, instituicao=instituicao, prefix="departamento")
 
         return context
     

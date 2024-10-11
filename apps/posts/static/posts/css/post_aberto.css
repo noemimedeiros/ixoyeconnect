@@ -33,9 +33,7 @@
 .post-aberto-content{
     margin-top: 100px;
 }
-.post-aberto-descricao{
-    flex: 1;
-}
+
 .post-aberto-acoes{
     display: flex;
     justify-content: space-evenly;
@@ -71,6 +69,5 @@
     }
     .card-post-aberto{
         padding-inline: 10%;
-        padding-bottom: 200px;
     }
 }

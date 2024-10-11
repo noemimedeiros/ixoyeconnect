@@ -61,7 +61,7 @@ class EventoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'instituicao': self.request.user.conta})
+        kwargs.update({'instituicao': self.request.user.instituicao})
         return kwargs
     
     def get_success_url(self):
@@ -86,7 +86,7 @@ class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'instituicao': self.request.user.conta})
+        kwargs.update({'instituicao': self.request.user.instituicao})
         return kwargs
     
     def get_success_url(self):

@@ -1,7 +1,7 @@
 from typing import Any
 from django import forms
 from core.forms import FormBaseIxoye
-from .models import Denominacao, Instituicao, InstituicaoSede, Membro
+from .models import Denominacao, Departamento, Funcao, FuncaoMembro, Instituicao, InstituicaoSede, Membro
 from crispy_forms.layout import Submit, Layout, Row, Column
 from crispy_bootstrap5.bootstrap5 import FloatingField, Field
 
@@ -76,3 +76,27 @@ class MembroForm(FormBaseIxoye):
             self.add_error('codigo_sede', "Código incorreto ou inexistente. Por favor, verifique se seu código está correto e tente novamente.")
 
         return cleaned_data
+    
+class DepartamentoForm(FormBaseIxoye):
+    class Meta:
+        model = Departamento
+        fields = '__all__'
+        widgets = {
+            'instituicao': forms.HiddenInput()
+        }
+
+    def __init__(self, *args, **kwargs):
+        instituicao = kwargs.pop('instituicao', None)
+        super().__init__(*args, **kwargs)
+        self.helper.form_tag = True
+        self.helper.form_action = '/usuario/cadastrar_departamento/'
+        self.helper.add_input(Submit('adicionar-departamento', 'Criar Departamento', css_class='btn button-filled w-100'))
+
+        if instituicao:
+            self.fields['instituicao'].queryset = Instituicao.objects.filter(pk=instituicao.pk)
+            self.fields['instituicao'].initial = instituicao
+
+class FuncaoForm(FormBaseIxoye):
+    class Meta:
+        model = Funcao
+        fields = '__all__'
