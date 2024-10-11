@@ -5,16 +5,6 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
 <link rel="stylesheet" href="{% static 'evento/css/evento_detail.css' %}">
-<style>
-    .dashboard-card{
-        margin-bottom: 0;
-    }
-    .dashboard-card, .dashboard-content{
-        background-color: transparent;
-        box-shadow: none;
-        border-radius: 0;
-    }
-</style>
 {% endblock style %}
 
 {% block dashboard_actions %}
@@ -49,7 +39,17 @@
                 <i class="fa-solid fa-users"></i>
                 {{ evento.participantes.all.count|default:"0" }} pessoas confirmadas
             </div>
-            <button class="btn button-filled w-100">Confirmar Participação</button>
+            {% if not request.user.is_admin %}
+                {% if evento.pk not in request.user.conta.eventos_confirmados_pks %}
+                <form action="{% url 'evento:confirmar_participacao_evento' evento.pk request.user.pk %}">
+                    <button type="submit" class="btn button-filled w-100"><span class="evento-valor">{{ evento.valor|default:"Gratuito!" }}</span> - Confirmar Participação</button>
+                </form>
+                {% else %}
+                <form action="{% url 'evento:cancelar_participacao_evento' evento.pk request.user.pk %}">
+                    <button type="submit" class="btn button-danger-outlined w-100">Cancelar Participação</button>
+                </form>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 </section>

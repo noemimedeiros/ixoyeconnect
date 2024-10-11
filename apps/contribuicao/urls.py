@@ -9,9 +9,8 @@ from . import views
 app_name = 'contribuicao'
 
 urlpatterns = [
-    path('contribuicao/<int:instituicao_pk>/', views.contribuicaoListView.as_view(), name="contribuicao_list_view"),
-    path('criar_contribuicao/', views.contribuicaoCreateView.as_view(), name="contribuicao_create_view"),
-    path('editar_contribuicao/<int:pk>/', views.contribuicaoUpdateView.as_view(), name="contribuicao_update_view"),
-    path('excluir_contribuicao/<int:pk>/', views.contribuicaoDeleteView, name="contribuicao_delete_view"),
-    path('ver_contribuicao/<int:pk>/', views.contribuicaoDetailView.as_view(), name="contribuicao_detail_view")
+    path('contribuicao/<int:instituicao_pk>/', views.ContribuicaoListView.as_view(), name="contribuicao_list_view"),
+    path('criar_contribuicao/', views.ContribuicaoCreateView.as_view(), name="contribuicao_create_view"),
+    path('editar_contribuicao/<int:pk>/', views.ContribuicaoUpdateView.as_view(), name="contribuicao_update_view"),
+    path('excluir_contribuicao/<int:pk>/', views.ContribuicaoDeleteView, name="contribuicao_delete_view"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

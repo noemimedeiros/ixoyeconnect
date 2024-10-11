@@ -85,7 +85,7 @@ class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         return kwargs
     
     def get_success_url(self):
-        return reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk, 'tipo': self.kwargs['tipo']})
+        return reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk, 'tipo': self.kwargs['tipo']})
     
 class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     model = Post
@@ -117,7 +117,7 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     
     def get_success_url(self):
         tipo = self.get_object().categoria.nome
-        return reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk, 'tipo': tipo})
+        return reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk, 'tipo': tipo})
 
 class PostDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
     model = Post
@@ -149,7 +149,7 @@ def PostDeleteView(request, pk):
         message_delete_registro(request)
     except Post.DoesNotExist:
         message_error_registro(request)
-    return HttpResponseRedirect(reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': request.user.conta.pk, 'tipo': tipo}))
+    return HttpResponseRedirect(reverse('posts:conteudo_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk, 'tipo': tipo}))
 
 @login_required(login_url='/login/')
 def curtir_post(request, user, post):

@@ -325,12 +325,14 @@ a.btn{
     color: white;
 }
 .button-danger-outlined{
-    background-color: var(--body-bg);
+    background-color: transparent;
     border-color: brown;
+    border: 1px solid;
     color: brown;
 }
 .button-danger-outlined:hover{
-    background-color: var(--gray-2);
+    background-color: brown;
+    color: white;
 }
 
 .toast{

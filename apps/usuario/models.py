@@ -80,6 +80,9 @@ class Membro(UsuarioAbstract):
 
     class Meta:
         db_table = 'membro'
+    
+    def eventos_confirmados_pks(self):
+        return self.eventos_confirmados.values_list("evento", flat=True)
 
 class Funcao(models.Model):
     funcao = models.CharField(max_length=50, null=False, blank=False)

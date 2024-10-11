@@ -41,11 +41,11 @@ class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'instituicao': self.request.user.conta})
+        kwargs.update({'instituicao': self.request.user.instituicao})
         return kwargs
     
     def get_success_url(self):
-        return reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        return reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
     
 class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     template_name = 'agenda/agenda_create_view.html'
@@ -62,11 +62,11 @@ class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'instituicao': self.request.user.conta})
+        kwargs.update({'instituicao': self.request.user.instituicao})
         return kwargs
     
     def get_success_url(self):
-        return reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        return reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
 
 @login_required(login_url="/login/")
 def AgendaSemanalDeleteView(request, pk):
@@ -75,4 +75,4 @@ def AgendaSemanalDeleteView(request, pk):
         message_delete_registro(request)
     except AgendaSemanal.DoesNotExist:
         message_error_registro(request)
-    return HttpResponseRedirect(reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': request.user.conta.pk}))
+    return HttpResponseRedirect(reverse('agenda:agendas_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))

@@ -8,5 +8,11 @@ class ContribuicaoForm(FormBaseIxoye):
         model = Contribuicao
         fields = '__all__'
         widgets = {
-            'instituicao'
+            'instituicao': forms.HiddenInput()
         }
+    def __init__(self, *args, **kwargs):
+        instituicao = kwargs.pop('instituicao', None)
+        super().__init__(*args, **kwargs)
+
+        if instituicao:
+            self.fields['instituicao'].initial = instituicao

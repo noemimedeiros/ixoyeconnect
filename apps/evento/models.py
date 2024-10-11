@@ -19,9 +19,9 @@ class Evento(models.Model):
         db_table = "evento"
 
 class ParticipanteEvento(models.Model):
-    membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False)
+    membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False, related_name="eventos_confirmados")
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, null=False, blank=False, related_name="participantes")
-    data_ingressao = models.DateField(null=False, blank=False, default=timezone.now)
+    data_ingressao = models.DateField(null=False, blank=False, auto_now=True)
 
     class Meta:
         db_table = "participanteevento"

@@ -5,10 +5,10 @@ from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
 from core.forms import EnderecoForm
-from core.messages_utils import message_delete_registro, message_error_registro
+from core.messages_utils import message_delete_registro, message_error_generic, message_error_registro, message_success_generic
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
-from .models import Evento
+from .models import Evento, ParticipanteEvento
 from .forms import EventoForm
 
 class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
@@ -110,4 +110,24 @@ def EventoDeleteView(request, pk):
         message_delete_registro(request)
     except Evento.DoesNotExist:
         message_error_registro(request)
-    return HttpResponseRedirect(reverse('evento:evento_list_view', kwargs={'instituicao_pk': request.user.conta.pk}))
+    return HttpResponseRedirect(reverse('evento:evento_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))
+
+@login_required(login_url="/login/")
+def confirmar_participacao_evento(request, evento_pk, membro_pk):
+    try:
+        ParticipanteEvento.objects.create(evento_id=evento_pk, membro_id=membro_pk)
+        message_success_generic(request, "Sua participação está confirmada!")
+    except Exception as e:
+        print(e)
+        message_error_registro(request)
+    return HttpResponseRedirect(reverse('evento:evento_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))
+
+@login_required(login_url="/login/")
+def cancelar_participacao_evento(request, evento_pk, membro_pk):
+    try:
+        ParticipanteEvento.objects.filter(evento_id=evento_pk, membro_id=membro_pk).delete()
+        message_success_generic(request, "Sua participação foi cancelada.")
+    except Exception as e:
+        print(e)
+        message_error_registro(request)
+    return HttpResponseRedirect(reverse('evento:evento_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))

@@ -45,7 +45,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <a href="#" class="side-nav-item {% if 'contribuicoes' in active %}active{% endif %}">
+        <a href="{% url 'contribuicao:contribuicao_list_view' instituicao.pk %}" class="side-nav-item {% if 'contribuicoes' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="side-nav-text">Contribuições</div>
         </a>

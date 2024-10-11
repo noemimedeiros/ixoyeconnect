@@ -7,10 +7,17 @@
     align-items: center;
     position: relative;
 }
-
+.dashboard-card{
+    margin-bottom: 0;
+}
+.dashboard-card, .dashboard-content{
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
 .card-post{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    height: 260px;;
+    height: 260px;
 }
 .evento-aberto-header{
     width: calc(100% - 40%);
@@ -19,13 +26,9 @@
 }
 .evento-aberto-title{
     font-weight: 500;
-    margin-bottom: 40px;
 }
 .evento-aberto-content{
     margin-top: 100px;
-}
-.evento-aberto-descricao{
-    flex: 1;
 }
 .evento-titulo{
     margin-top: 1rem;

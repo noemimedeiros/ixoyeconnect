@@ -1,4 +1,4 @@
-<a href="{% if agenda %}{% url 'evento:evento_detail_view' evento.pk %} {% else %} #{% endif %}" class="eventos-grid">
+<a href="{% if evento %}{% url 'evento:evento_detail_view' evento.pk %} {% else %} #{% endif %}" class="eventos-grid">
     <div class="linha-tempo-evento">
         <div class="evento-dia">
             <h6 class="evento-dia">
@@ -28,7 +28,15 @@
                     </div>
                 </div>
                 {% if not request.user.is_admin %}
-                <button class="btn button-filled btn-sm">Confirmar Participação</button>
+                    {% if evento.pk not in request.user.conta.eventos_confirmados_pks %}
+                    <form class="mb-auto" action="{% url 'evento:confirmar_participacao_evento' evento.pk request.user.pk %}">
+                        <button type="submit" class="btn button-filled btn-sm">Confirmar Participação</button>
+                    </form>
+                    {% else %}
+                    <div class="button-filled-tonal mb-auto p-2 px-4 rounded-pill">
+                        Presença confirmada!
+                    </div>
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="evento-descricao">
