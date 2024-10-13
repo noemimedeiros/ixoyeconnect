@@ -1,5 +1,6 @@
 {% extends "core/dashboard.html" %}
 {% load static %}
+{% load get_tipo_display %}
 
 {% block app_title %}
 {{ titulo }}
@@ -21,13 +22,64 @@
 
 {% block dashboard_content %}
 <section class="contribuicao-section">
-    {% for contribuicao in contribuicao %}
-        <div class="div-items-actions">
-            {% include "contribuicao/partials/card_contribuicao.html" with contribuicao=contribuicao index=forloop.counter %}
-            {% if request.user.is_admin %}
-                {% include "core/includes/default_item_actions.html" with object=contribuicao edit_link='contribuicao:contribuicao_update_view' delete_link='contribuicao:contribuicao_delete_view' item_pk=contribuicao.pk %}
-            {% endif %}
+    {% regroup contribuicoes by tipo as contribuicao_list %}
+    {% for contrib_tipo in contribuicao_list %}
+        <div class="mb-3"><h6><b>{{ contrib_tipo.grouper|get_tipo_display }}</b></h6></div>
+        <div class="div-cards-contribuicoes">
+            {% for contribuicao in contrib_tipo.list %}
+                <div class="div-items-actions">
+                    {% if contribuicao.metodo == 'pix' %}
+                        {% include "contribuicao/partials/card_contribuicao_pix.html" with contribuicao=contribuicao index=forloop.counter %}
+                    {% else %}
+                        {% include "contribuicao/partials/card_contribuicao_deposito.html" with contribuicao=contribuicao index=forloop.counter %}
+                    {% endif %}
+
+                    {% if request.user.is_admin %}
+                        {% include "core/includes/default_item_actions.html" with object=contribuicao edit_link='contribuicao:contribuicao_update_view' delete_link='contribuicao:contribuicao_delete_view' item_pk=contribuicao.pk %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% for contato in instituicao.contatos.all %}
+                {% if contato.tipo == contrib_tipo.grouper %}
+                    <div class="div-items-actions">
+                        {% include "contribuicao/partials/card_contribuicao_contatos.html" with instituicao=contato.instituicao tipo=contato.tipo index=forloop.counter %}
+
+                        {% if request.user.is_admin %}
+                            {% include "core/includes/default_item_actions.html" with object=contato edit_link='contribuicao:contatos_contribuicao_update_view' delete_link='contribuicao:contatos_contribuicao_delete_view' item_pk=contato.pk %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
     {% endfor %}
+    {% if not contribuicoes %}
+    <div class="div-cards-contribuicoes">
+        {% for contato in instituicao.contatos.all %}
+            {% if contato.tipo == contrib_tipo.grouper %}
+                <div class="div-items-actions">
+                    {% include "contribuicao/partials/card_contribuicao_contatos.html" with instituicao=contato.instituicao tipo=contato.tipo index=forloop.counter %}
+
+                    {% if request.user.is_admin %}
+                        {% include "core/includes/default_item_actions.html" with object=contato edit_link='contribuicao:contatos_contribuicao_update_view' delete_link='contribuicao:contatos_contribuicao_delete_view' item_pk=contato.pk %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
 </section>
 {% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    function copiarChavePix(chave, btn){
+        var chavePixText = $(chave).data('chave');
+        navigator.clipboard.writeText(chavePixText);
+
+        $(btn).toggleClass('fa-copy').toggleClass('fa-check');
+        setTimeout(function(){
+            $(btn).toggleClass('fa-copy').toggleClass('fa-check');
+        }, 5000)
+    }
+</script>
+{% endblock _scripts %}

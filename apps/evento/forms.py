@@ -1,4 +1,4 @@
-from usuario.models import Instituicao, InstituicaoSede
+from usuario.models import InstituicaoSede
 from core.forms import FormBaseIxoye
 from django import forms
 from .models import Evento
@@ -24,7 +24,7 @@ class EventoForm(FormBaseIxoye):
         super().__init__(*args, **kwargs)
 
         if instituicao:
-            self.fields['instituicao'].queryset = Instituicao.objects.filter(pk=instituicao.pk)
+            self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
 
         self.helper['capa'].wrap(Field, template="core/includes/custom_capa_select.html")

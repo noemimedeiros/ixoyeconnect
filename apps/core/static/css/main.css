@@ -287,10 +287,10 @@
 .div-items-actions{
     display: flex;
     align-content: center;
+    gap: 10px;
 }
 .item-actions{
     text-align: center;
-    padding-left: 5%;
     color: var(--green);
     margin-top: 10px;
     margin-bottom: auto;

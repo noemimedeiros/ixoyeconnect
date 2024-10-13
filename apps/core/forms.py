@@ -14,7 +14,7 @@ def floating_fields(self):
     
     for field_name, field in self.fields.items():
         field_widget = field.widget.__class__.__name__
-        field_classes = f'form-primary {field.widget.attrs.get('class')}'
+        field_classes = f'form-primary {field.widget.attrs.get("class")}'
         if field_widget in ['TimeInput', 'TextInput', 'NumberInput', 'EmailInput', 'URLInput', 'DateInput', 'Select', 'PasswordInput']:
             layout_fields.append(FloatingField(field_name, css_class=field_classes))
         elif field_widget in ['ClearableFileInput', 'FileInput', 'Textarea']:
@@ -22,7 +22,6 @@ def floating_fields(self):
         else:
             layout_fields.append(Field(field_name))
 
-    # Aplica o layout
     self.helper.layout = Layout(*layout_fields)
 
 class FormBaseIxoye(forms.ModelForm):

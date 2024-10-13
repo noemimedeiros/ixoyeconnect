@@ -1,4 +1,6 @@
 from django import forms
+
+from usuario.models import InstituicaoSede
 from .models import DIAS_SEMANA, AgendaSemanal, IconeAgendaSemanal
 from core.forms import FormBaseIxoye
 from crispy_forms.layout import Submit, Layout, Row, Column
@@ -19,6 +21,7 @@ class AgendaSemanalForm(FormBaseIxoye):
         super().__init__(*args, **kwargs)
 
         if instituicao:
+            self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
 
         self.helper.form_tag = True

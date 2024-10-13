@@ -273,7 +273,6 @@ textarea.form-primary{
     cursor: pointer;
     padding: .375rem 1.5rem;
     font-weight: 500;
-    transition: background-color .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
 }
 a.btn{
     display: inline-flex;
@@ -283,6 +282,11 @@ a.btn{
 
 .button i {
     font-size: 1.25rem;
+}
+
+.btn-sm{
+    height: calc(2rem + calc(var(--bs-border-width)* 2));
+    min-height: calc(2rem + calc(var(--bs-border-width)* 2));
 }
 
 .button-filled{
@@ -472,11 +476,11 @@ a.btn{
 
 @media (min-width: 768px) {
     .form-switch .form-check-input{
-        width: 3.5em;
-        height: 2em;
+        width: 2.5em;
+        height: 1.5em;
     }
     .form-check-label{
-        line-height: 2.5em;
+        line-height: 2em;
         padding-left: .5em;
     }
 }

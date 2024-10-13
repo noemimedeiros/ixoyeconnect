@@ -1,21 +1,20 @@
 from django.contrib.auth.decorators import login_required
-
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
 from usuario.forms import DepartamentoForm
-from core.forms import EnderecoForm
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import Contribuicao
-from .forms import ContatosContribuicaoForm, ContribuicaoForm
+from .forms import ContribuicaoForm
 
 class ContribuicaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'contribuicao/contribuicao_list_view.html'
     model = Contribuicao
-    context_object_name = 'contribuicao'
+    context_object_name = 'contribuicoes'
+    ordering = ['tipo']
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -37,39 +36,24 @@ class ContribuicaoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         instituicao = self.request.user.instituicao
         context["titulo"] = "Criar Contribuição"
         context["active"] = ["contribuicao"]
-        context["endereco_form"] = EnderecoForm()
-        context["contatos_contribuicao_form"] = ContatosContribuicaoForm()
         context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
 
         if self.request.POST:
-            context["endereco_form"] = EnderecoForm(self.request.POST)
-            context["contatos_contribuicao_form"] = ContatosContribuicaoForm(self.request.POST)
-            context["departamentos_form"] = DepartamentoForm(self.request.POST, instituicao=instituicao, prefix="departamento")
-
+            if self.request.POST.get('relacionar_departamento'):
+                context["departamentos_form"] = DepartamentoForm(self.request.POST, instituicao=instituicao, prefix="departamento")
         return context
     
-    def form_valid(self, form):
-        endereco_sede = form.cleaned_data["endereco_sede"]
-
-        form = form.save(commit=False)
-        if endereco_sede == False:
-            endereco_form = EnderecoForm(self.request.POST)
-            if endereco_form.is_valid():
-                endereco_form = endereco_form.save()
-                form.endereco = endereco_form
-        else:
-            form.endereco = form.instituicao.endereco
-
-        return super().form_valid(form)
-    
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'instituicao': self.request.user.conta})
+        kwargs.update({'instituicao': self.request.user.instituicao})
         return kwargs
     
     def get_success_url(self):
-        return reverse('contribuicao:contribuicao_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        return reverse('contribuicao:contribuicao_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
     
 class ContribuicaoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     template_name = 'contribuicao/contribuicao_create_view.html'
@@ -79,22 +63,25 @@ class ContribuicaoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        instituicao = self.request.user.instituicao
+        contribuicao = self.get_object()
         context["titulo"] = "Editar Contribuição"
         context["active"] = ["contribuicao"]
-        context["endereco_form"] = EnderecoForm()
+        context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
 
         if self.request.POST:
-            context["endereco_form"] = EnderecoForm(self.request.POST)
+            if self.request.POST.get('relacionar_departamento'):
+                context["departamentos_form"] = DepartamentoForm(self.request.POST, instituicao=instituicao, prefix="departamento")
 
         return context
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'instituicao': self.request.user.conta})
+        kwargs.update({'instituicao': self.request.user.instituicao})
         return kwargs
     
     def get_success_url(self):
-        return reverse('contribuicao:contribuicao_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        return reverse('contribuicao:contribuicao_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
 
 @login_required(login_url="/login/")
 def ContribuicaoDeleteView(request, pk):
@@ -103,4 +90,4 @@ def ContribuicaoDeleteView(request, pk):
         message_delete_registro(request)
     except Contribuicao.DoesNotExist:
         message_error_registro(request)
-    return HttpResponseRedirect(reverse('contribuicao:contribuicao_list_view', kwargs={'instituicao_pk': request.user.conta.pk}))
+    return HttpResponseRedirect(reverse('contribuicao:contribuicao_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))

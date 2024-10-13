@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+    .card-contribuicao{
+        width: 100%;
+    }
+    .item-actions{
+        padding-left: 5%;
+    }
+    .contribuicao-form-section{
+        grid-template-columns: 1fr;
+    }
+    .div-cards-contribuicoes{
+        width: 100%;
+    }
+
+}

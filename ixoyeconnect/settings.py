@@ -118,7 +118,8 @@ TEMPLATES = [
             ],
             "libraries":{
                 "icons_arquivos": "posts.filters",
-                "file_ext": "posts.filters"
+                "file_ext": "posts.filters",
+                "get_tipo_display": "contribuicao.filters"
             }
         },
     },

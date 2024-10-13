@@ -109,10 +109,24 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         context["active"] = ["conteudo", tipo]
         return context
     
+    def form_valid(self, form):
+        form = form.save()
+        arquivos_formset = ArquivoPostFormSet(self.request.POST, self.request.FILES)
+        arquivos = arquivos_formset.save(commit=False)
+        for arquivo in arquivos:
+            arquivo.post = form
+            arquivo.nome
+            arquivo.save()
+        return HttpResponseRedirect(self.get_success_url())
+    
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
+    
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         post = self.get_object()
-        kwargs.update({'instituicao': post.instituicao.pk, 'categoria': post.categoria.pk, 'user': post.user.pk})
+        kwargs.update({'instituicao': post.instituicao, 'categoria': post.categoria.pk, 'user': post.user.pk})
         return kwargs
     
     def get_success_url(self):

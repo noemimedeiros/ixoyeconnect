@@ -1,4 +1,4 @@
-from usuario.models import Instituicao
+from usuario.models import InstituicaoSede
 from core.forms import FormBaseIxoye
 from .models import Post, ArquivoPost
 from django import forms
@@ -33,7 +33,7 @@ class NewPostForm(FormBaseIxoye):
         super().__init__(*args, **kwargs)
 
         if instituicao:
-            self.fields['instituicao'].queryset = Instituicao.objects.filter(pk=instituicao.pk)
+            self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
         if categoria:
             self.helper['categoria'].wrap(Field, type="hidden", value=categoria)

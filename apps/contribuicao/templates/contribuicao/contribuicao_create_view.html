@@ -16,13 +16,17 @@
 {% block dashboard_content %}
 <span>Preencha os dados abaixo</span>
 <section class="contribuicao-form-section">
-    <div>
+    <form method="POST" enctype="multipart/form-data">
         {% crispy form %}
-    </div>
+        <button type="submit" class="btn button-filled w-100">Criar Contribuição</button>
+    </form>
     <div>
         <div class="contribuicao-preview">
             <div class="mb-4"><small>Pré-Visualização</small></div>
-            <div class='div-card-contribuicao'></div>
+            <div class='div-preview-contribuicao'>
+                {% include "contribuicao/partials/card_contribuicao_deposito.html" %}
+                {% include "contribuicao/partials/card_contribuicao_pix.html" %}
+            </div>
         </div>
     </div>
 </section>
@@ -48,5 +52,62 @@
 
 {% block _scripts %}
 <script>
+    function metodoContribuicao(){
+        let metodo = $('#id_metodo').val()
+        if (metodo == "pix"){
+            $('#div_id_agencia, #div_id_conta, #div_id_banco').css("display", "none")
+            $('#div_id_chave_pix').removeAttr("style")
+
+            $('#id_chave_pix').prop('required', true)
+            $('#id_agencia, #id_conta, #id_banco').prop('required', false)
+
+            $('.card-contribuicao-pix').removeAttr('style')
+            $('.card-contribuicao-deposito').css("display", "none")
+        }else if(metodo == 'deposito'){
+            $('#div_id_agencia, #div_id_conta, #div_id_banco').removeAttr("style")
+            $('#div_id_chave_pix').css("display", "none")
+
+            $('#id_chave_pix').prop('required', false)
+            $('#id_agencia, #id_conta, #id_banco').prop('required', true)
+
+            $('.card-contribuicao-deposito').removeAttr('style')
+            $('.card-contribuicao-pix').css("display", "none")
+        }
+    }
+
+    function cardContribuicao(){
+        let metodo = $('#id_metodo').val()
+        let pix = $('#id_chave_pix').val()
+        let agencia = $('#id_agencia').val()
+        let conta = $('#id_conta').val()
+        let banco = $('#id_banco').val()
+
+        if (metodo == "pix"){
+            $('.card-contribuicao-chave').html(pix)
+        }else{
+            $('.contribuicao-agencia').html(agencia)
+            $('.contribuicao-numconta').html(conta)
+            $('.contribuicao-banco').html(banco)
+        }
+    }
+
+    function relacionarDepartamento(){
+        let addDepartamento = $('#id_relacionar_departamento').is(':checked')
+        if (addDepartamento){
+            $('#div_id_departamento').removeAttr('style')
+        }else{
+            $('#div_id_departamento').css('display', 'none')
+        }
+    }
+
+    $('#id_relacionar_departamento').change(() => relacionarDepartamento())
+    $('#id_metodo').change(() => metodoContribuicao())
+    $('input, select').on('input change', () => cardContribuicao())
+    
+    $(function(){
+        metodoContribuicao()
+        relacionarDepartamento()
+        cardContribuicao()
+    })
 </script>
 {% endblock _scripts %}

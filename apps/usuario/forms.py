@@ -93,7 +93,7 @@ class DepartamentoForm(FormBaseIxoye):
         self.helper.add_input(Submit('adicionar-departamento', 'Criar Departamento', css_class='btn button-filled w-100'))
 
         if instituicao:
-            self.fields['instituicao'].queryset = Instituicao.objects.filter(pk=instituicao.pk)
+            self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
 
 class FuncaoForm(FormBaseIxoye):
