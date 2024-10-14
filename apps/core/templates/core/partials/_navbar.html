@@ -53,7 +53,7 @@
             <div class="side-nav-icon"><i class="fa-solid fa-users"></i></div>
             <div class="side-nav-text">Lista de Membros</div>
         </a>
-        <a href="#" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
+        <a href="{% url 'escala:escala_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-clipboard-list"></i></div>
             <div class="side-nav-text">Escalas</div>
         </a>

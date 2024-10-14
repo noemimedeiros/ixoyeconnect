@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_ckeditor_5',
     'extra_views',
+    'django_filters',
 
     # Local,
     'core',

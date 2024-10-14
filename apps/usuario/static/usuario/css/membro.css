@@ -47,6 +47,16 @@
     padding: .175rem 1.25rem;
 }
 
+.buttons-form{
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+}
+.buttons-form button, .buttons-form a{
+    margin-top: auto;
+    width: 20%;
+}
+
 #funcoes-formset{
     display: grid;
     gap: 20px;

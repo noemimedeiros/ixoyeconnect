@@ -9,4 +9,13 @@
     #adicionar-funcoes{
         width: 100%;
     }
+    .btn-add-modal{
+        width: 100%;
+    }
+    .buttons-form button, .buttons-form a{
+        width: 100%;
+    }
+    .buttons-form{
+        flex-direction: column-reverse;
+    }
 }

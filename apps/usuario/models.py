@@ -78,9 +78,13 @@ class Membro(UsuarioAbstract):
     ano_ingressao = models.IntegerField(null=True, blank=True)
     data_nascimento = models.DateField(null=False, blank=False)
     foto = models.ImageField(upload_to='usuario/perfil', max_length=255, null=True, blank=True)
+    desvinculado = models.BooleanField(default=0)
 
     class Meta:
         db_table = 'membro'
+
+    def __str__(self):
+        return self.nome
 
     @property
     def idade(self):

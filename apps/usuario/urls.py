@@ -20,4 +20,5 @@ urlpatterns = [
     path('excluir_membro/<int:pk>/', views.MembroDeleteView, name="membro_delete_view"),
 
     path('funcao_por_departamento/', views.funcao_por_departamento, name="funcao_por_departamento"),
+    path('devincular_usuario/<int:membro_pk>/', views.devincular_usuario, name="devincular_usuario"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

@@ -203,3 +203,12 @@ def funcao_por_departamento(request):
         resposta['funcao'].append(funcao.funcao.funcao)
 
     return JsonResponse(resposta, safe=False)
+
+@login_required(login_url="/login/")
+def devincular_usuario(request, membro_pk):
+    try:
+        Membro.objects.filter(pk=membro_pk).update(devinculado=1)
+        message_delete_registro(request)
+    except Membro.DoesNotExist:
+        message_error_registro(request)
+    return HttpResponseRedirect(reverse('usuario:membro_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))

@@ -1,0 +1,32 @@
+<div role="button" class="escala-grid">
+    <div class="linha-tempo-escala">
+        <div class="escala-dia">
+            <h6 class="escala-dia">
+                {{ data|date:"d"|default:"--" }}
+            </h6>
+            <h6 class="escala-mes">
+                {{ data|date:"N"|default:"---" }}
+            </h6>
+        </div>
+        <div class="escala-linha"></div>
+    </div>
+    <div class="escala-card" data-bs-target="#escala-card-{{forloop.counter}}" data-bs-toggle="collapse">
+        <div class="escala-membros">
+            {% for escala in escalas %}
+                {% if forloop.counter <= 3 %}
+                    {% if escala.membro.profile_picture %}
+                    <img src="{{ escala.membro.profile_picture.url }}" class="profile-escala-card"></img>
+                    {% else %}
+                    <div class="profile-escala-card"><h2>{{ escala.membro.nome.0 }}</h2></div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if escalas|length > 3 %}
+            <div class="profile-escala-mais"><h5>+ {{ escalas|length }}</h5></div>
+            {% endif %}
+        </div>
+        <div>
+            Clique para expandir
+        </div>
+    </div>
+</div>

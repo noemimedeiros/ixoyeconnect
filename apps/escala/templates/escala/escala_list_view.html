@@ -1,0 +1,87 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'escala/css/escala.css' %}">
+<link rel="stylesheet" href="{% static 'escala/css/escala_responsive.css' %}">
+<style>
+    .item-actions{
+        margin-top: auto;
+    }
+</style>
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% include "core/includes/default_actions.html" %}
+{% if request.user.is_admin %}
+<button data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
+    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
+</button>
+{% endif %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="escala-section">
+    <section class="escala-filter">{% crispy filter.form %}</section>
+    <section class="escala-list">
+        {% regroup escalas by data as escalas_list %}
+        {% for escalas in escalas_list %}
+            {% include "escala/partials/card_escala.html" with escalas=escalas.list data=escalas.grouper %}
+        {% endfor %}
+    </section>
+</section>
+<div class="modal fade" tabindex="-1" id="criar-escala">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-4 border-0">
+                <div>
+                    <h4><b>Nova Escala</b></h4>
+                    <small>Preencha os dados abaixo</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    {% crispy form %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    const funcoes_por_membros_url = '{% url "escala:funcoes_por_membro" %}'
+
+    $('#id_escala-membro').change(function(){
+        let membro = $(this).val()
+        $.ajax({
+            url: funcoes_por_membros_url,
+            type: 'GET',
+            data: {membro: membro},
+            beforeSend: function(){
+                $('#id_escala-funcao_membro').children('option').remove()
+            },
+            success:function(resposta){
+                $('#id_escala-funcao_membro').append(
+                    `<option value="" disabled>---------</option>`
+                )
+                for(let i=0; i < resposta.funcao.length; i++){
+                    $('#id_escala-funcao_membro').append(
+                        `<option value="${resposta.id[i]}">${resposta.funcao[i]}</option>`
+                    )
+                }
+            },
+            error: function(e){
+                console.log(e)
+            }
+        })
+    })
+</script>
+{% endblock _scripts %}

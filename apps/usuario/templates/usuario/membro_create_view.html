@@ -32,7 +32,10 @@
                 {% crispy endereco_form %}
             </div>
         </div>
-        <button class="btn button-filled w-100" type="submit">Salvar</button>
+        <div class="buttons-form">
+            <a href="{% url 'usuario:membro_list_view' instituicao.pk %}" class="btn button-outlined" type="button">Cancelar</a>
+            <button class="btn button-filled" type="submit">Salvar</button>
+        </div>
     </form>
 </section>
 {% endblock dashboard_content %}

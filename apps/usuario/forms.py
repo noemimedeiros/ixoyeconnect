@@ -58,7 +58,7 @@ class MembroForm(FormBaseIxoye):
     class Meta:
         model = Membro
         fields = '__all__'
-        exclude = ('user', 'endereco', 'foto', 'sede', )
+        exclude = ('user', 'endereco', 'foto', 'sede', 'desvinculado', )
         widgets = {
             'data_nascimento': forms.TextInput(attrs={'class': 'datepicker date'}),
             'celular': forms.TextInput(attrs={'class': 'phone'})
@@ -82,7 +82,7 @@ class NewMembroForm(FormBaseIxoye):
     class Meta:
         model = Membro
         fields = '__all__'
-        exclude = ('endereco',)
+        exclude = ('endereco', 'desvinculado', )
         widgets = {
             'user': forms.HiddenInput(),
             'data_nascimento': forms.TextInput(attrs={'class': 'datepicker date'}),
