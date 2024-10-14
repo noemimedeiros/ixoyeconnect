@@ -293,8 +293,17 @@
 .item-actions{
     text-align: center;
     color: var(--green);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     margin-top: 10px;
     margin-bottom: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-actions:focus{
+    background-color: var(--gray-1);
 }
 .item-actions-popover{
     display: grid;

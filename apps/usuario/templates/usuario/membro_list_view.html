@@ -8,7 +8,12 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'usuario/css/membro.css' %}">
 <link rel="stylesheet" href="{% static 'usuario/css/membro_responsive.css' %}">
-
+<style>
+    .item-actions{
+        margin-top: auto;
+        margin-left: auto;
+    }
+</style>
 {% endblock style %}
 
 {% block dashboard_actions %}
@@ -55,7 +60,7 @@
                     <td class="text-center">{{ membro.membro_ha }}</td>
                     <td>{{ membro.celular }}</td>
                     <td>{{ membro.data_nascimento|date:"d" }} de {{ membro.data_nascimento|date:"F" }}</td>
-                    <td>
+                    <td class="text-right">
                         {% if request.user.is_admin %}
                             {% include "core/includes/default_item_actions.html" with object=membro edit_link='usuario:membro_update_view' delete_link='usuario:membro_delete_view' item_pk=membro.pk %}
                         {% endif %}
