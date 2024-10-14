@@ -46,11 +46,11 @@
         if (isDarkMode){
             btnDarkmode.classList.remove('fa-moon')
             btnDarkmode.classList.add('fa-sun')
-            textDarkmode.innerText = 'Modo Claro';
+            if (textDarkmode) textDarkmode.innerText = 'Modo Claro';
         }else{
             btnDarkmode.classList.remove('fa-sun')
             btnDarkmode.classList.add('fa-moon')
-            textDarkmode.innerText = 'Modo Escuro';
+            if (textDarkmode) textDarkmode.innerText = 'Modo Escuro';
         }
     }
     var darkModeStatus = localStorage.getItem('darkMode');
@@ -71,7 +71,8 @@
 <script src="{% static 'public/js/popper.min.js' %}"></script>
 <script src="{% static 'public/libs/pagination/pagination.min.js' %}"></script>
 <script src="{% static 'public/libs/bootstrap/js/bootstrap-datepicker.min.js' %}"></script>
-{% block scripts %}{% endblock scripts %}
+<script src="{% static 'public/libs/bootstrap/js/bootstrap-datepicker.pt-BR.js' %}"></script>
+
 <script>
     if (darkModeStatus === 'enabled') {
         $('.icon-dark-mode').removeClass('fa-moon').addClass('fa-sun')
@@ -82,11 +83,16 @@
     }
 
     $('.datepicker').datepicker({
-        language: "pt-BR",
+        language: 'pt-BR',
         format: 'dd/mm/yyyy',
         todayHighlight: 'TRUE',
         autoclose: true,
     });
+
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
 
     {% if messages %}
         $(function() {
@@ -94,4 +100,5 @@
         });
     {% endif %}
 </script>
+{% block scripts %}{% endblock scripts %}
 </html>

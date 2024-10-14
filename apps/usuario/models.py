@@ -1,3 +1,4 @@
+from django.utils import timezone
 from typing import Iterable
 from django.db import models
 from core.models import Endereco
@@ -80,22 +81,49 @@ class Membro(UsuarioAbstract):
 
     class Meta:
         db_table = 'membro'
+
+    @property
+    def idade(self):
+        today = timezone.now().date()
+        idade = int(
+            today.year
+            - (self.data_nascimento.year)
+            - ((today.month, today.day) < (self.data_nascimento.month, self.data_nascimento.day))
+        )
+        return idade
+    
+    @property
+    def membro_ha(self):
+        today = timezone.now().date()
+        membro_ha = int(
+            today.year
+            - (self.ano_ingressao)
+        )
+        return membro_ha
+    
+    def get_funcoes(self):
+        funcoes = [str(funcao) for funcao in self.funcoes.all()]
+        if funcoes:
+            funcoes = " - ".join(funcoes)
+            return funcoes
+        return "Membro"
     
     def eventos_confirmados_pks(self):
         return self.eventos_confirmados.values_list("evento", flat=True)
 
 class Funcao(models.Model):
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)
     funcao = models.CharField(max_length=50, null=False, blank=False, verbose_name="Nome da Função")
     descricao = models.TextField(null=True, blank=True, help_text="Este campo é opcional")
 
-    def __tr__(self):
+    def __str__(self):
         return self.funcao
      
     class Meta:
         db_table = 'funcao'
 
 class Departamento(models.Model):
-    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)
     departamento = models.CharField(max_length=50, null=False, blank=False, verbose_name="Nome do Departamento")
     descricao = models.TextField(null=True, blank=True, help_text="Este campo é opcional")
 
@@ -105,10 +133,23 @@ class Departamento(models.Model):
     class Meta:
         db_table = 'departamento'
 
-class FuncaoMembro(models.Model):
-    membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False)
+class FuncaoDepartamento(models.Model):
     funcao = models.ForeignKey(Funcao, on_delete=models.CASCADE, null=False, blank=False)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=False, blank=False)
 
     class Meta:
+        db_table = 'funcaodepartamento'
+
+    def __str__(self):
+        return f'{self.funcao} - {self.departamento}'
+
+class FuncaoMembro(models.Model):
+    membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False, related_name="funcoes")
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=False, blank=False)
+    funcao = models.ForeignKey(Funcao, on_delete=models.CASCADE, null=False, blank=False)
+
+    class Meta:
         db_table = 'funcaomembro'
+
+    def __str__(self):
+        return f'{self.funcao} - {self.departamento}'

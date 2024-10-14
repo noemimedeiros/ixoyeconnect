@@ -37,10 +37,6 @@ class ContribuicaoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         context["titulo"] = "Criar Contribuição"
         context["active"] = ["contribuicao"]
         context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
-
-        if self.request.POST:
-            if self.request.POST.get('relacionar_departamento'):
-                context["departamentos_form"] = DepartamentoForm(self.request.POST, instituicao=instituicao, prefix="departamento")
         return context
     
     def form_invalid(self, form):
@@ -67,12 +63,6 @@ class ContribuicaoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         contribuicao = self.get_object()
         context["titulo"] = "Editar Contribuição"
         context["active"] = ["contribuicao"]
-        context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
-
-        if self.request.POST:
-            if self.request.POST.get('relacionar_departamento'):
-                context["departamentos_form"] = DepartamentoForm(self.request.POST, instituicao=instituicao, prefix="departamento")
-
         return context
     
     def get_form_kwargs(self):

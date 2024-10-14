@@ -1,0 +1,44 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'usuario/css/membro.css' %}">
+<link rel="stylesheet" href="{% static 'usuario/css/membro_responsive.css' %}">
+{% endblock style %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block dashboard_actions %}
+<button class="btn button-outlined btn-sm gap-2" data-bs-target="#criar-funcao" data-bs-toggle="modal">
+    <i class="fa-solid fa-plus"></i> <span>Criar nova Função</span>
+</button>
+<button class="btn button-outlined btn-sm gap-2" data-bs-target="#criar-departamento" data-bs-toggle="modal">
+    <i class="fa-solid fa-plus"></i> <span>Criar novo Departamento/Ministério</span>
+</button>
+{% endblock %}
+
+{% block dashboard_content %}
+<span>Preencha os dados abaixo</span>
+<section class="membro-form-section">
+    <form  method="POST" enctype="multipart/form-data">
+        <div class="form-membro">
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados do Usuário</b></h6>
+                {% crispy user_form %}
+            </div>
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados do Membro</b></h6>
+                {% crispy form %}
+            </div>
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados do Endereço</b></h6>
+                {% crispy endereco_form %}
+            </div>
+        </div>
+        <button class="btn button-filled w-100" type="submit">Salvar</button>
+    </form>
+</section>
+{% endblock dashboard_content %}

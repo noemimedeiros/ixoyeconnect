@@ -1,0 +1,184 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'usuario/css/membro.css' %}">
+<link rel="stylesheet" href="{% static 'usuario/css/membro_responsive.css' %}">
+{% endblock style %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block dashboard_actions %}
+<button class="btn button-outlined btn-sm gap-2" data-bs-target="#criar-funcao" data-bs-toggle="modal">
+    <i class="fa-solid fa-plus"></i> <span>Criar nova Função</span>
+</button>
+<button class="btn button-outlined btn-sm gap-2" data-bs-target="#criar-departamento" data-bs-toggle="modal">
+    <i class="fa-solid fa-plus"></i> <span>Criar novo Departamento/Ministério</span>
+</button>
+{% endblock %}
+
+{% block dashboard_content %}
+<span>Preencha os dados abaixo</span>
+<section class="membro-form-section">
+    <form  method="POST" enctype="multipart/form-data">
+        <div class="form-membro">
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados do Membro</b></h6>
+                {% crispy form %}
+            </div>
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados do Endereço</b></h6>
+                {% crispy endereco_form %}
+            </div>
+        </div>
+        <div class="border-top border-bottom py-4 mb-3">
+            <div>
+                <h6 class="mb-3"><b>Cargos/Funções</b></h6>
+                {{ funcoes_form.management_form }}
+                <div id="funcoes-formset">
+                    {% for funcao_form in funcoes_form %}
+                        <div class="formset-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="text-muted"><b>Cargo - {{ forloop.counter }}</b> <div id="form-a-excluir-{{forloop.counter0}}" class="text-danger d-none">A excluir*</div> </div>
+                                <div>
+                                    <input data-id="{{forloop.counter0}}" onchange="deletarFuncao(this)" type="checkbox" name="form-{{forloop.counter0}}-DELETE" id="id_form-{{forloop.counter0}}-DELETE" hidden>
+                                    <label class="btn button-danger btn-model-add" for="id_form-{{forloop.counter0}}-DELETE"><i class="fa-solid fa-trash-can"></i></label>
+                                </div>
+                            </div>
+                            {{ funcao_form.id }}
+                            {% crispy funcao_form %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="btn button-outlined px-4" type="button" id="adicionar-funcoes">Adicionar mais funções</button>
+            </div>
+        </div>
+        <button class="btn button-filled w-100" type="submit">Salvar</button>
+    </form>
+    
+</section>
+<div class="modal" tabindex="-1" id="criar-departamento">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-4 border-0">
+                <div>
+                    <h4><b>Novo Departamento</b></h4>
+                    <small>Preencha os dados abaixo</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    {% crispy departamentos_form %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" id="criar-funcao">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-4 border-0">
+                <div>
+                    <h4><b>Novo(a) Cargo/Função</b></h4>
+                    <small>Preencha os dados abaixo</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    {% crispy funcao_form %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    const formsetContainer = $('#funcoes-formset');
+    const totalFormsInput = $('#id_form-TOTAL_FORMS');
+    const adicionarFuncoes = $('#adicionar-funcoes');
+
+    function deletarFuncao(btn){
+        $(`label[for="${btn.id}"]`).toggleClass('button-danger').toggleClass('btn-info')
+        $(`label[for="${btn.id}"]`).find('i').toggleClass('fa-trash-can').toggleClass('fa-rotate-left')
+        $(`#form-a-excluir-${btn.dataset.id}`).toggleClass('d-none')
+    }
+
+    adicionarFuncoes.click(function() {
+        var totalForms = parseInt(totalFormsInput.val());
+        var newForm = $('.formset-item:last').clone(true);
+
+        var formRegex = new RegExp(`form-(\\d+)-`, 'g');
+        newForm.html(newForm.html().replace(formRegex, `form-${totalForms}-`));
+
+        newForm.find('input, select, textarea').each(function() {
+            var type = $(this).attr('type');
+            if (type !== 'hidden') {
+                $(this).val('');
+            }
+        });
+
+        formsetContainer.append(newForm);
+        totalFormsInput.val(totalForms + 1);
+
+        newForm.find('select[name$="-funcao"]').children('option').remove()
+        $('select[name$="-departamento"]').change(function(){
+            let departamento = $(this).val();
+            let funcaoSelect = $(this).parents('.formset-item').find('select[name$="-funcao"]')
+            $.ajax({
+                data: {departamento:departamento},
+                type: 'GET',
+                url: funcao_por_departamento_url,
+                beforeSend: function(){
+                    funcaoSelect.children('option').remove()
+                },
+                success:function(resposta){
+                    for(let i=0; i < resposta.funcao.length; i++){
+                        funcaoSelect.append(
+                            `<option value="${resposta.id[i]}">${resposta.funcao[i]}</option>`
+                        )
+                    }
+                },
+                error: function(e){
+                    console.log(e)
+                }
+            })
+        })
+    });
+    const funcao_por_departamento_url = '{% url "usuario:funcao_por_departamento" %}'
+
+    $(function(){
+        $('select[name$="-departamento"]').change(function(){
+            let departamento = $(this).val();
+            let funcaoSelect = $(this).parents('.formset-item').find('select[name$="-funcao"]')
+            $.ajax({
+                data: {departamento:departamento},
+                type: 'GET',
+                url: funcao_por_departamento_url,
+                beforeSend: function(){
+                    funcaoSelect.children('option').remove()
+                },
+                success:function(resposta){
+                    funcaoSelect.append(
+                        `<option value="" disabled>---------</option>`
+                    )
+                    for(let i=0; i < resposta.funcao.length; i++){
+                        funcaoSelect.append(
+                            `<option value="${resposta.id[i]}">${resposta.funcao[i]}</option>`
+                        )
+                    }
+                },
+                error: function(e){
+                    console.log(e)
+                }
+            })
+        })
+    })
+</script>
+{% endblock _scripts %}

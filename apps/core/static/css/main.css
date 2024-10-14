@@ -122,6 +122,7 @@
     overflow-y: scroll;
     grid-auto-rows: min-content;
     margin-top: 10px;
+    padding-bottom: 60px;
 }
 .side-nav-items a, .side-nav-logo{
     color: var(--gray-3);

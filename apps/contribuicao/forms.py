@@ -1,6 +1,7 @@
-from usuario.models import InstituicaoSede
+from usuario.models import Departamento, InstituicaoSede
 from core.forms import FormBaseIxoye
 from django import forms
+from django.db.models import Q
 from .models import METODO_CONTRIBUICAO, TIPO_CONTRIBUICAO, Contribuicao, ContatosContribuicao
 from crispy_forms.layout import Field
 from crispy_bootstrap5.bootstrap5 import Switch
@@ -26,6 +27,8 @@ class ContribuicaoForm(FormBaseIxoye):
         if instituicao:
             self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
+
+        self.fields['departamento'].queryset = Departamento.objects.filter(Q(instituicao__isnull=True) | Q(instituicao=instituicao.pk))
 
         self.helper['departamento'].wrap(Field, template="contribuicao/partials/custom_departamento_field.html")
         self.helper['relacionar_departamento'].wrap(Switch)

@@ -51,6 +51,7 @@
 
     $(function(){
         $('.item-actions').each(function () {
+            $(this).popover('dispose');
             $(this).popover({
                 html: true,
                 content: `

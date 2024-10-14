@@ -1,9 +1,8 @@
-from allauth.account.forms import LoginForm, SignupForm, ChangePasswordForm, AddEmailForm, ConfirmLoginCodeForm, ResetPasswordForm
+from allauth.account.forms import UserForm, LoginForm, SignupForm, ChangePasswordForm, AddEmailForm, ConfirmLoginCodeForm, ResetPasswordForm
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Div, Submit
 from crispy_bootstrap5.bootstrap5 import FloatingField, Field, Switch
-
 from core.models import Endereco
 
 def floating_fields(self):

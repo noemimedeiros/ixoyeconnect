@@ -1,0 +1,15 @@
+<div id="div_{{ field.id_for_label }}" class="mb-3">
+    <div class="d-flex align-items-center gap-2 mb-2">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <button type="button" class="btn button-filled btn-model-add" data-bs-target="#criar-funcao" data-bs-toggle="modal">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    <select name="{{ field.html_name  }}" id="{{ field.id_for_label }}" class="form-primary select form-select" required>
+        {% for choice in field.field.choices %}
+          <option value="{{ choice.0 }}">
+                {{ choice.1 }}
+          </option>
+        {% endfor %}
+    </select>
+</div>

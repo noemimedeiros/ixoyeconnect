@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
 from core.forms import EnderecoForm
-from core.messages_utils import message_delete_registro, message_error_generic, message_error_registro, message_success_generic
+from core.messages_utils import message_delete_registro, message_error_registro, message_success_generic
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import Evento, ParticipanteEvento
@@ -65,7 +65,7 @@ class EventoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         return kwargs
     
     def get_success_url(self):
-        return reverse('evento:evento_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        return reverse('evento:evento_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
     
 class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     template_name = 'evento/evento_create_view.html'
@@ -90,7 +90,7 @@ class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         return kwargs
     
     def get_success_url(self):
-        return reverse('evento:evento_list_view', kwargs={'instituicao_pk': self.request.user.conta.pk})
+        return reverse('evento:evento_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
     
 class EventoDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
     template_name = "evento/evento_detail_view.html"
