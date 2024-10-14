@@ -1,0 +1,12 @@
+@media (max-width: 768px) {
+    .form-membro, #funcoes-formset{
+        grid-template-columns: 1fr;
+    }
+    .table-membros tbody td:not(:first-child):not(:nth-child(2)):not(:last-child),
+    .table-membros thead th:not(:first-child):not(:nth-child(2)):not(:last-child){
+        display: none;
+    }
+    #adicionar-funcoes{
+        width: 100%;
+    }
+}

@@ -284,9 +284,11 @@ a.btn{
     font-size: 1.25rem;
 }
 
-.btn-sm{
-    height: calc(2rem + calc(var(--bs-border-width)* 2));
-    min-height: calc(2rem + calc(var(--bs-border-width)* 2));
+@media (min-width: 768px) {
+    .btn-sm{
+        height: calc(2rem + calc(var(--bs-border-width)* 2));
+        min-height: calc(2rem + calc(var(--bs-border-width)* 2));
+    }
 }
 
 .button-filled{
