@@ -1,5 +1,5 @@
-<a href="{% if post %} {% url 'posts:conteudo_detail_view' post.pk %}{% else %}#{% endif %}" class="card-post">
-    <img {% if post %}src="{{ post.capa.url }}"{% endif %} class="card-post-capa" alt="">
+<a href="{% if post %} {% url 'posts:conteudo_detail_view' post.pk %}{% else %}#{% endif %}" class="card-post {% if post and not post.capa %}card-post-sem-capa{% endif %}">
+    {% if post and post.capa %}<img src="{{ post.capa.url }}" class="card-post-capa" alt="">{% endif %}
     <div class="post-body">
         <h5 class="card-post-titulo">
             {{ post.titulo|default:"-----" }}

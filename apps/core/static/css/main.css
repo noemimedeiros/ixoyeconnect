@@ -411,6 +411,8 @@
     width: 100%;
     color: var(--black-1);
     object-fit: cover;
+    display: flex;
+    flex-direction: column;
 }
 .card-post-aberto{
     display: flex;

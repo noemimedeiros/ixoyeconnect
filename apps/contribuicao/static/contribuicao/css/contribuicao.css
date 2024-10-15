@@ -58,6 +58,7 @@
 .card-contribuicao-conta, .card-contribuicao-infos{
     display: flex;
     justify-content: space-between;
+    gap: 20px;
     width: 100%;
 }
 .card-contribuicao-infos-body .card-contribuicao-infos:not(:last-child){

@@ -1,11 +1,11 @@
 <div class="card-contribuicao-deposito card-contribuicao">
     <div class="card-cotribuicao-body">
         <div class="card-contribuicao-metodo">
-            Depósito:
+            Depósito {% if contribuicao and contribuicao.departamento %}- {{contribuicao.departamento}}{% endif %} :
         </div>
         <div class="card-contribuicao-conta">
             <div>
-                <div class="contribuicao-titulo">Conta Corrente</div>
+                <div class="contribuicao-titulo">Conta</div>
                 <div class="contribuicao-numconta">{{ contribuicao.conta|default:"-----" }}</div>
             </div>
             <div>

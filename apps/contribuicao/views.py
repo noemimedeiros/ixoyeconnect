@@ -63,6 +63,7 @@ class ContribuicaoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         contribuicao = self.get_object()
         context["titulo"] = "Editar Contribuição"
         context["active"] = ["contribuicao"]
+        context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
         return context
     
     def get_form_kwargs(self):
