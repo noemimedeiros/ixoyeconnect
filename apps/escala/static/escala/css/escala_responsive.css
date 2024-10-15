@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+    .dashboard-head-actions button{
+        display: none;
+    }
+    .escala-filter{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+    .escala-filter .form-floating{
+        flex: 1;
+    }
+    .escala-filter button{
+        display: block;
+    }
+    .escala-filter{
+        margin-top: 0;
+    }
+}

@@ -52,18 +52,19 @@
     $(function(){
         $('.item-actions').each(function () {
             $(this).popover('dispose');
+
             $(this).popover({
                 html: true,
                 content: `
                     <div class="item-actions-popover">
-                        <a href="${$(this).data('editlink')}"><i class="fa-solid fa-pen-to-square"></i> <span>Editar</span> </a>
-                        <a role="button" data-object="${$(this).data('object')}" data-deletelink="${$(this).data('deletelink')}" data-bs-toggle="modal" href="#" data-bs-target="#delete-modal"><i class="fa-solid fa-trash-can text-danger"></i> <span>Excluir</span> </a>
+                        <a class="item-edit-link" href="${$(this).data('editlink')}"><i class="fa-solid fa-pen-to-square"></i> <span>Editar</span> </a>
+                        <a class="item-delete-link" role="button" data-object="${$(this).data('object')}" data-deletelink="${$(this).data('deletelink')}" data-bs-toggle="modal" href="#" data-bs-target="#delete-modal"><i class="fa-solid fa-trash-can text-danger"></i> <span>Excluir</span> </a>
                     </div>
                 `,
                 placement: 'left',
                 trigger: 'blur',
                 allowList: {
-                    a: ['href', 'role', 'data-object', 'data-deletelink', 'data-bs-toggle', 'data-bs-target'],
+                    a: ['class', 'href', 'role', 'data-object', 'data-deletelink', 'data-bs-toggle', 'data-bs-target'],
                     i: ['class'],
                     div: ['class'],
                     span: []

@@ -44,8 +44,8 @@
                 {% for membro in membro %}
                 <tr>
                     <td>
-                        {% if membro.profile_picture %}
-                        <img src="{% if membro.profile_picture %}{{ membro.profile_picture.url }}{% endif %}" class="membro-foto-table"></img>
+                        {% if membro.foto %}
+                        <img src="{% if membro.foto %}{{ membro.foto.url }}{% endif %}" class="membro-foto-table"></img>
                         {% else %}
                         <div class="user-profile"><h2>{{ membro.nome.0 }}</h2></div>
                         {% endif %}
@@ -57,7 +57,13 @@
                         </div>
                     </td>
                     <td class="text-center">{{ membro.idade }}</td>
-                    <td class="text-center">{{ membro.membro_ha }}</td>
+                    <td class="text-center">
+                        {% if membro.membro_ha > 0 %}
+                        {{ membro.membro_ha }} anos
+                        {% else %}
+                        Meses
+                        {% endif %}
+                    </td>
                     <td>{{ membro.celular }}</td>
                     <td>{{ membro.data_nascimento|date:"d" }} de {{ membro.data_nascimento|date:"F" }}</td>
                     <td class="text-right">

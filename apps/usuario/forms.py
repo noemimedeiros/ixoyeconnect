@@ -82,7 +82,7 @@ class NewMembroForm(FormBaseIxoye):
     class Meta:
         model = Membro
         fields = '__all__'
-        exclude = ('endereco', 'desvinculado', )
+        exclude = ('user', 'endereco', 'desvinculado', )
         widgets = {
             'user': forms.HiddenInput(),
             'data_nascimento': forms.TextInput(attrs={'class': 'datepicker date'}),

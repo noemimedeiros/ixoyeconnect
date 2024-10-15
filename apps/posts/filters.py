@@ -1,6 +1,8 @@
 import os
 from django import template
 
+from posts.models import Curtida, Salvo
+
 register = template.Library()
 
 @register.filter
@@ -30,3 +32,17 @@ def icons_arquivos(ext):
 @register.filter
 def file_ext(value):
     return os.path.splitext(value.name)[1]
+
+@register.filter
+def curtido(post, user):
+    if Curtida.objects.filter(post=post, user=user).exists():
+        return True
+    else:
+        return False
+    
+@register.filter
+def salvo(post, user):
+    if Salvo.objects.filter(post=post, user=user).exists():
+        return True
+    else:
+        return False

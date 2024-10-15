@@ -15,4 +15,5 @@ urlpatterns = [
     path('excluir_escala/<int:pk>/', views.excluir_escala, name="escala_delete_view"),
 
     path('funcoes_por_membro/', views.funcoes_por_membro, name="funcoes_por_membro"),
+    path('carregar_infos_editar/', views.carregar_infos_editar, name="carregar_infos_editar"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

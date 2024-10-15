@@ -120,6 +120,8 @@ TEMPLATES = [
             "libraries":{
                 "icons_arquivos": "posts.filters",
                 "file_ext": "posts.filters",
+                "curtido": "posts.filters",
+                "salvo": "posts.filters",
                 "get_tipo_display": "contribuicao.filters"
             }
         },

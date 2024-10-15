@@ -17,7 +17,6 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
-{% include "core/includes/default_actions.html" %}
 {% if request.user.is_admin %}
 <button data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
@@ -27,20 +26,38 @@
 
 {% block dashboard_content %}
 <section class="escala-section">
-    <section class="escala-filter">{% crispy filter.form %}</section>
-    <section class="escala-list">
-        {% regroup escalas by data as escalas_list %}
-        {% for escalas in escalas_list %}
-            {% include "escala/partials/card_escala.html" with escalas=escalas.list data=escalas.grouper %}
-        {% endfor %}
-    </section>
+    <form method="get">
+        <div>
+            <section class="escala-filter">
+                {% crispy filter.form %}
+                <button type="button" data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
+                    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
+                </button>
+            </section>
+            <section class="escala-list">
+                {% if filtrado_para %}
+                <span class="escala-titulo-filtro">Escalados para <b>{{ filtrado_para }}</b>.</span>
+                {% else %}
+                <span class="escala-titulo-filtro">Escalados para <b>todos os departamentos.</b></span>
+                {% endif %}
+                {% regroup escalas by data as escalas_list %}
+                {% for escalas in escalas_list %}
+                    {% include "escala/partials/card_escala.html" with filtrado_para=filtrado_para escalas=escalas.list data=escalas.grouper %}
+                {% empty %}
+                <div class="text-muted text-center">
+                    Ainda não há nenhuma escala definida.
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+    </form>
 </section>
 <div class="modal fade" tabindex="-1" id="criar-escala">
     <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header p-4 border-0">
                 <div>
-                    <h4><b>Nova Escala</b></h4>
+                    <h4 class="modal-title-criar"><b>Nova Escala</b></h4>
                     <small>Preencha os dados abaixo</small>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -82,6 +99,74 @@
                 console.log(e)
             }
         })
+    })
+
+    $('.escala-cards').on('show.bs.collapse', function(){
+        $(this).find('.escala-card-expandir').html('Clique para recolher')
+    })
+    $('.escala-cards').on('hide.bs.collapse', function(){
+        $(this).find('.escala-card-expandir').html('Clique para expandir')
+    })
+    
+    const load_infos_edit = '{% url "escala:carregar_infos_editar" %}'
+
+    $(function(){
+        $('.item-actions').each(function () {
+            $(this).popover('dispose');
+
+            $(this).popover({
+                html: true,
+                content: `
+                    <div class="item-actions-popover">
+                        <a class="item-edit-link" role="button" data-id="${$(this).data('id')}" data-editlink="${$(this).data('editlink')}" data-bs-toggle="modal" href="#" data-bs-target="#criar-escala"><i class="fa-solid fa-pen-to-square"></i> <span>Editar</span> </a>
+                        <a class="item-delete-link" role="button" data-object="${$(this).data('object')}" data-deletelink="${$(this).data('deletelink')}" data-bs-toggle="modal" href="#" data-bs-target="#delete-modal"><i class="fa-solid fa-trash-can text-danger"></i> <span>Excluir</span> </a>
+                    </div>
+                `,
+                placement: 'left',
+                trigger: 'blur',
+                allowList: {
+                    a: ['class', 'href', 'role', 'data-id', 'data-object', 'data-editlink', 'data-deletelink', 'data-bs-toggle', 'data-bs-target'],
+                    i: ['class'],
+                    div: ['class'],
+                    span: []
+                }
+
+            })
+        });
+    })
+    
+    const criar_escala_link = $('#criar-escala').find('form').prop('action');
+    $('#criar-escala').on('show.bs.modal', function(event){
+        const btn = $(event.relatedTarget)
+        if (btn.data('editlink')){
+            let pk = btn.data('id')
+            $('.modal-title-criar').html('<b>Editar Escala</b>')
+            $.ajax({
+                url: load_infos_edit,
+                type: 'GET',
+                data: {escala_id: pk},
+                success:function(resposta){
+                    let data = new Date(resposta.data+'T00:00')
+                    data = data.toLocaleDateString()
+
+                    const modal_Form = $('#criar-escala').find('form')
+                    const edit_link = btn.data("editlink")
+                    modal_Form.prop('action', edit_link)
+
+                    modal_Form.find('#id_escala-membro').val(resposta.membro_id)
+                    $('#id_escala-membro').trigger('change')
+                    modal_Form.find('#id_escala-funcao_membro').val(resposta.funcao_membro_id)
+                    modal_Form.find('#id_escala-data').val(data)
+                    modal_Form.find('#id_escala-hora').val(resposta.hora)
+                }
+            })
+       }
+    })
+
+    $('#criar-escala').on('hide.bs.modal', function(){
+        $('#criar-escala').find('form').prop('action', criar_escala_link)
+        $('.modal-title-criar').html('<b>Nova Escala</b>')
+        $('#criar-escala').find('input, select').not('[name="csrfmiddlewaretoken"], #id_escala-instituicao, [type="submit"]').val('')
     })
 </script>
 {% endblock _scripts %}

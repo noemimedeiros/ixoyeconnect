@@ -1,4 +1,4 @@
-<div role="button" class="escala-grid">
+<div  class="escala-grid">
     <div class="linha-tempo-escala">
         <div class="escala-dia">
             <h6 class="escala-dia">
@@ -10,23 +10,50 @@
         </div>
         <div class="escala-linha"></div>
     </div>
-    <div class="escala-card" data-bs-target="#escala-card-{{forloop.counter}}" data-bs-toggle="collapse">
-        <div class="escala-membros">
-            {% for escala in escalas %}
-                {% if forloop.counter <= 3 %}
-                    {% if escala.membro.profile_picture %}
-                    <img src="{{ escala.membro.profile_picture.url }}" class="profile-escala-card"></img>
-                    {% else %}
-                    <div class="profile-escala-card"><h2>{{ escala.membro.nome.0 }}</h2></div>
+    <div class="escala-cards">
+        <div role="button" class="escala-card" data-bs-target="#escala-card-{{forloop.counter}}" data-bs-toggle="collapse">
+            <div class="escala-membros">
+                {% for escala in escalas %}
+                    {% if forloop.counter <= 3 %}
+                        {% if escala.membro.foto %}
+                        <img src="{{ escala.membro.foto.url }}" class="profile-escala-card"></img>
+                        {% else %}
+                        <div class="profile-escala-card"><h4>{{ escala.membro.nome.0 }}</h4></div>
+                        {% endif %}
                     {% endif %}
+                {% endfor %}
+                {% if escalas|length > 3 %}
+                <div class="profile-escala-mais"><h5>+ {{ escalas|length|add:-3 }}</h5></div>
                 {% endif %}
-            {% endfor %}
-            {% if escalas|length > 3 %}
-            <div class="profile-escala-mais"><h5>+ {{ escalas|length }}</h5></div>
-            {% endif %}
+            </div>
+            <div class="escala-card-expandir">
+                Clique para expandir
+            </div>
+            <div class="ms-auto escala-card-seta">
+                <i class="fa-solid fa-chevron-down fa-lg"></i>
+            </div>
         </div>
-        <div>
-            Clique para expandir
+        <div class="collapse escala-cards" id="escala-card-{{forloop.counter}}">
+            {% for escala in escalas %}
+            <div class="div-items-actions">
+                <div class="escala-card escala-card-infos">
+                    <div class="escala-card-membro">
+                        {% if escala.membro.foto %}
+                        <img src="{{ escala.membro.foto.url }}" class="profile-escala-card"></img>
+                        {% else %}
+                        <div class="profile-escala-card"><h4>{{ escala.membro.nome.0 }}</h4></div>
+                        {% endif %}
+                        <span><b>{{ escala.membro.nome }}</b> {% if not filtrado_para %}- {{ escala.funcao_membro }}{% endif %}</span>
+                    </div>
+                    <div class="escala-card-hora">
+                        <i class="fa-solid fa-clock fa-lg"></i> <span>{{ escala.hora }}</span>
+                    </div>
+                </div>
+                {% if request.user.is_admin %}
+                    {% include "core/includes/default_item_actions.html" with object=escala edit_link='escala:escala_update_view' delete_link='escala:escala_delete_view' item_pk=escala.pk %}
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

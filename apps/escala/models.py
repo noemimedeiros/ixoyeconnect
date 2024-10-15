@@ -11,3 +11,6 @@ class Escala(models.Model):
 
     class Meta:
         db_table = "escala"
+
+    def __str__(self):
+        return f'Escala: {self.membro} - {self.funcao_membro}'

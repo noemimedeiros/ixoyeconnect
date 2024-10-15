@@ -4,9 +4,12 @@ from .models import Escala
 from core.forms import floating_fields
 
 class EscalaFilter(FilterSet):
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         floating_fields(self.form)
+
+        self.form.fields['funcao_membro'].widget.attrs['onchange'] = "this.form.submit()"
 
     class Meta:
         model = Escala

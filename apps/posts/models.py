@@ -45,7 +45,9 @@ class Salvo(models.Model):
 
     class Meta:
         db_table = 'salvo'
-        unique_together = ['post', 'user']
+        constraints = [
+            models.UniqueConstraint(fields=('post', 'user'), name="un_post_user_salvo")
+        ]
 
 class Curtida(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False, related_name="curtida")
@@ -55,5 +57,5 @@ class Curtida(models.Model):
     class Meta:
         db_table = 'curtida'
         constraints = [
-            models.UniqueConstraint(fields=('post', 'user'), name="un_post_user")
+            models.UniqueConstraint(fields=('post', 'user'), name="un_post_user_curitda")
         ]

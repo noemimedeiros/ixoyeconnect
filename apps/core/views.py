@@ -92,8 +92,8 @@ class MyCadastroView(SignupView):
     def post(self, request):
         form = MySignUpForm(request.POST)
         endereco_form = EnderecoForm(request.POST)
-        instituicao_form = InstituicaoSedeForm(request.POST, prefix="sede")
-        membro_form = MembroForm(request.POST)
+        instituicao_form = InstituicaoSedeForm(request.POST, request.FILES, prefix="sede")
+        membro_form = MembroForm(request.POST, request.FILES)
 
         if request.POST.get('sede-instituicao'):
             membro_instituicao_form = instituicao_form.is_valid()

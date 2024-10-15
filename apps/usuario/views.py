@@ -103,7 +103,7 @@ class MembroCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     
     @transaction.atomic
     def post(self, request):
-        form = NewMembroForm(request.POST)
+        form = NewMembroForm(request.POST, request.FILES)
         endereco_form = EnderecoForm(request.POST)
         user_form = MySignUpForm(request.POST)
 
@@ -118,6 +118,7 @@ class MembroCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
             form = form.save()
         else:
             self.object = None
+            print(form.errors)
             return self.form_invalid(form)
         
         message_success_generic(request, 'Cadastro realizado com sucesso! Por favor, ative sua conta através do link enviado para o seu e-mail.')

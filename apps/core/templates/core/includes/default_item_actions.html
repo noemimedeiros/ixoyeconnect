@@ -1,3 +1,3 @@
-<div tabindex='0' role="button" data-bs-toggle="popover" class="item-actions" data-object="{{ object|default:'' }}" data-editlink="{% url edit_link item_pk  %}" data-deletelink="{% url delete_link item_pk %}">
+<div tabindex='0' role="button" data-bs-toggle="popover" class="item-actions" data-object="{{ object|default:'' }}" data-editlink="{% if edit_link %} {% url edit_link item_pk  %} {% else %}# {% endif %}" data-id="{{ item_pk }}" data-deletelink="{% if delete_link %} {% url delete_link item_pk %} {% else %} # {% endif %}">
     <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
 </div>

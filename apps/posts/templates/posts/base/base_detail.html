@@ -2,6 +2,8 @@
 {% load static %}
 {% load file_ext %}
 {% load icons_arquivos %}
+{% load curtido %}
+{% load salvo %}
 
 {% block app_title %}
 {% endblock app_title %}
@@ -43,11 +45,11 @@
         </div>
         <div class="post-aberto-acoes">
             <button id="btn-curtir" class="button-post-acoes">
-                <i class="{% if object.curtida %}fas{% else %}far{% endif %} fa-heart fa-lg me-2"></i>
+                <i class="{% if object|curtido:request.user %}fas{% else %}far{% endif %} fa-heart fa-lg me-2"></i>
                 Curtir
             </button>
             <button id="btn-salvar" class="button-post-acoes">
-                <i class="{% if object.salvo %}fas{% else %}far{% endif %} fa-bookmark fa-lg me-2"></i>
+                <i class="{% if object|salvo:request.user %}fas{% else %}far{% endif %} fa-bookmark fa-lg me-2"></i>
                 Salvar
             </button>
         </div>

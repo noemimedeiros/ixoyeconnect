@@ -1,7 +1,11 @@
 .escala-filter{
     margin-top: 1rem;
 }
-
+.escala-list, .escala-cards{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
 .escala-grid{
     display: grid;
     grid-template-columns: 60px 1fr;
@@ -60,6 +64,8 @@
     color: white;
     height: 40px;
     width: 40px;
+    min-height: 40px;
+    min-width: 40px;
     background-color: var(--aqua-blue);
     border: 2px solid white;
 }
@@ -81,10 +87,48 @@
 }
 
 .escala-card{
-    gap: 20px;
+    gap: 10px;
     color: var(--green);
 }
 
-.escala-card.collapse{
+.escala-card-infos{
+    min-height: 50px;
+    height: fit-content;
     justify-content: space-between;
+}
+.escala-card-membro{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.escala-card-membro b{
+    color: var(--aqua-blue);
+}
+.escala-card-hora{
+    display: flex;
+    gap: 5px;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.escala-card-membro span, .escala-card-hora span{
+    color: var(--black-1);
+    font-weight: 400;
+    line-height: normal;
+}
+
+.escala-titulo-filtro{
+    color: var(--gray-3);
+}
+.escala-titulo-filtro b{
+    color: var(--aqua-blue);
+}
+.escala-filter button{
+    display: none;
+}
+
+.escala-card-seta{
+    transition: rotate 200ms ease-in-out;
+}
+.escala-card[aria-expanded="true"] .escala-card-seta{
+    rotate: 180deg
 }

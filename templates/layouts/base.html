@@ -87,7 +87,9 @@
         format: 'dd/mm/yyyy',
         todayHighlight: 'TRUE',
         autoclose: true,
-    });
+    }).on('hide', function(e) {
+        e.stopPropagation();
+    });;
 
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
