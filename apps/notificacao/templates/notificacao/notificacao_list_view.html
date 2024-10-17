@@ -19,8 +19,8 @@
 {% block dashboard_actions %}
 {% include "core/includes/default_actions.html" %}
 <form action="{% url 'notificacao:ler_todas_notificacoes' request.user.pk %}">
-    <button type="submit" class="btn button-filled gap-2">
-        Ler todas
+    <button type="submit" class="btn button-filled button-adicionar gap-2">
+        <i class="fa-solid fa-check-double"></i> <span>Marcar tudo como lido</span>
     </button>
 </form>
 {% endblock dashboard_actions %}

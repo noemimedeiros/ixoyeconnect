@@ -11,4 +11,10 @@
     .notificacoes-section{
         margin-top: 2rem;
     }
+    .darkmode .dashboard-card{
+        background-color: var(--body-bg);
+    }
+    .darkmode .notificacao-card{
+        background-color: var(--gray-1);
+    }
 }

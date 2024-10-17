@@ -44,4 +44,17 @@
         width: 50px;
         margin-left: auto;
     }
+
+    .darkmode .dashboard-card{
+        background-color: var(--body-bg);
+    }
+    .darkmode .button-outlined{
+        background-color: var(--body-bg);
+    }
+    .darkmode .profile-navs{
+        background-color: var(--gray-1);
+    }
+    .darkmode .profile-generic-infos, .darkmode .profile-informacoes,.darkmode  .profile-edit-div{
+        background-color: var(--gray-1);
+    }
 }
