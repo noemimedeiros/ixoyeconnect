@@ -1,13 +1,13 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse
-from django.contrib.auth import authenticate
 from django.views.generic import (View, CreateView, DeleteView, DetailView, FormView,
                                   ListView, TemplateView, UpdateView)
 from allauth.account.views import SignupView, LoginView
-from django.db import transaction, IntegrityError
+from django.db import transaction
 from extra_views import SearchableListMixin
 
+from notificacao.models import ConfiguracoesNotificacao
 from core.messages_utils import *
 from posts.models import CategoriaPost
 from usuario.models import Instituicao, InstituicaoSede
@@ -22,6 +22,12 @@ def index(request):
         return redirect('/login/')
 
 class MyViewIxoyeConnect:
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect('/login/')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["instituicao"] = self.request.user.instituicao
@@ -73,8 +79,9 @@ class MyCadastroView(SignupView):
         if self.request.POST:
             context["endereco_form"] = EnderecoForm(self.request.POST)
 
-            if self.request.POST.get('instituicao'):
+            if self.request.POST.get('sede-instituicao'):
                 context["instituicaosede_form"] = InstituicaoSedeForm(self.request.POST, prefix="sede")
+                context["instituicao_selecionada"] = self.request.POST.get('sede-instituicao')
                 context["membro_form"] = MembroForm()
             else:
                 context["membro_form"] = MembroForm(self.request.POST)
@@ -116,6 +123,8 @@ class MyCadastroView(SignupView):
                 membro_form.endereco = endereco_form
                 membro_form.sede = InstituicaoSede.objects.get(codigo=request.POST.get('codigo_sede'))
                 membro_form = membro_form.save()
+            
+            ConfiguracoesNotificacao.objects.create(user=user)
         else:
             return self.form_invalid(form)
         

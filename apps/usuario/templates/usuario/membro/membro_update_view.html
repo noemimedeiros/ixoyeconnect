@@ -37,22 +37,24 @@
             </div>
         </div>
         <div class="border-top border-bottom py-4 mb-3">
-            <div class="d-flex justify-content-end gap-2 mb-3">
-                <button type="button" class="btn button-outlined btn-sm gap-2 btn-add-modal" data-bs-target="#criar-funcao" data-bs-toggle="modal">
-                    <i class="fa-solid fa-plus"></i> <span>Criar Função</span>
-                </button>
-                <button type="button" class="btn button-outlined btn-sm gap-2 btn-add-modal" data-bs-target="#criar-departamento" data-bs-toggle="modal">
-                    <i class="fa-solid fa-plus"></i> <span>Criar Departamento</span>
-                </button>
+            <div class="d-flex justify-content-between">
+                <h6 class="mb-3"><b>Cargos/Funções</b></h6>
+                <div class="d-flex justify-content-end gap-2 mb-3">
+                    <button type="button" class="btn button-outlined btn-sm gap-2 btn-add-modal" data-bs-target="#criar-funcao" data-bs-toggle="modal">
+                        <i class="fa-solid fa-plus"></i> <span>Criar Função</span>
+                    </button>
+                    <button type="button" class="btn button-outlined btn-sm gap-2 btn-add-modal" data-bs-target="#criar-departamento" data-bs-toggle="modal">
+                        <i class="fa-solid fa-plus"></i> <span>Criar Departamento</span>
+                    </button>
+                </div>
             </div>
             <div>
-                <h6 class="mb-3"><b>Cargos/Funções</b></h6>
                 {{ funcoes_form.management_form }}
                 <div id="funcoes-formset">
                     {% for funcao_form in funcoes_form %}
                         <div class="formset-item">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="text-muted"><b>Cargo - {{ forloop.counter }}</b> <div id="form-a-excluir-{{forloop.counter0}}" class="text-danger d-none">A excluir*</div> </div>
+                                <div class="text-muted"><b>Cargo - {{ forloop.counter }}</b> <div id="form-{{forloop.counter0}}-a-excluir" class="text-danger d-none">A excluir*</div> </div>
                                 <div>
                                     <input data-id="{{forloop.counter0}}" onchange="deletarFuncao(this)" type="checkbox" name="form-{{forloop.counter0}}-DELETE" id="id_form-{{forloop.counter0}}-DELETE" hidden>
                                     <label class="btn button-danger btn-model-add" for="id_form-{{forloop.counter0}}-DELETE"><i class="fa-solid fa-trash-can"></i></label>
@@ -63,7 +65,9 @@
                         </div>
                     {% endfor %}
                 </div>
-                <button class="btn button-outlined px-4" type="button" id="adicionar-funcoes">Adicionar mais funções</button>
+                <button class="btn button-outlined px-4" type="button" id="adicionar-funcoes">
+                    <i class="fa-solid fa-plus me-2"></i> Adicionar mais cargos/funções
+                </button>
             </div>
         </div>
         <div class="buttons-form">
@@ -146,7 +150,7 @@
     function deletarFuncao(btn){
         $(`label[for="${btn.id}"]`).toggleClass('button-danger').toggleClass('btn-info')
         $(`label[for="${btn.id}"]`).find('i').toggleClass('fa-trash-can').toggleClass('fa-rotate-left')
-        $(`#form-a-excluir-${btn.dataset.id}`).toggleClass('d-none')
+        $(`#form-${btn.dataset.id}-a-excluir`).toggleClass('d-none')
     }
 
     adicionarFuncoes.click(function() {
@@ -162,6 +166,7 @@
                 $(this).val('');
             }
         });
+        newForm.find(`#id_form-${totalForms}-DELETE`).attr('data-id', totalForms)
 
         formsetContainer.append(newForm);
         totalFormsInput.val(totalForms + 1);

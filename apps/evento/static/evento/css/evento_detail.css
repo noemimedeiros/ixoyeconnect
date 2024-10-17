@@ -44,6 +44,12 @@
         padding: 0;
         background-color: var(--light-bg);
     }
+    .dashboard-card{
+        padding-bottom: 100px;
+    }
+    .evento-detail{
+        height: fit-content;
+    }
     .card-post{
         height: 260px;
     }

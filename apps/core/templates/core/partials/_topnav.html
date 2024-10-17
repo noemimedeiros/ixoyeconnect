@@ -24,25 +24,25 @@
     <div class="top-nav-items">
         <a href="{% url 'core:dashboard' %}" class="top-nav-item button-filled-tonal {% if 'dashboard/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-house"></i>
-        </a href="#">
-        <a href="#" class="top-nav-item button-filled-tonal">
+        </a>
+        <a href="{% url 'usuario:instituicao_detail_view' instituicao.pk %}" class="top-nav-item button-filled-tonal {% if 'usuario/instituicao/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-church"></i>
-        </a href="#">
-        <a href="#" class="top-nav-item button-filled-tonal">
+        </a>
+        <a href="{% url 'notificacao:notificacoes_list_view' %}" class="top-nav-item button-filled-tonal {% if 'notificacoes/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-bell"></i>
-        </a href="#">
-        <a href="#" class="top-nav-item button-filled-tonal top-nav-user">
+        </a>
+        <a href="{% url 'usuario:meu_perfil' %}" class="top-nav-item button-filled-tonal top-nav-user {% if 'minha_conta/' in request.path or 'meu_perfil/' in request.path or 'editar_perfil_membro/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-user"></i>
-        </a href="#">
+        </a>
         <div class="user-infos">
-            <a class="user-infos" href="#">
+            <a class="user-infos" href="{% url 'usuario:meu_perfil' %}">
                 <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% endif %}" class="user-profile"></img>
                 <div class="user-name">
                     <div>{{ request.user }}</div>
                     <div>{{ request.user.email }}</div>
                 </div>
             </a>
-            <div class="user-configs">
+            <div class="user-configs" tabindex='0' role="button" data-bs-toggle="popover" data-bs-placement="bottom">
                 <i role="button" class="fa-solid fa-chevron-down fa-lg"></i>
             </div>
         </div>

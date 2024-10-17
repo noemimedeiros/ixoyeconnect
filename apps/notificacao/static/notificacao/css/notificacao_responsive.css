@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+    .dashboard-card{
+        background-color: var(--gray-1);
+    }
+    .notificacao-card{
+        background-color: var(--body-bg);
+    }
+}

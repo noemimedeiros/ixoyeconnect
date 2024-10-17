@@ -5,7 +5,7 @@
         <span class="side-nav-icon-text">Ixoye Connect</span>
     </a>
     <div class="user-infos">
-        <a class="user-infos" href="#">
+        <a class="user-infos" href="{% url 'usuario:meu_perfil' %}">
             {% if request.user.profile_picture %}
             <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% endif %}" class="user-profile"></img>
             {% else %}
@@ -49,10 +49,12 @@
             <div class="side-nav-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="side-nav-text">Contribuições</div>
         </a>
+        {% if request.user.is_admin %}
         <a href="{% url 'usuario:membro_list_view' instituicao.pk %}" class="side-nav-item {% if 'lista-membros' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-users"></i></div>
             <div class="side-nav-text">Lista de Membros</div>
         </a>
+        {% endif %}
         <a href="{% url 'escala:escala_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-clipboard-list"></i></div>
             <div class="side-nav-text">Escalas</div>

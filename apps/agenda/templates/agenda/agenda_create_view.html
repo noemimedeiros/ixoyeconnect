@@ -67,6 +67,11 @@
         };
     }
     $('input, select, textarea').on('change input', () => cardAgenda());
- 
+    
+    {% if not request.POST and not object %}
+    $(function(){
+        selecionar_icone('1', 'fa-book', 'Livro')
+    })
+    {% endif %}
 </script>
 {% endblock _scripts %}

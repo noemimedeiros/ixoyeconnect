@@ -63,3 +63,18 @@
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
 }
+
+#div_id_foto .input-group-text{
+    border: 0;
+    border-top-left-radius: var(--rounded-pill);
+    border-bottom-left-radius: var(--rounded-pill);
+    background-color: var(--gray-1);
+}
+#div_id_foto .form-control.h-auto{
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-top-right-radius: var(--rounded-pill);
+    border-bottom-right-radius: var(--rounded-pill);
+    background-color: var(--gray-1);
+}

@@ -2,9 +2,15 @@ from django import forms
 from django.forms import modelformset_factory
 from core.forms import FormBaseIxoye
 from django.db.models import Q
-from .models import Denominacao, Departamento, Funcao, FuncaoDepartamento, FuncaoMembro, Instituicao, InstituicaoSede, Membro
+from .models import (Denominacao, Departamento, Funcao, FuncaoDepartamento, FuncaoMembro, Instituicao,
+                     InstituicaoSede, Membro, RedeSocialInstituicaoSede, User)
 from crispy_forms.layout import Submit
-from crispy_bootstrap5.bootstrap5 import FloatingField, Field
+from crispy_bootstrap5.bootstrap5 import FloatingField, Switch
+
+class UserForm(FormBaseIxoye):
+    class Meta:
+        model = User
+        fields = ('email', 'username',)
 
 class DenominacaoForm(FormBaseIxoye):
     class Meta:
@@ -36,7 +42,7 @@ class InstituicaoSedeForm(FormBaseIxoye):
     class Meta:
         model = InstituicaoSede
         fields = "__all__"
-        exclude = ('user', 'endereco', 'capa', 'codigo', )
+        exclude = ('user', 'endereco', 'codigo', )
         widgets = {
             'celular': forms.TextInput(attrs={'class': 'phone'}),
             'cnpj': forms.TextInput(attrs={'class': 'cnpj'}),
@@ -58,7 +64,7 @@ class MembroForm(FormBaseIxoye):
     class Meta:
         model = Membro
         fields = '__all__'
-        exclude = ('user', 'endereco', 'foto', 'sede', 'desvinculado', )
+        exclude = ('user', 'endereco', 'foto', 'sede', 'desvinculado', 'admin', )
         widgets = {
             'data_nascimento': forms.TextInput(attrs={'class': 'datepicker date'}),
             'celular': forms.TextInput(attrs={'class': 'phone'})
@@ -101,6 +107,7 @@ class NewMembroForm(FormBaseIxoye):
     
     def __init__(self, *args, **kwargs):
         sede = kwargs.pop('sede', None)
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
         if sede:
@@ -108,6 +115,10 @@ class NewMembroForm(FormBaseIxoye):
             self.fields['sede'].queryset = InstituicaoSede.objects.filter(pk=sede)
 
         self.fields['data_nascimento'].localize = True
+        self.helper['admin'].wrap(Switch)
+
+        if user and not user.is_admin:
+            self.fields.pop('admin')
     
 class DepartamentoForm(FormBaseIxoye):
     class Meta:
@@ -178,3 +189,21 @@ class FuncaoMembroForm(FormBaseIxoye):
         # self.helper['funcao'].wrap(Field, template="usuario/partials/custom_funcao_field.html")
 
 FuncaoMembroFormset = modelformset_factory(FuncaoMembro, FuncaoMembroForm, can_delete=True, extra=1)
+    
+class RedeSocialInstituicaoSedeForm(FormBaseIxoye):
+    class Meta:
+        model = RedeSocialInstituicaoSede
+        fields = '__all__'
+        widgets = {
+            'instituicao': forms.HiddenInput()
+        }
+
+    def __init__(self, *args, **kwargs):
+        instituicao = kwargs.pop('instituicao', None)
+        super().__init__(*args, **kwargs)
+
+        if instituicao:
+            self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
+            self.fields['instituicao'].initial = instituicao
+
+RedeSocialInstituicaoSedeFormset = modelformset_factory(RedeSocialInstituicaoSede, RedeSocialInstituicaoSedeForm, can_delete=True, extra=1)

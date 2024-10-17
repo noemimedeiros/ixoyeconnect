@@ -17,7 +17,7 @@ class Post(models.Model):
     capa = models.ImageField(upload_to='posts/capa/',max_length=255, null=True, blank=True)
     fixado = models.BooleanField(default=False, verbose_name="Deseja fixar esse post?")
     titulo = models.CharField(max_length=50, null=False, blank=False)
-    descricao = CKEditor5Field(null=True, blank=True)
+    descricao = CKEditor5Field(null=False, blank=False)
     hora = models.TimeField(null=False, blank=False, auto_now=True)
     data = models.DateField(null=False, blank=False, auto_now=True)
     categoria = models.ForeignKey(CategoriaPost, on_delete=models.CASCADE, null=False, blank=False)

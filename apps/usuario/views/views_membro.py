@@ -8,66 +8,27 @@ from django.db.models import Q
 
 from core.forms import EnderecoForm, MySignUpForm
 from core.messages_utils import message_delete_registro, message_error_registro, message_success_generic
-from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
-from .models import Departamento, Funcao, FuncaoDepartamento, InstituicaoSede, Membro
-from .forms import FuncaoForm, FuncaoMembroForm, NewMembroForm, FuncaoMembroFormset
+from ..models import Departamento, FuncaoDepartamento, Membro
+from ..forms import FuncaoForm, NewMembroForm, FuncaoMembroFormset, UserForm
 
-from apps.core.messages_utils import message_error_generic, message_create_registro
+from ..forms import DepartamentoForm
 
-from .forms import DenominacaoForm, DepartamentoForm, InstituicaoForm
+class MembroDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
+    template_name = 'usuario/membro/membro_profile_view.html'
+    model = Membro
+    context_object_name = 'membro'
 
-def cadastrar_instituicao(request):
-    if request.POST:
-        form = InstituicaoForm(request.POST, request.FILES, prefix="instituicao")
-        if form.is_valid():
-            form.save()
-            message_create_registro(request)
-        else:
-            print(form.errors)
-            message_error_generic(request, 'Houve um erro durante o cadastro. Por favor, tente novamente.')
-    
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-def cadastrar_denominacao(request):
-    if request.POST:
-        form = DenominacaoForm(request.POST, prefix="denominacao")
-        if form.is_valid():
-            form.save()
-            message_create_registro(request)
-        else:
-            print(form.errors)
-            message_error_generic(request, 'Houve um erro durante o cadastro. Por favor, tente novamente.')
-    
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-def cadastrar_funcao(request):
-    if request.POST:
-        form = FuncaoForm(request.POST, prefix="funcao")
-        if form.is_valid():
-            form.save()
-            message_create_registro(request)
-        else:
-            print(form.errors)
-            message_error_generic(request, 'Houve um erro durante o cadastro. Por favor, tente novamente.')
-    
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-@login_required(login_url="/login/")
-def cadastrar_departamento(request):
-    if request.POST:
-        form = DepartamentoForm(request.POST, prefix="departamento")
-        if form.is_valid():
-            form.save()
-            message_create_registro(request)
-        else:
-            print(form.errors)
-            message_error_generic(request, 'Houve um erro durante o cadastro. Por favor, tente novamente.')
-    
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["titulo"] = "Minha Conta"
+        context["active"] = ["membro"]
+        context["usuario"] = self.request.user.conta
+        return context
 
 class MembroListView(LoginRequiredMixin, MyListViewIxoyeConnect):
-    template_name = 'usuario/membro_list_view.html'
+    template_name = 'usuario/membro/membro_list_view.html'
     model = Membro
     ordering = ['nome']
     context_object_name = 'membro'
@@ -84,7 +45,7 @@ class MembroListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         return context
 
 class MembroCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
-    template_name = 'usuario/membro_create_view.html'
+    template_name = 'usuario/membro/membro_create_view.html'
     model = Membro
     form_class = NewMembroForm
 
@@ -133,7 +94,7 @@ class MembroCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         return reverse('usuario:membro_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
     
 class MembroUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
-    template_name = 'usuario/membro_update_view.html'
+    template_name = 'usuario/membro/membro_update_view.html'
     model = Membro
     form_class = NewMembroForm
     context_object_name = "membro"
@@ -174,11 +135,51 @@ class MembroUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'sede': self.request.user.instituicao})
+        kwargs.update({'sede': self.request.user.instituicao, 'user': self.request.user})
         return kwargs
     
     def get_success_url(self):
         return reverse('usuario:membro_list_view', kwargs={'instituicao_pk': self.request.user.instituicao.pk})
+
+
+class MembroProfileUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
+    template_name = 'usuario/membro/membro_profile_update_view.html'
+    model = Membro
+    form_class = NewMembroForm
+    context_object_name = "membro"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["titulo"] = "Editar Perfil"
+        context["active"] = ["membros"]
+        membro = self.get_object()
+        context["endereco_form"] = EnderecoForm(instance=membro.endereco)
+        context["user_form"] = UserForm(instance=membro.user)
+        if self.request.POST:
+            context["endereco_form"] = EnderecoForm(self.request.POST, instance=membro.endereco)
+            context["user_form"] = UserForm(data=self.request.POST, instance=membro.user)
+        return context
+    
+    def form_valid(self, form):
+        membro = self.get_object()
+        user_form = UserForm(data=self.request.POST, instance=membro.user)
+        endereco_form = EnderecoForm(self.request.POST, instance=membro.endereco)
+        if form.is_valid() and endereco_form.is_valid() and user_form.is_valid():
+            user_form.save()
+            form = form.save()
+            endereco_form = endereco_form.save()
+        else:
+            self.object = membro
+            return self.form_invalid(form)
+        return super().form_valid(form)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'sede': self.request.user.instituicao, 'user': self.request.user})
+        return kwargs
+    
+    def get_success_url(self):
+        return reverse('usuario:membro_detail_view', kwargs={'pk': self.request.user.pk})
 
 @login_required(login_url="/login/")
 def MembroDeleteView(request, pk):

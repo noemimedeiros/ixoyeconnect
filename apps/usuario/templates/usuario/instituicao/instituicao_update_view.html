@@ -1,0 +1,41 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'usuario/css/instituicao.css' %}">
+<link rel="stylesheet" href="{% static 'usuario/css/instituicao_responsive.css' %}">
+{% endblock style %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block dashboard_actions %}
+{% endblock %}
+
+{% block dashboard_content %}
+<span>Preencha os dados abaixo</span>
+<section class="instituicao-form-section">
+    <form  method="POST" enctype="multipart/form-data">
+        <div class="form-instituicao">
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados da Instituição</b></h6>
+                {% crispy user_form %}
+            </div>
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados de Autenticação</b></h6>
+                {% crispy form %}
+            </div>
+            <div class="mb-3">
+                <h6 class="mb-3"><b>Dados do Endereço</b></h6>
+                {% crispy endereco_form %}
+            </div>
+        </div>
+        <div class="buttons-form">
+            <a href="{% url 'usuario:instituicao_detail_view' instituicao.pk %}" class="btn button-outlined" type="button">Cancelar</a>
+            <button class="btn button-filled" type="submit">Salvar</button>
+        </div>
+    </form>
+</section>
+{% endblock dashboard_content %}

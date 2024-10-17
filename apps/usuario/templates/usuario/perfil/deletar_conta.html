@@ -1,0 +1,25 @@
+{% extends "usuario/base/profile_base.html" %}
+{% load static %}
+
+{% block profile_content %}
+<section class="profile-infos">
+    <div class="div-deletar-conta profile-edit-div">
+        <div>
+            <h5 class="titulo-perfil-page"><b>Deletar Conta</b></h5>
+        </div>
+        <div class="mt-3">
+            <p>Nesta página, você pode optar por excluir sua conta permanentemente. Isso significa que todas as suas informações pessoais, histórico de atividades e contribuições serão removidos do sistema, sem possibilidade de recuperação.</p>
+            <b>Ao excluir sua conta:</b>
+            <ul>
+                <li>Seus dados não poderão ser recuperados.</li>
+                <li>Você perderá acesso a todas as funcionalidades associadas à conta.</li>
+                <li>Não receberá mais notificações ou atualizações.</li>
+            </ul>
+            <span>Se está pensando em deletar sua conta, recomendamos avaliar as consequências antes de tomar essa decisão.</span>
+        </div>
+        <div class="mt-5">
+            <button data-object="sua conta" data-deletelink="{% if not request.user.is_instituicao %}{% url 'usuario:membro_delete_view' object.pk %} {% else %}{% url 'usuario:instituicao_delete_view' object.pk %}{% endif %}" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn button-danger">Desejo deletar minha conta.</button>
+        </div>
+    </div>
+</section>
+{% endblock profile_content %}

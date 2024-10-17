@@ -15,5 +15,6 @@ urlpatterns = [
     path('', include('evento.urls')),
     path('', include('contribuicao.urls')),
     path('', include('escala.urls')),
+    path('', include('notificacao.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()

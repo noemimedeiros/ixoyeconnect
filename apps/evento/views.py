@@ -1,5 +1,6 @@
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Case, When, Value, IntegerField
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
@@ -14,13 +15,21 @@ from .forms import EventoForm
 class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'evento/evento_list_view.html'
     model = Evento
-    ordering = ['-data', '-hora']
+    ordering = ['data', 'hora']
     context_object_name = 'evento'
     search_fields = ['titulo', 'descricao']
 
     def get_queryset(self):
+        hoje = timezone.now().date()
         qs = super().get_queryset()
-        return qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
+        qs = qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
+        qs = qs.annotate(
+                proximos_dias=Case(
+                    When(data__gte=hoje, then=Value(1)),
+                    When(data__lt=hoje, then=Value(0)),
+                    output_field=IntegerField(),
+                )).order_by('-proximos_dias', 'data')
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

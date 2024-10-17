@@ -6,7 +6,7 @@ from crispy_bootstrap5.bootstrap5 import Switch
 from crispy_forms.layout import Submit, Field
 
 class EventoForm(FormBaseIxoye):
-    endereco_sede = forms.BooleanField(initial=False, label="Este evento ocorrerá na sede principal (endereço cadastrado)?")
+    endereco_sede = forms.BooleanField(initial=False, label="Este evento ocorrerá na sede principal (endereço cadastrado)?", required=False)
 
     class Meta:
         model = Evento

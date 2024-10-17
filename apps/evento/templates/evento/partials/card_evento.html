@@ -1,3 +1,4 @@
+{% load evento_passado %}
 <a href="{% if evento %}{% url 'evento:evento_detail_view' evento.pk %} {% else %} #{% endif %}" class="eventos-grid">
     <div class="linha-tempo-evento">
         <div class="evento-dia">
@@ -11,7 +12,7 @@
         <div class="evento-linha"></div>
     </div>
     <div class="card-evento">
-        <img {% if evento %}src="{{ evento.capa.url }}"{% endif %} class="evento-capa" alt="">
+        <img {% if evento %}src="{{ evento.capa.url }}"{% endif %} class="evento-capa {% if evento and evento.data|evento_passado %}evento-capa-passou{% endif %}" alt="">
         <div class="card-evento-content">
             <div class="card-evento-header">
                 <div>
@@ -27,16 +28,18 @@
                         </small>
                     </div>
                 </div>
+                {% if not evento.data|evento_passado %}
                 {% if not request.user.is_admin %}
                     {% if evento.pk not in request.user.conta.eventos_confirmados_pks %}
-                    <form class="mb-auto" action="{% url 'evento:confirmar_participacao_evento' evento.pk request.user.pk %}">
+                    <form class="btn-confirmar-participacao" class="mb-auto" action="{% url 'evento:confirmar_participacao_evento' evento.pk request.user.pk %}">
                         <button type="submit" class="btn button-filled btn-sm">Confirmar Participação</button>
                     </form>
                     {% else %}
-                    <div class="button-filled-tonal mb-auto p-2 px-4 rounded-pill">
+                    <div class="btn-confirmar-participacao button-filled-tonal mb-auto p-2 px-4 rounded-pill">
                         Presença confirmada!
                     </div>
                     {% endif %}
+                {% endif %}
                 {% endif %}
             </div>
             <div class="evento-descricao">

@@ -72,6 +72,9 @@
     height: 100%;
     object-fit: cover;
 }
+.evento-capa-passou{
+    filter: grayscale();
+}
 
 .card-evento-content{
     box-sizing: border-box;
@@ -117,7 +120,7 @@
     color: var(--gray-2);
 }
 
-.titulo-proximo-evento, .titulo-evento-porvir, .titulo-evento-fim{
+.titulo-proximo-evento, .titulo-evento-porvir, .titulo-evento-fim, .titulo-evento-passados{
     padding-left: 20px;
     margin-bottom: 1rem;
     font-weight: 400;
@@ -128,7 +131,9 @@
 .titulo-evento-porvir{
     color: var(--gray-2);
 }
-
+.titulo-evento-passados{
+    color: var(--gray-3);
+}
 .evento-component{
     display: flex;
     justify-content: space-between;

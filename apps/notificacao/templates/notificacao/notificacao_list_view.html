@@ -1,0 +1,64 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load icone_notificacao %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'notificacao/css/notificacao.css' %}">
+<link rel="stylesheet" href="{% static 'notificacao/css/notificacao_responsive.css' %}">
+<style>
+    .item-actions{
+        margin-top: auto;
+    }
+</style>
+{% endblock style %}
+
+{% block dashboard_actions %}
+
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="notificacoes-section">
+    {% if nao_lidas|length == 0 %}
+    <h5 class="notificacoes-total">Você não possui novas notificações.</h5>
+    {% else %}
+    <h5 class="notificacoes-total">Você possui <span class="quant-nao-lidas">{{ nao_lidas|length }} novas notificações.</span></h5>
+    {% endif %}
+    {% for notificacao in notificacoes %}
+        <a class="notificacao-card" role="button" href="{{ notificacao.link|default:"#" }}">
+            <div class="notificacao-icone-div">
+                <div id="lido-{{ notificacao.pk }}" class="notificacao-nao-lida {% if notificacao.lida %}d-none{% endif %}"><i class="fa-solid fa-circle"></i></div>
+                <div class="notificacao-icone"><i class="fa-solid {{ notificacao.modulo|icone_notificacao }}"></i></div>
+            </div>
+            <div>
+                <div class="notificacao-mensagem">{{ notificacao.mensagem }}</div>
+                <div class="notificacao-data">
+                    {% if notificacao.data.date == hoje %}
+                        {{ notificacao.data|time:"H:i" }}
+                    {% else %}
+                        {{ notificacao.data|date:"d/m/Y H:i" }}
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</section>
+{% endblock dashboard_content %}
+
+{% block _scripts %}
+<script>
+    const ler_notificacao_url = '{% url "notificacao:ler_notificacao" %}'
+    function lerNotificacao(notificacao_id){
+        $.ajax({
+            url: ler_notificacao_url,
+            data: {
+                notificacao_id: notificacao_id
+            },
+            type: 'GET'
+        })
+    }
+</script>
+{% endblock _scripts %}

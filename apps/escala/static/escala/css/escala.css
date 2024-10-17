@@ -67,7 +67,7 @@
     min-height: 40px;
     min-width: 40px;
     background-color: var(--aqua-blue);
-    border: 2px solid white;
+    border: 2px solid var(--body-bg);
 }
 .profile-escala-card:not(:first-child){
     margin-left: -15px;
@@ -83,7 +83,7 @@
     width: 40px;
     background-color: var(--green);
     margin-left: -15px;
-    border: 2px solid white;
+    border: 2px solid var(--body-bg);
 }
 
 .escala-card{

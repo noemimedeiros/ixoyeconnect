@@ -1,0 +1,42 @@
+.notificacoes-section{
+    margin-top: 1rem;
+    display: grid;
+    row-gap: 20px;
+}
+.notificacao-nao-lida{
+    font-size: 1rem;
+    color: red;
+}
+.notificacao-card{
+    background-color: var(--gray-1);
+    border-radius: var(--rounded-pill);
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.notificacao-icone-div{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.notificacao-icone{
+    border-radius: 50%;
+    background-color: var(--green-transparent);
+    color: var(--green);
+    font-size: 2rem;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.notificacao-mensagem{
+    font-weight: 400;
+}
+.notificacao-data{
+    color: var(--gray-3);
+}
+.notificacoes-total{
+    color: var(--aqua-blue);
+}

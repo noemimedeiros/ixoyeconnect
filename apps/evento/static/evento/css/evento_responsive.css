@@ -12,6 +12,15 @@
     .eventos-grid{
         flex: 1;
     }
+    .card-evento-header{
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .btn-confirmar-participacao{
+        margin-left: auto;
+        color: white;
+    }
     .card-evento-content{
         position: absolute;
         color: white;

@@ -1,5 +1,5 @@
 .post-detail{
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,6 +19,11 @@
 .card-post{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+.card-post-aberto-sem-capa{
+    justify-content: space-evenly;
+    margin-top: 0;
+    padding-bottom: 0;
+}
 .post-aberto-header{
     width: calc(100% - 40%);
     position: absolute;
@@ -32,6 +37,9 @@
 
 .post-aberto-content{
     margin-top: 100px;
+}
+.card-post-aberto-sem-capa .post-aberto-content{
+    margin-top: 0;
 }
 
 .post-aberto-acoes{
@@ -60,6 +68,12 @@
         padding: 0;
         background-color: var(--light-bg);
     }
+    .dashboard-card{
+        padding-bottom: 100px;
+    }
+    .post-detail{
+        height: fit-content;
+    }
     .card-post{
         height: var(--post-card-height);
     }
@@ -69,5 +83,9 @@
     }
     .card-post-aberto{
         padding-inline: 10%;
+        padding-bottom: 30px;
+    }
+    .card-post-aberto-sem-capa{
+        height: calc(100% - 15rem);
     }
 }

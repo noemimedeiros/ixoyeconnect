@@ -70,7 +70,6 @@ class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         arquivos = arquivos_formset.save(commit=False)
         for arquivo in arquivos:
             arquivo.post = form
-            arquivo.nome
             arquivo.save()
         return HttpResponseRedirect(self.get_success_url())
     
@@ -115,7 +114,6 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         arquivos = arquivos_formset.save(commit=False)
         for arquivo in arquivos:
             arquivo.post = form
-            arquivo.nome
             arquivo.save()
         return HttpResponseRedirect(self.get_success_url())
     

@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'escala',
     'evento',
     'usuario',
-    'posts'
+    'posts',
+    'notificacao'
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,9 @@ TEMPLATES = [
                 "file_ext": "posts.filters",
                 "curtido": "posts.filters",
                 "salvo": "posts.filters",
-                "get_tipo_display": "contribuicao.filters"
+                "get_tipo_display": "contribuicao.filters",
+                "evento_passado": "evento.filters",
+                "icone_notificacao": "notificacao.filters"
             }
         },
     },
@@ -201,7 +204,9 @@ MEDIA_ROOT = env("DJ_MEDIA_ROOT", default=root_path("media"))
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+# -----------------------------------------------------------------------------
 # CKEDITOR
+# -----------------------------------------------------------------------------
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': {
@@ -242,3 +247,12 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+# -----------------------------------------------------------------------------
+# WEBPUSH
+# -----------------------------------------------------------------------------
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": env("VAPID_PUBLIC_KEY", default=""),
+   "VAPID_PRIVATE_KEY": env("VAPID_PRIVATE_KEY", default=""),
+   "VAPID_ADMIN_EMAIL": env("VAPID_ADMIN_EMAIL", default="")
+}

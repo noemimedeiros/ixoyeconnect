@@ -1,0 +1,47 @@
+@media (max-width: 768px) {
+    .dashboard-card{
+        background-color: var(--gray-1);
+    }
+    .profile-view{
+        grid-template-columns: 1fr;
+    }
+    .profile-navs{
+        flex-direction: row;
+        flex-wrap: wrap;
+        background-color: var(--body-bg);
+        border-radius: 30px;
+        padding: 10px;
+    }
+    .profile-informacoes-grid{
+        grid-template-columns: 1fr;
+    }
+    .btn-profile-navs, .btn-profile-navs.active{
+        white-space: nowrap;
+    }
+    .profile-navs::-webkit-scrollbar{
+        display: none;
+    }
+    a.btn-deletar-conta{
+        margin-top: 0;
+    }
+    .profile-generic-infos, .profile-informacoes, .profile-edit-div{
+        background-color: var(--body-bg);
+        border-radius: 30px;
+    }
+    .profile-redesocial-grid{
+        grid-template-columns: 1fr;
+    }
+    .profile-edit-div{
+        border: 0;
+    }
+    .profile-infos button[type="submit"]{
+        width: 100%;
+    }
+    .button-outlined{
+        background-color: var(--gray-1);
+    }
+    .profile-redesocial-grid .btn-model-add{
+        width: 50px;
+        margin-left: auto;
+    }
+}

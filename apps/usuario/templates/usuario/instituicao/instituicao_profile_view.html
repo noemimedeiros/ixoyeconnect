@@ -1,0 +1,108 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'usuario/css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'usuario/css/profile_responsive.css' %}">
+{% endblock style %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block dashboard_actions %}
+{% endblock %}
+
+{% block dashboard_content %}
+<section class="profile-view">
+    {% if request.user.is_instituicao %}
+    <section class="profile-navs">
+        <a href="{% url 'usuario:meu_perfil' %}" class="btn btn-profile-navs active" >Meu Perfil</a>
+        <a href="{% url 'notificacao:notificacoes_configurar' %}" class="btn btn-profile-navs">Notificações</a>
+        <a href="{% url 'usuario:senha_seguranca' %}" class="btn btn-profile-navs">Senha e Segurança</a>
+        <a href="{% url 'usuario:deletar_conta' %}" class="btn btn-profile-navs btn-deletar-conta">Deletar Conta</a>
+    </section>
+    {% endif %}
+    <section class="profile-infos">
+        <div class="profile-generic-infos">
+            <img class="user-profile" src="{{ igreja.profile_picture.url }}" alt="">
+            <div class="profile-name">
+                <h5><b>{{ igreja.nome }}</b></h5>
+                <h6>{{ igreja.instituicao.denominacao }}</h6>
+            </div>
+        </div>
+        {% if request.user.is_admin %}
+        <div class="text-end">
+            <a class="btn button-outlined" href="{% url 'usuario:instituicao_update_view' igreja.pk %}">Editar Instituição</a>
+        </div>
+        {% endif %}
+        <div class="profile-informacoes">
+            <div>
+                <h5><b>Informações Pessoais</b></h5>
+            </div>
+            <div class="profile-informacoes-grid">
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Nome</b></h6>
+                    <span class="profile-infos-text">{{ igreja.nome }}</span>
+                </div>
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Celular</b></h6>
+                    <span class="profile-infos-text">{{ igreja.celular }}</span>
+                </div>
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>E-mail</b></h6>
+                    <span class="profile-infos-text">{{ igreja.user.email }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="profile-informacoes">
+            <div>
+                <h5><b>Endereço</b></h5>
+            </div>
+            <div class="profile-informacoes-grid">
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Unidade Federativa</b></h5>
+                    <span class="profile-infos-text">{{ igreja.endereco.uf }}</span>
+                </div>
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Cidade</b></h6>
+                    <span class="profile-infos-text">{{ igreja.endereco.cidade }}</span>
+                </div>
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Bairro</b></h6>
+                    <span class="profile-infos-text">{{ igreja.endereco.bairro }}</span>
+                </div>
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Logradouro</b></h6>
+                    <span class="profile-infos-text">{{ igreja.endereco.rua }} - {{ igreja.endereco.numero }}</span>
+                </div>
+                {% if igreja.endereco.complemento %}
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Logradouro</b></h6>
+                    <span class="profile-infos-text">{{ igreja.endereco.complemento }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="profile-informacoes">
+            <div>
+                <h5><b>Redes Sociais</b></h5>
+                <a href="" class=""></a>
+            </div>
+            <div class="profile-informacoes-grid">
+                {% for rede_social in igreja.redes_sociais.all %}
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>{{ rede_social.redesocial }}</b></h6>
+                    <span class="profile-infos-text">{{ rede_social.descricao }}</span>
+                </div>
+                {% empty %}
+                <div class="profile-infos-div">
+                    <h6 class="profile-infos-title"><b>Não há redes sociais cadastradas</b></h6>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock dashboard_content %}

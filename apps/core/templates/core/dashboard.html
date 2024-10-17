@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 {% block style %}{% endblock style %}
 
-
 {% endblock css %}
 
 {% block content %}
@@ -82,6 +81,31 @@
             $("#form-delete").prop('action', button.dataset.deletelink)
             $(".object-delete").html(button.dataset.object)
         })
+
+        $('.user-configs').each(function () {
+            $(this).popover('dispose');
+            $(this).popover({
+                html: true,
+                content: `
+                    <div class="user-config-popover">
+                        <a href="{% url 'usuario:meu_perfil' %}">
+                            <i class="fa-solid fa-user-circle"></i> Minha conta
+                        </a>
+                        <a href="/logout/">
+                            <i class="fa-solid fa-right-from-bracket"></i> Sair
+                        </a>
+                    </div>
+                `,
+                placement: 'bottom',
+                trigger: 'blur',
+                allowList: {
+                    a: ['class', 'href', 'role'],
+                    i: ['class'],
+                    div: ['class'],
+                    span: []
+                }
+            })
+        });
     });
 
     function fotoPreview(input_id, foto_preview='#foto-preview'){

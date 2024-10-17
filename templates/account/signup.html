@@ -226,13 +226,19 @@
 
 
     $(function(){
-        {% if request.POST.instituicao %}
+        {% if instituicao_selecionada %}
         mudar_formulario('igreja');
-        selecionar_instituicao('{{ request.POST.instituicao }}')
+        selecionar_instituicao('{{ instituicao_selecionada }}')
         {% else %}
         mudar_formulario('membro');
         {% endif %}
         checkScreenWidth();
+
+        setTimeout(() => {
+            if($('.invalid-feedback').length > 0 ){
+                document.querySelector('.invalid-feedback').scrollIntoView();
+            }
+        }, 700)
     })
 
     function selecionar_instituicao(id){

@@ -31,6 +31,8 @@
     --gray-2: white;
     --gray-3: #A7AEB6;
     --black-1: white;
+
+    --light-bg: #0d0e0f;
     
     --bs-body-bg: #181a1d;
     --bs-heading-color: white;
@@ -481,7 +483,7 @@ a.btn{
         width: 2.5em;
         height: 1.5em;
     }
-    .form-check-label{
+    .form-switch .form-check-label{
         line-height: 2em;
         padding-left: .5em;
     }

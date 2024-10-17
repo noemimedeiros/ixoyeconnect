@@ -149,4 +149,11 @@
     .card-post-aberto{
         height: fit-content;
     }
+    .toast {
+        top: 8rem !important;
+        margin-inline: auto !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: fit-content;
+    }
 }

@@ -18,10 +18,12 @@
 
 {% block dashboard_content %}
 <section class="post-detail">
+    {% if object.capa %}
     <div class="post-aberto-header">
         <img class="card-post" src="{{ object.capa.url }}" alt="">
     </div>
-    <div class="card-post-aberto">
+    {% endif %}
+    <div class="card-post-aberto {% if not object.capa %}card-post-aberto-sem-capa{% endif %}">
         <div class="post-aberto-content">
             <div class="post-aberto-title">
                 <h2 class="mb-2">{{ object.titulo }}</h2>

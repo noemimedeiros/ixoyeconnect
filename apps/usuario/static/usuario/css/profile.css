@@ -1,0 +1,127 @@
+.titulo-dashboard{
+    display: none;
+}
+
+.profile-view{
+    display: grid;
+    grid-template-columns: 15% 1fr;
+    gap: 10px;
+}
+a.btn-profile-navs{
+    width: fit-content;
+    padding-inline: 20px;
+    justify-content: start;
+    color: var(--green);
+    text-align: start;
+}
+.btn-profile-navs.active{
+    color: var(--green);
+    background-color: var(--green-transparent);
+}
+.profile-navs{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+a.btn-deletar-conta{
+    margin-top: 2rem;
+    color: brown;
+}
+a.btn-deletar-conta.active{
+    background-color: rgba(165, 42, 42, 0.096);
+    color: brown;
+}
+.profile-infos, .senha-seguranca-div{
+    display: grid;
+    gap: 20px;
+}
+.profile-generic-infos{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.profile-name{
+    display: grid;
+    gap: 5px;
+}
+.profile-name h6{
+    color: var(--gray-2);
+}
+.profile-informacoes, .profile-generic-infos{
+    background-color: var(--gray-1);
+    border-radius: 20px;
+    padding: 20px;
+}
+.profile-informacoes-grid{
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.profile-redesocial-grid{
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr 20rem;
+    gap: 10px;
+}
+.profile-redesocial-grid .btn-model-add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.profile-informacoes h5{
+    color: var(--aqua-blue);
+}
+.profile-infos-title{
+    color: var(--gray-2);
+}
+.profile-infos-div{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+.profile-infos-text{
+    color: var(--black-1);
+    font-weight: 400;
+}
+
+.div-deletar-conta h5{
+    color: brown;
+}
+
+.notificacoes-div{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.notificacoes-div .profile-infos-div{
+    width: fit-content;
+}
+#id_horario{
+    width: 250px;
+}
+#div_id_logo .input-group-text, #div_id_foto .input-group-text{
+    border: 0;
+    border-top-left-radius: var(--rounded-pill);
+    border-bottom-left-radius: var(--rounded-pill);
+    background-color: var(--gray-1);
+}
+#div_id_logo .form-control.h-auto, #div_id_foto .form-control.h-auto{
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-top-right-radius: var(--rounded-pill);
+    border-bottom-right-radius: var(--rounded-pill);
+    background-color: var(--gray-1);
+}
+
+.titulo-perfil-page{
+    color: var(--aqua-blue);
+}
+.profile-edit-div{
+    border-radius: 20px;
+    border: 1px solid var(--gray-1);
+    padding: 20px;
+}

@@ -1,6 +1,5 @@
 from django.utils import timezone
-from typing import Iterable
-from django.db import models
+from django.db import connection, models
 from core.models import Endereco
 from django.contrib.auth.models import AbstractUser
 
@@ -8,31 +7,38 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.conta.nome
-            
+    
     @property
-    def is_admin(self):
+    def is_instituicao(self):
         if hasattr(self, 'instituicaosede'):
             return True
         else:
             return False
     
     @property
+    def is_admin(self):
+        if hasattr(self, 'instituicaosede') or self.membro.admin:
+            return True
+        else:
+            return False
+    
+    @property
     def profile_picture(self):
-        if self.is_admin:
-            return self.conta.instituicao.logo
+        if self.is_instituicao:
+            return self.conta.logo
         else:
             return self.conta.foto
 
     @property
     def conta(self):
-        if self.is_admin:
+        if self.is_instituicao:
             return self.instituicaosede
         else:
             return self.membro
 
     @property
     def instituicao(self):
-        if self.is_admin:
+        if self.is_instituicao:
             return self.conta
         else:
             return self.conta.sede
@@ -50,14 +56,13 @@ class Instituicao(models.Model):
     nome = models.CharField(max_length=120, null=False, blank=False)
     denominacao = models.ForeignKey(Denominacao, on_delete=models.CASCADE, null=False, blank=False)
     sigla = models.CharField(max_length=10, null=True, blank=True)
-    logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/')
 
     class Meta:
         db_table = "instituicao"
 
 class UsuarioAbstract(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True)
-    nome = models.CharField(max_length=60, null=False, blank=False)
+    nome = models.CharField(max_length=60, null=False, blank=False, verbose_name="Nome Completo")
     celular = models.CharField(max_length=16, null=True, blank=True)
     endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, null=False, blank=False, verbose_name="Endereço")
 
@@ -69,9 +74,41 @@ class InstituicaoSede(UsuarioAbstract):
     cnpj = models.CharField(max_length=20, null=False, blank=False, unique=True)
     sigla = models.CharField(max_length=10, null=False, blank=False)
     codigo = models.CharField(max_length=8, null=False, blank=False, unique=True)
+    logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/')
+
+    def __str__(self):
+        return self.nome
 
     class Meta:
         db_table = "instituicaosede"
+
+    @property
+    def quantidade_membros(self):
+        with connection.cursor() as cursor:
+            cursor.execute(f'''
+            select count(*) from membro where sede = {self.pk}
+            ''')
+            cursor.fetchall()
+            if cursor[0]:
+                return cursor[0]
+        return 0
+
+class RedeSocial(models.Model):
+    nome = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        db_table = 'redesocial'
+
+class RedeSocialInstituicaoSede(models.Model):
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False, related_name='redes_sociais')
+    redesocial = models.ForeignKey(RedeSocial, on_delete=models.CASCADE, null=False, blank=False)
+    descricao = models.CharField(max_length=50, null=False, blank=False)
+
+    class Meta:
+        db_table = 'redesocialinstituicaosede'
 
 class Membro(UsuarioAbstract):
     sede = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
@@ -79,6 +116,7 @@ class Membro(UsuarioAbstract):
     data_nascimento = models.DateField(null=False, blank=False)
     foto = models.ImageField(upload_to='usuario/perfil', max_length=255, null=True, blank=True)
     desvinculado = models.BooleanField(default=0)
+    admin = models.BooleanField(default=0, verbose_name="Definir como Admin", help_text="Ao definir um usuário como admin, ele poderá ter acesso a publicar, editar ou excluir informações da Igreja.")
 
     class Meta:
         db_table = 'membro'
@@ -103,7 +141,9 @@ class Membro(UsuarioAbstract):
             today.year
             - (self.ano_ingressao)
         )
-        return membro_ha
+        if membro_ha <= 0:
+            return f'{membro_ha} meses'
+        return f'{membro_ha} anos'
     
     def get_funcoes(self):
         funcoes = [str(funcao) for funcao in self.funcoes.all()]

@@ -1,0 +1,40 @@
+{% extends "usuario/base/profile_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block profile_content %}
+<section >
+   <div class="mt-3 mb-4">
+    <h4 class="titulo-perfil-page"><b>Editar perfil</b></h4>
+   </div>
+    <form class="profile-infos mt-3" method="POST" enctype="multipart/form-data">
+        <div class="profile-edit-div">
+            <div>
+                <h5><b>Dados do Usuário</b></h5>
+            </div>
+            <div class="profile-informacoes-grid">
+                {% crispy user_form %}
+            </div>
+        </div>
+        <div class="profile-edit-div">
+            <div>
+                <h5><b>Informações Pessoais</b></h5>
+            </div>
+            <div class="profile-informacoes-grid">
+                {% crispy form %}
+            </div>
+        </div>
+        <div class="profile-edit-div">
+            <div>
+                <h5><b>Endereço</b></h5>
+            </div>
+            <div class="mt-3">
+                {% crispy endereco_form %}
+            </div>
+        </div>
+        <div class="mt-3">
+            <button type="submit" class="btn button-filled">Salvar alterações</button>
+        </div>
+    </form>
+</section>
+{% endblock profile_content %}
