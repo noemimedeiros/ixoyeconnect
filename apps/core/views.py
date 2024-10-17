@@ -7,7 +7,7 @@ from allauth.account.views import SignupView, LoginView
 from django.db import transaction
 from extra_views import SearchableListMixin
 
-from notificacao.models import ConfiguracoesNotificacao
+from notificacao.models import ConfiguracoesNotificacao, Notificacao
 from core.messages_utils import *
 from posts.models import CategoriaPost
 from usuario.models import Instituicao, InstituicaoSede

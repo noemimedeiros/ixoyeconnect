@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.http import HttpResponseRedirect
@@ -14,8 +14,9 @@ from core.views import MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 class NotificacaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'notificacao/notificacao_list_view.html'
     model = Notificacao
-    ordering = ['data']
+    ordering = ['-data']
     context_object_name = 'notificacoes'
+    search_fields = ['mensagem']
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -26,6 +27,7 @@ class NotificacaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["titulo"] = "Notificações"
         context["active"] = ["notificacao"]
         context["hoje"] = date.today()
+        context["ontem"] = date.today() - timedelta(days=1)
         context["nao_lidas"] = self.get_queryset().filter(lida=False)
         return context
     
@@ -63,7 +65,15 @@ def NotificacaoDeleteView(request, pk):
 @login_required(login_url="/login/")
 def ler_notificacao(request):
     try:
-        Notificacao.objects.filter(pk=request.GET.get('notificacao_id')).update(lida=True)
+        Notificacao.objects.filter(pk=request.GET.get('notificacao_id')).update(lida=1)
+    except Notificacao.DoesNotExist:
+        pass
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url="/login/")
+def ler_todas_notificacoes(request, user_pk):
+    try:
+        Notificacao.objects.filter(user_id=user_pk).update(lida=1)
     except Notificacao.DoesNotExist:
         pass
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

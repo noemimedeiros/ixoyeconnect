@@ -17,7 +17,12 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
-
+{% include "core/includes/default_actions.html" %}
+<form action="{% url 'notificacao:ler_todas_notificacoes' request.user.pk %}">
+    <button type="submit" class="btn button-filled gap-2">
+        Ler todas
+    </button>
+</form>
 {% endblock dashboard_actions %}
 
 {% block dashboard_content %}
@@ -27,23 +32,35 @@
     {% else %}
     <h5 class="notificacoes-total">Você possui <span class="quant-nao-lidas">{{ nao_lidas|length }} novas notificações.</span></h5>
     {% endif %}
-    {% for notificacao in notificacoes %}
-        <a class="notificacao-card" role="button" href="{{ notificacao.link|default:"#" }}">
-            <div class="notificacao-icone-div">
-                <div id="lido-{{ notificacao.pk }}" class="notificacao-nao-lida {% if notificacao.lida %}d-none{% endif %}"><i class="fa-solid fa-circle"></i></div>
-                <div class="notificacao-icone"><i class="fa-solid {{ notificacao.modulo|icone_notificacao }}"></i></div>
-            </div>
-            <div>
-                <div class="notificacao-mensagem">{{ notificacao.mensagem }}</div>
-                <div class="notificacao-data">
-                    {% if notificacao.data.date == hoje %}
-                        {{ notificacao.data|time:"H:i" }}
-                    {% else %}
-                        {{ notificacao.data|date:"d/m/Y H:i" }}
-                    {% endif %}
+    {% regroup notificacoes by data|date:"j \d\e F \d\e Y" as notificacoes_list %}
+    {% for notif_data in notificacoes_list %}
+        <div class="mb-2">
+            {% if notif_data.grouper == hoje|date:"j \d\e F \d\e Y" %}
+            <h6 class="text-muted mb-3">Hoje</h6>
+            {% elif notif_data.grouper == ontem|date:"j \d\e F \d\e Y"%}
+            <h6 class="text-muted mb-3">Ontem</h6>
+            {% else %}
+            <h6 class="text-muted mb-3">{{ notif_data.grouper }}</h6>
+            {% endif %}
+            {% for notificacao in notif_data.list %}
+            <a class="notificacao-card mb-2" {% if not notificacao.lida %}onclick="lerNotificacao('{{ notificacao.pk }}')"{% endif %} href="{{ notificacao.link|default:"#" }}">
+                <div class="notificacao-icone-div">
+                    <div id="lido-{{ notificacao.pk }}" class="notificacao-nao-lida {% if notificacao.lida %}d-none{% endif %}"><i class="fa-solid fa-circle"></i></div>
+                    <div class="notificacao-icone"><i class="fa-solid {{ notificacao.modulo|icone_notificacao }}"></i></div>
                 </div>
-            </div>
-        </a>
+                <div>
+                    <div class="notificacao-mensagem">{{ notificacao.mensagem }}</div>
+                    <div class="notificacao-data">
+                        {% if notificacao.data.date == hoje %}
+                            {{ notificacao.data|time:"H:i" }}
+                        {% else %}
+                            {{ notificacao.data|date:"d/m/Y H:i" }}
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     {% endfor %}
 </section>
 {% endblock dashboard_content %}

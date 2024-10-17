@@ -42,6 +42,15 @@ class User(AbstractUser):
             return self.conta
         else:
             return self.conta.sede
+        
+    @property
+    def get_quant_notificacoes(self):
+        with connection.cursor() as cursor:
+            cursor.execute(f'select count(*) from notificacao where user_id = {self.pk} and lida = 0')
+            row = cursor.fetchone()
+            if row[0]:
+                return int(row[0])
+        return 0
 
 class Denominacao(models.Model):
     nome = models.CharField(max_length=120, null=False, blank=False)
@@ -88,9 +97,9 @@ class InstituicaoSede(UsuarioAbstract):
             cursor.execute(f'''
             select count(*) from membro where sede = {self.pk}
             ''')
-            cursor.fetchall()
-            if cursor[0]:
-                return cursor[0]
+            row = cursor.fetchall()
+            if row[0]:
+                return row[0]
         return 0
 
 class RedeSocial(models.Model):

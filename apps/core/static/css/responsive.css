@@ -156,4 +156,9 @@
         right: 0 !important;
         height: fit-content;
     }
+    .notificacao-push-icon{
+        font-size: 1.1rem;
+        width: 2rem;
+        height: 2rem;
+    }
 }

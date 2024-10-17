@@ -29,9 +29,16 @@
             <i class="fa-solid fa-church"></i>
         </a>
         <a href="{% url 'notificacao:notificacoes_list_view' %}" class="top-nav-item button-filled-tonal {% if 'notificacoes/' in request.path %}active{% endif %}">
-            <i class="fa-solid fa-bell"></i>
+            <div class="notificacao-btn">
+                <i class="fa-solid fa-bell"></i>
+                {% if request.user.get_quant_notificacoes > 0 %}
+                <div class="notificacao-push-icon">
+                    {{ request.user.get_quant_notificacoes }}
+                </div>
+                {% endif %}
+            </div>
         </a>
-        <a href="{% url 'usuario:meu_perfil' %}" class="top-nav-item button-filled-tonal top-nav-user {% if 'minha_conta/' in request.path or 'meu_perfil/' in request.path or 'editar_perfil_membro/' in request.path %}active{% endif %}">
+        <a href="{% url 'usuario:meu_perfil' %}" class=" top-nav-item button-filled-tonal top-nav-user {% if 'minha_conta/' in request.path or 'meu_perfil/' in request.path or 'editar_perfil_membro/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-user"></i>
         </a>
         <div class="user-infos">

@@ -5,4 +5,10 @@
     .notificacao-card{
         background-color: var(--body-bg);
     }
+    .search-input input{
+        background-color: var(--body-bg);
+    }
+    .notificacoes-section{
+        margin-top: 2rem;
+    }
 }

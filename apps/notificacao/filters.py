@@ -5,7 +5,7 @@ register = template.Library()
 @register.filter
 def icone_notificacao(self):
     if self == 'Post':
-        return 'fa-bible'
+        return 'fa-book'
     if self == 'Escala':
         return 'fa-clipboard-list'
     if self == 'Evento':

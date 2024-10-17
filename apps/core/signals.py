@@ -36,13 +36,13 @@ def enviar_notificacao(instance, link, mensagem):
 def notificar_novo_evento(sender, instance, created, **kwargs):
     if created:
         link = reverse('evento:evento_detail_view', kwargs={'pk': instance.pk})
-        enviar_notificacao(instance=instance, link=link, mensagem=f"{instance.instituicao} publicou um novo evento: {instance.titulo}")
+        enviar_notificacao(instance=instance, link=link, mensagem=f"Foi publicado um novo evento: {instance.titulo}")
 
 @receiver(post_save, sender=Post)
 def notificar_novo_post(sender, instance, created, **kwargs):
     if created:
         link = reverse('posts:conteudo_detail_view', kwargs={'pk': instance.pk})
-        enviar_notificacao(instance=instance, link=link, mensagem=f"{instance.instituicao} publicou um novo {instance.categoria.nome}: {instance.titulo}")
+        enviar_notificacao(instance=instance, link=link, mensagem=f"Foi publicado um(a) novo(a) {instance.categoria.nome}: {instance.titulo}")
 
 @receiver(post_save, sender=Escala)
 def notificar_nova_escala(sender, instance, created, **kwargs):

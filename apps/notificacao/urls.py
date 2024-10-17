@@ -14,4 +14,5 @@ urlpatterns = [
     path('excluir_notificacao/<int:pk>/', views.NotificacaoDeleteView, name="notificacao_delete_view"),
 
     path('ler_notificacao/', views.ler_notificacao, name="ler_notificacao"),
+    path('ler_todas_notificacoes/<int:user_pk>', views.ler_todas_notificacoes, name="ler_todas_notificacoes"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)
