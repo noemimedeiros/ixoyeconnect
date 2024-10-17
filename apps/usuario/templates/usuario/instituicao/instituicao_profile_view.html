@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<section class="profile-view">
+<section class="{% if request.user.is_instituicao %}profile-view {% endif %}">
     {% if request.user.is_instituicao %}
     <section class="profile-navs">
         <a href="{% url 'usuario:meu_perfil' %}" class="btn btn-profile-navs active" >Meu Perfil</a>
