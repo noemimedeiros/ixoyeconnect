@@ -6,22 +6,30 @@
     "display": "standalone",
     "scope": "/",
     "orientation": "any",
-    "background_color": "#ffffff",
+    "background_color": "#3DBD90",
     "theme_color": "#3DBD90",
     "icons": [
       {
-        "src": "/static/public/img/favicon/android-chrome-512x512.png",
+        "src": "/static/img/android-chrome-512x512.png",
         "sizes": "512x512"
       },
       {
-        "src": "/static/public/img/favicon/android-chrome-192x192.png",
+        "src": "/static/img/android-chrome-192x192.png",
         "sizes": "192x192"
       }
     ],
-    "splash_screen": [
+    "splash_screens": [
         {
-            "src": "/static/public/img/favicon/splash_screen.png",
+            "src": "/static/img/splash_screen_320x568.png",
             "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+        },
+        {
+            "src": "/static/img/splash_screen_375x667.png",
+            "media": "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+        },
+        {
+            "src": "/static/img/splash_screen_414x869.png",
+            "media": "(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
         }
     ],
     "dir": "ltr",

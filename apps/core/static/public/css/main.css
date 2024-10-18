@@ -22,19 +22,19 @@
 }
 
 .darkmode:root{
-    --body-bg: #232429;
+    --body-bg: #18191f;
 
     /* --green: #287e60;
     --aqua-blue: #1a4f53; */
 
-    --gray-1: #181a1d;
+    --gray-1: #1e2128;
     --gray-2: white;
     --gray-3: #A7AEB6;
     --black-1: white;
 
     --light-bg: #0d0e0f;
     
-    --bs-body-bg: #181a1d;
+    --bs-body-bg: #18191f;
     --bs-heading-color: white;
     --bs-body-color: #A7AEB6;
     --bs-secondary-color: #A7AEB6;
@@ -106,6 +106,7 @@ input[type=file]::file-selector-button {
     width: 100%;
     background-color: var(--body-bg);
     display: grid;
+    z-index: 2;
 }
 
 .section-login{
