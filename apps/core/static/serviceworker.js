@@ -8,11 +8,3 @@ self.addEventListener('push', function(event) {
         self.registration.showNotification(data.title, options)
     );
 });
-self.addEventListener('fetch', function(event) {
-    event.respondWith(
-      caches.match(event.request).then(function(response) {
-        // Serve o conteúdo do cache, ou busca na rede
-        return response || fetch(event.request);
-      })
-    );
-  });
