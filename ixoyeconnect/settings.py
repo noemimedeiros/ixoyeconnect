@@ -18,6 +18,7 @@ SECRET_KEY = env("DJ_SECRET_KEY", default="")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]
 
 sys.path.append(
     os.path.join(BASE_DIR, "apps")
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'extra_views',
     'django_filters',
+    'pwa_webpush',
 
     # Local,
     'core',
@@ -257,3 +259,33 @@ WEBPUSH_SETTINGS = {
    "VAPID_PRIVATE_KEY": env("VAPID_PRIVATE_KEY", default=""),
    "VAPID_ADMIN_EMAIL": env("VAPID_ADMIN_EMAIL", default="")
 }
+
+# -----------------------------------------------------------------------------
+# PWA WEBPUSH
+# -----------------------------------------------------------------------------
+PWA_APP_NAME = 'IxoyeConnect'
+PWA_APP_DESCRIPTION = "IxoyeConnect"
+PWA_APP_THEME_COLOR = '#3DBD90'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/public/img/favicon/android-chrome-512x512.png',
+        'sizes': '512x512'
+    },
+    {
+        'src': '/static/public/img/favicon/android-chrome-192x192.png',
+        'sizes': '192x192'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/public/img/favicon/splash_screen.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'pt-BR'

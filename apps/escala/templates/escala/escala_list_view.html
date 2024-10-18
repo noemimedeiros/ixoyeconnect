@@ -30,9 +30,11 @@
         <div>
             <section class="escala-filter">
                 {% crispy filter.form %}
+                {% if request.user.is_admin %}
                 <button type="button" data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
                     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
                 </button>
+                {% endif %}
             </section>
             <section class="escala-list">
                 {% if filtrado_para %}

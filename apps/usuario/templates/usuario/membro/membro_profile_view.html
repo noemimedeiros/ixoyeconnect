@@ -4,7 +4,7 @@
 {% block profile_content %}
 <section class="profile-infos">
     <div class="profile-generic-infos">
-        <img class="user-profile" src="{{ membro.foto.url }}" alt="">
+        <img class="user-profile" src="{% if membro.foto %}{{ membro.foto.url }}{% endif %}" alt="">
         <div class="profile-name">
             <h5><b>{{ membro.nome }}</b></h5>
             <h6>{{ membro.user.username }}</h6>

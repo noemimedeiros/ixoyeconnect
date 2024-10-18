@@ -1,4 +1,5 @@
 {% load static %}
+{% load pwa_webpush %}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -6,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Ixoye Connect{% endblock title %}</title>
+    <link crossorigin="use-credentials" rel="manifest" href="{% static 'manifest.json' %}"/>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'public/img/favicon/apple-touch-icon.png' %}">
@@ -20,10 +22,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     
-    
     <!-- Font awesome -->
     <link href="{% static 'public/fonts/fontawesome/css/all.min.css' %}" rel="stylesheet" />
-
 
     <!-- Bootstrap -->
     <link href="{% static 'public/libs/bootstrap/css/bootstrap-grid.min.css' %}" rel="stylesheet" />
@@ -73,6 +73,14 @@
 <script src="{% static 'public/libs/bootstrap/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'public/libs/bootstrap/js/bootstrap-datepicker.pt-BR.js' %}"></script>
 <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js').then(function(reg) {
+            console.log('Service Worker registrado com sucesso:', reg);
+        }).catch(function(err) {
+            console.log('Falha ao registrar o Service Worker:', err);
+        });
+    }
+    
     if (darkModeStatus === 'enabled') {
         $('.icon-dark-mode').removeClass('fa-moon').addClass('fa-sun')
         $('.text-dark-mode').html('Modo Claro')
