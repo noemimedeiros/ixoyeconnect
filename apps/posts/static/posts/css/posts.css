@@ -2,7 +2,7 @@
     --post-card-height: 260px;
     --post-card-height-mb: 110px;
 }
-.posts-section *{
+.posts-section *, .card-post *{
     font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
 }
 .form-posts{
@@ -133,4 +133,8 @@
     .card-post-sem-capa .card-post-descricao{
         max-height: 40px;
     }
+}
+.card-post-fixado{
+    color: var(--aqua-blue);
+    rotate: 45deg;
 }

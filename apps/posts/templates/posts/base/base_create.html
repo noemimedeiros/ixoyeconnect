@@ -64,11 +64,13 @@
 
         let titulo = $('#id_titulo').val();
         let descricao = editors.id_descricao.getData();
+        let fixado = $('#id_fixado').is(':checked');
         fotoPreview('id_capa', '.card-post-capa');
 
         if (titulo) $('.card-post-titulo').html(titulo)
         if (descricao) $('.card-post-descricao').html(descricao);
         if (hoje || usuario) $('.card-post-info').html(`${hoje} - ${usuario}`)
+        fixado ? $('.card-post-fixado').removeClass("d-none") : $('.card-post-fixado').addClass("d-none")
     }
 
     $('input').on('change input', () => cardPost())

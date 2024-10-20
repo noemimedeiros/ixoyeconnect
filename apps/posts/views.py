@@ -14,7 +14,7 @@ from .forms import ArquivoPostFormSet, NewPostForm
 
 class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     model = Post
-    ordering = ['-data', '-hora']
+    ordering = ['-fixado', '-data', '-hora']
     search_fields =  ['titulo', 'descricao']
 
     def dispatch(self, request, *args, **kwargs):
