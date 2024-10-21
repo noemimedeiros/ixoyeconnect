@@ -18,10 +18,10 @@ class EventoFilter(FilterSet):
                 FloatingField('data', css_class='form-primary datepicker'),
                 Row(
                     Column(
-                        FloatingField('data__lt', css_class='form-primary datepicker')
+                        FloatingField('data__gt', css_class='form-primary datepicker')
                     ),
                     Column(
-                        FloatingField('data__gt', css_class='form-primary datepicker')
+                        FloatingField('data__lt', css_class='form-primary datepicker')
                     )
                 ),
             ),
@@ -29,10 +29,10 @@ class EventoFilter(FilterSet):
                 HTML('<h6 class="mb-3">Valor:</h6>'),
                 Row(
                     Column(
-                        FloatingField('valor__lt', css_class='form-primary')
+                        FloatingField('valor__gt', css_class='form-primary')
                     ),
                     Column(
-                        FloatingField('valor__gt', css_class='form-primary')
+                        FloatingField('valor__lt', css_class='form-primary')
                     )
                 )
             )

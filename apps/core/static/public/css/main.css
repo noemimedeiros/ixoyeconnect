@@ -488,3 +488,10 @@ a.btn{
         padding-left: .5em;
     }
 }
+
+.text-primary{
+    color: var(--green) !important;
+}
+a.text-primary:hover{
+    color: var(--aqua-blue);
+}

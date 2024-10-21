@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 from django.db.models import Q
 
+from usuario.filter import MembroFilter
 from core.forms import EnderecoForm, MySignUpForm
 from core.messages_utils import message_delete_registro, message_error_registro, message_success_generic
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
@@ -36,12 +37,18 @@ class MembroListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(sede_id=self.kwargs['instituicao_pk'])
+        qs = qs.filter(sede_id=self.kwargs['instituicao_pk'])
+        if self.request.GET:
+            qs = MembroFilter(self.request.GET, queryset=qs).qs
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Membros"
         context["active"] = ["membros"]
+        context["filter"] = MembroFilter()
+        if self.request.GET:
+            context["filter"] = MembroFilter(self.request.GET)
         return context
 
 class MembroCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):

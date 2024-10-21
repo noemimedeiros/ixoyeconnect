@@ -6,6 +6,7 @@ from django.template import TemplateDoesNotExist
 from django.urls import reverse
 from django.template.loader import get_template
 
+from posts.filter import PostFilter
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
@@ -30,15 +31,19 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tipo = self.kwargs['tipo']
-        instituicao = self.kwargs['instituicao_pk']
         context["titulo"] = tipo.capitalize()
         context["tipo"] = tipo
         context["active"] = ["conteudo", tipo]
+        context["filter"] = PostFilter()
+        if self.request.GET:
+            context["filter"] = PostFilter(self.request.GET)
         return context
     
     def get_queryset(self):
         qs = super().get_queryset()
         qs = qs.filter(categoria__nome=self.kwargs['tipo'], instituicao_id=self.kwargs['instituicao_pk'])
+        if self.request.GET:
+            qs = PostFilter(self.request.GET, queryset=qs).qs
         return qs
     
 

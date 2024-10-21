@@ -14,7 +14,7 @@
         </span>
         <small class="card-post-info">
             {% if post %}
-            {{ post.data|date:"d/m/Y" }} às {{ post.hora|default:"--:--" }} - {{ request.user.conta.nome }}
+            {{ post.data|date:"d/m/Y" }} às {{ post.hora|default:"--:--" }} - {{ post.user }}
             {% else %}
             {% now 'd/m/Y' %} - {{ request.user.conta.nome }}
             {% endif %}
