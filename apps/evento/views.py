@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
+from evento.filter import EventoFilter
 from core.forms import EnderecoForm
 from core.messages_utils import message_delete_registro, message_error_registro, message_success_generic
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
@@ -20,16 +21,10 @@ class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     search_fields = ['titulo', 'descricao']
 
     def get_queryset(self):
-        hoje = timezone.now().date()
         qs = super().get_queryset()
         qs = qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
-        # Ordenação joga os eventos que já passaram de hoje, para o fim da lista
-        # qs = qs.annotate(
-        #         proximos_dias=Case(
-        #             When(data__gte=hoje, then=Value(1)),
-        #             When(data__lt=hoje, then=Value(0)),
-        #             output_field=IntegerField(),
-        #         )).order_by('-proximos_dias', 'data')
+        if self.request.GET:
+            qs = EventoFilter(self.request.GET, queryset=qs).qs
         return qs
 
     def get_context_data(self, **kwargs):
@@ -37,8 +32,11 @@ class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Eventos"
         context["active"] = ["evento"]
+        context["filter"] = EventoFilter()
         context["eventos_porvir"] = self.get_queryset().filter(data__gte=hoje).order_by('data')
         context["eventos_passados"] = self.get_queryset().filter(data__lt=hoje).order_by('-data')
+        if self.request.GET:
+            context["filter"] = EventoFilter(self.request.GET)
         return context
 
 class EventoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):

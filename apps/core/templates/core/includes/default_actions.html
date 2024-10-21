@@ -1,9 +1,29 @@
+{% load crispy_forms_tags %}
 <div class="search-input">
     <i class="fa-solid fa-magnifying-glass"></i>
     <form method="GET">
         <input name="q" class="form-primary" type="text" placeholder="Pesquisar" value="{{ request.GET.q }}">
     </form>
 </div>
-<button type="button" class="btn button-filled-tonal">
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal_filtar" class="btn button-filled-tonal">
     <i class="fa-solid fa-filter fa-xl"></i>
 </button>
+<div class="modal fade" id="modal_filtar" tabindex="-1" aria-labelledby="modal_filtar_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="get">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal_filtar_label">Filtrar por:</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                {% crispy filter.form %}
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url link_list instituicao.pk %}" class="btn button-outlined me-auto">Limpar Filtros</a>
+                    <button type="submit" class="btn button-filled">Aplicar filtros</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

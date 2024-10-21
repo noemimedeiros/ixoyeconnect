@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
+from agenda.filter import AgendaSemanalFilter
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
@@ -19,12 +20,18 @@ class AgendaSemanalListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
+        qs = qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
+        if self.request.GET:
+            qs = AgendaSemanalFilter(self.request.GET, queryset=qs).qs
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Agenda Semanal"
         context["active"] = ["agenda"]
+        context["filter"] = AgendaSemanalFilter()
+        if self.request.GET:
+            context["filter"] = AgendaSemanalFilter(self.request.GET)
         return context
 
 class AgendaSemanalCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):

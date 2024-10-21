@@ -21,16 +21,10 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.GET:
-            return qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
-        else:
-            return self.filter_queryset(qs)
-    
-    def filter_queryset(self, queryset):
-        funcao_membro = self.request.GET.get('funcao_membro', None)
-        if funcao_membro:
-            queryset = queryset.filter(funcao_membro_id=funcao_membro)
-        return queryset
+        qs = qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
+        if self.request.GET:
+            qs = EscalaFilter(self.request.GET, queryset=qs).qs
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,13 +32,13 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["titulo"] = "Escala de Obreiros"
         context["active"] = ["escala"]
         context["form"] = EscalaForm(instituicao=instituicao, prefix="escala")
-        context["filter"] = EscalaFilter()
+        context["filter"] = EscalaFilter(queryset=self.get_queryset())
 
         if self.request.GET:
             if self.request.GET.get("funcao_membro"):
                 context["filtrado_para"] = FuncaoMembro.objects.get(pk=self.request.GET.get("funcao_membro"))
 
-            context["filter"] = EscalaFilter(self.request.GET)
+            context["filter"] = EscalaFilter(self.request.GET, queryset=self.get_queryset())
 
         return context
 
