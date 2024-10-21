@@ -36,6 +36,9 @@
                 {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
             {% endif %}
         </div>
+        {% if forloop.last and not eventos_passados %}
+            <div class="titulo-evento-fim"><small class=" text-muted">Não há mais eventos agendados após esta data. Fique atento para os próximos anúncios e novidades em breve!</small></div>
+        {% endif %}
     {% endfor %}
     
     {% if eventos_passados %}

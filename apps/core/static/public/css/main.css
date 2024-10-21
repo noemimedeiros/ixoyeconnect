@@ -106,7 +106,6 @@ input[type=file]::file-selector-button {
     width: 100%;
     background-color: var(--body-bg);
     display: grid;
-    z-index: 2;
 }
 
 .section-login{

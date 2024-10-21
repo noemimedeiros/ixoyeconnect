@@ -21,14 +21,14 @@
                 <div class="evento-infos button-filled-tonal">
                     <div>
                         <i class="fa-solid fa-calendar-day me-1"></i>
-                        {{ evento.data|default:"-- de -------" }}
+                        {{ evento.data|date:"d/m/Y" }}
                     </div>
                     <div>
                         <i class="fa-solid fa-clock me-1"></i>
-                        {{ evento.hora|default:"--:--" }}
+                        {{ evento.hora|time:'H:i' }}
                     </div>
                 </div>
-                <h3 class="evento-titulo">{{ evento.titulo|default:"-------" }}</h3>
+                <h3 class="evento-titulo">{{ evento.titulo }}</h3>
             </div>
         </div>
         <div class="evento-aberto-descricao">

@@ -61,7 +61,7 @@
 {% endblock logo_content %}
 
 {% block card_content %}
-    <form class="login-form" method="POST" action="{% url 'account_signup' %}">
+    <form class="login-form" method="POST" action="{% url 'account_signup' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="pages-signup">
             <div id="pages-singup">

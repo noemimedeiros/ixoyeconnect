@@ -20,11 +20,11 @@
                     <div class="evento-infos button-filled-tonal">
                         <small>
                             <i class="fa-solid fa-calendar-day me-1"></i>
-                            <span class="evento-data">{{ evento.data|default:"-- de -------" }}</span>
+                            <span class="evento-data">{{ evento.data|date:"d/m/Y"|default:"-- de -------" }}</span>
                         </small>
                         <small>
                             <i class="fa-solid fa-clock me-1"></i>
-                            <span class="evento-hora">{{ evento.hora|default:"--:--" }}</span>
+                            <span class="evento-hora">{{ evento.hora|time:'H:i'|default:"--:--" }}</span>
                         </small>
                     </div>
                 </div>

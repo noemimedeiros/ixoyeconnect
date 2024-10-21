@@ -106,6 +106,7 @@ class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
 class EventoDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
     template_name = "evento/evento_detail_view.html"
     model = Evento
+    context_object_name = "evento"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

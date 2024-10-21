@@ -74,7 +74,7 @@ class MembroForm(FormBaseIxoye):
         cleaned_data = super().clean()
         
         ano_ingressao = cleaned_data.get('ano_ingressao')
-        if ano_ingressao < 1900 or ano_ingressao > 2100:
+        if ano_ingressao and ano_ingressao < 1900 or ano_ingressao > 2100:
             self.add_error('ano', 'Por favor, verifique se o ano que você inseriu é válido.')
 
         try:
