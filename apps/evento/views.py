@@ -16,25 +16,29 @@ class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'evento/evento_list_view.html'
     model = Evento
     ordering = ['data', 'hora']
-    context_object_name = 'evento'
+    context_object_name = 'eventos'
     search_fields = ['titulo', 'descricao']
 
     def get_queryset(self):
         hoje = timezone.now().date()
         qs = super().get_queryset()
         qs = qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
-        qs = qs.annotate(
-                proximos_dias=Case(
-                    When(data__gte=hoje, then=Value(1)),
-                    When(data__lt=hoje, then=Value(0)),
-                    output_field=IntegerField(),
-                )).order_by('-proximos_dias', 'data')
+        # Ordenação joga os eventos que já passaram de hoje, para o fim da lista
+        # qs = qs.annotate(
+        #         proximos_dias=Case(
+        #             When(data__gte=hoje, then=Value(1)),
+        #             When(data__lt=hoje, then=Value(0)),
+        #             output_field=IntegerField(),
+        #         )).order_by('-proximos_dias', 'data')
         return qs
 
     def get_context_data(self, **kwargs):
+        hoje = timezone.now().date()
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Eventos"
         context["active"] = ["evento"]
+        context["eventos_porvir"] = self.get_queryset().filter(data__gte=hoje).order_by('data')
+        context["eventos_passados"] = self.get_queryset().filter(data__lt=hoje).order_by('-data')
         return context
 
 class EventoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):

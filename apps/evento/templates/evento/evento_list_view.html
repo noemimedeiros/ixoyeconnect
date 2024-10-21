@@ -23,13 +23,10 @@
 
 {% block dashboard_content %}
 <section class="evento-section">
-    {% for evento in evento %}
+    {% for evento in eventos_porvir %}
         {% if forloop.first %}
         <h4 class="titulo-proximo-evento">Próximo Evento</h4>
-        {% elif evento.data|evento_passado %}
-        <h5 class="titulo-evento-passados">Eventos passados</h6>
-        <div class="evento-linha linha-porvir"></div>
-        {% else %}
+        {% elif forloop.counter == 2 %}
         <h5 class="titulo-evento-porvir">Eventos por vir</h6>
         <div class="evento-linha linha-porvir"></div>
         {% endif %}
@@ -39,9 +36,22 @@
                 {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
             {% endif %}
         </div>
-        {% if forloop.last %}
-        <div class="titulo-evento-fim"><small class=" text-muted">Não há mais eventos agendados após esta data. Fique atento para os próximos anúncios e novidades em breve!</small></div>
-        {% endif %}
     {% endfor %}
+    
+    {% if eventos_passados %}
+    <h5 class="titulo-evento-passados">Eventos passados</h6>
+        <div class="evento-linha linha-porvir"></div>
+        {% for evento in eventos_passados %}
+            <div class="evento-component">
+                {% include "evento/partials/card_evento.html" with evento=evento index=forloop.counter %}
+                {% if request.user.is_admin %}
+                    {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
+                {% endif %}
+            </div>
+            {% if forloop.last %}
+            <div class="titulo-evento-fim"><small class=" text-muted">Não há mais eventos agendados após esta data. Fique atento para os próximos anúncios e novidades em breve!</small></div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </section>
 {% endblock dashboard_content %}
