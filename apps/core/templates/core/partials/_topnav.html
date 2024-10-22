@@ -22,6 +22,11 @@
         </div>
     </div> {% endcomment %}
     <div class="top-nav-items">
+        <button class="btn-dark-mode-top" onclick="darkMode()">
+            <i class="fa-solid fa-sun"></i>
+            <i class="fa-solid fa-moon"></i>
+            <div class="circle-darkmode"></div>
+        </button>
         <a href="{% url 'core:dashboard' %}" class="top-nav-item button-filled-tonal {% if 'dashboard/' in request.path %}active{% endif %}">
             <i class="fa-solid fa-house"></i>
         </a>
