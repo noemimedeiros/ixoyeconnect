@@ -528,3 +528,13 @@ html:not(.darkmode) .btn-dark-mode-top .circle-darkmode{
     border-radius: var(--rounded-pill);
     transition: all 300ms linear;
 }
+
+.buttons-form{
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+}
+.buttons-form button, .buttons-form a{
+    margin-top: auto;
+    width: 20%;
+}

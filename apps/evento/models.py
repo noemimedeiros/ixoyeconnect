@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.utils import timezone
+from django.templatetags.l10n import localize
 from django_ckeditor_5.fields import CKEditor5Field
 from usuario.models import Membro, InstituicaoSede
 from core.models import Endereco
@@ -17,6 +18,9 @@ class Evento(models.Model):
 
     class Meta:
         db_table = "evento"
+
+    def __str__(self):
+        return f'{self.titulo} - {localize(self.data)}'
 
 class ParticipanteEvento(models.Model):
     membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False, related_name="eventos_confirmados")

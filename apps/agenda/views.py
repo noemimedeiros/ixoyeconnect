@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from agenda.filter import AgendaSemanalFilter
 from core.messages_utils import message_delete_registro, message_error_registro
-from core.views import MyCreateViewIxoyeConnect, MyDeleteViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .models import AgendaSemanal, IconeAgendaSemanal
 from .forms import AgendaSemanalForm

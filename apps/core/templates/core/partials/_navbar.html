@@ -50,6 +50,10 @@
             <div class="side-nav-text">Contribuições</div>
         </a>
         {% if request.user.is_admin %}
+        <a href="{% url 'relatorio:relatorio_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
+            <div class="side-nav-icon"><i class="fa-solid fa-file-lines"></i></div>
+            <div class="side-nav-text">Relatórios</div>
+        </a>
         <a href="{% url 'usuario:membro_list_view' instituicao.pk %}" class="side-nav-item {% if 'lista-membros' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-users"></i></div>
             <div class="side-nav-text">Lista de Membros</div>

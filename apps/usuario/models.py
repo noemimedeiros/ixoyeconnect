@@ -125,7 +125,7 @@ class Membro(UsuarioAbstract):
     data_nascimento = models.DateField(null=False, blank=False)
     foto = models.ImageField(upload_to='usuario/perfil', max_length=255, null=True, blank=True)
     desvinculado = models.BooleanField(default=0)
-    admin = models.BooleanField(default=0, verbose_name="Definir como Admin", help_text="Ao definir um usuário como admin, ele poderá ter acesso a publicar, editar ou excluir informações da Igreja.")
+    admin = models.BooleanField(default=False, verbose_name="Definir como Admin", help_text="Ao definir um usuário como admin, ele poderá ter acesso a publicar, editar ou excluir informações da Igreja.")
 
     class Meta:
         db_table = 'membro'

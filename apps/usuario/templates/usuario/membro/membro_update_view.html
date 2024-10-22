@@ -117,7 +117,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="POST" action="{% url 'usuario:devincular_usuario' object.pk %}">
-                {% csrf_token %}
                 <div class="modal-body pb-0">
                     <div class="modal-excluir-body">
                         <div class="text-center">

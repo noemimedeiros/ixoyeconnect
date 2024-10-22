@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'evento',
     'usuario',
     'posts',
-    'notificacao'
+    'notificacao',
+    'relatorios'
 ]
 
 MIDDLEWARE = [

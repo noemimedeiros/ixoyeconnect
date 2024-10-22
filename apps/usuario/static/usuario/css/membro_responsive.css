@@ -12,12 +12,6 @@
     .btn-add-modal{
         width: 100%;
     }
-    .buttons-form button, .buttons-form a{
-        width: 100%;
-    }
-    .buttons-form{
-        flex-direction: column-reverse;
-    }
     .table-membros thead{
         display: none
     }
