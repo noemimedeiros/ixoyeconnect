@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
+from notificacao.filter import NotificacaoFilter
 from usuario.models import InstituicaoSede, Membro
 from notificacao.forms import ConfiguracoesNotificacaoForm
 from notificacao.models import ConfiguracoesNotificacao, Notificacao
@@ -20,7 +21,10 @@ class NotificacaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(user_id=self.request.user.pk)
+        qs = qs.filter(user_id=self.request.user.pk)
+        if self.request.GET:
+            qs = NotificacaoFilter(self.request.GET, queryset=qs).qs
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -29,6 +33,9 @@ class NotificacaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["hoje"] = date.today()
         context["ontem"] = date.today() - timedelta(days=1)
         context["nao_lidas"] = self.get_queryset().filter(lida=False)
+        context["filter"] = NotificacaoFilter()
+        if self.request.GET:
+            context["filter"] = NotificacaoFilter(self.request.GET)
         return context
     
 class ConfiguracoesNotificacaoView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):

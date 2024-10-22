@@ -22,7 +22,7 @@
 .card-post-aberto-sem-capa{
     justify-content: space-evenly;
     margin-top: 0;
-    padding-bottom: 0;
+    padding-bottom: 5%;
 }
 .post-aberto-header{
     width: calc(100% - 40%);

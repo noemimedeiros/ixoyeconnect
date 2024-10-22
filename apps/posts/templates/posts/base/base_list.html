@@ -10,7 +10,7 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
-{% include "core/includes/default_actions.html" %}
+{% include "core/includes/default_actions.html" with link_list='posts:conteudo_list_view' %}
 {% if request.user.is_admin %}
 <a role="button" href="{% url 'posts:conteudo_create_view' tipo instituicao.pk %}" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>

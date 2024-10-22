@@ -27,6 +27,13 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
             self.template_name = 'posts/base/base_list.html'
             get_template(self.template_name)
             return super().dispatch(request, *args, **kwargs)
+        
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(categoria__nome=self.kwargs['tipo'], instituicao_id=self.kwargs['instituicao_pk'])
+        if self.request.GET:
+            qs = PostFilter(self.request.GET, queryset=qs).qs
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,12 +46,6 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
             context["filter"] = PostFilter(self.request.GET)
         return context
     
-    def get_queryset(self):
-        qs = super().get_queryset()
-        qs = qs.filter(categoria__nome=self.kwargs['tipo'], instituicao_id=self.kwargs['instituicao_pk'])
-        if self.request.GET:
-            qs = PostFilter(self.request.GET, queryset=qs).qs
-        return qs
     
 
 class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):

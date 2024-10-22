@@ -1,5 +1,5 @@
 from django_filters import FilterSet, BooleanFilter
-from django.db import models
+from django.db.models import Q
 from django import forms
 from .models import Evento
 from core.forms import floating_fields
@@ -7,6 +7,7 @@ from crispy_forms.layout import Fieldset, Div, Layout, HTML, Row, Column
 from crispy_bootstrap5.bootstrap5 import FloatingField, Switch
 
 class EventoFilter(FilterSet):
+    gratuito = BooleanFilter(widget=forms.CheckboxInput, label='Gratuito', method='filter_gratuito')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -34,7 +35,8 @@ class EventoFilter(FilterSet):
                     Column(
                         FloatingField('valor__lt', css_class='form-primary')
                     )
-                )
+                ),
+                Switch('gratuito'),
             )
         )
 
@@ -44,3 +46,6 @@ class EventoFilter(FilterSet):
             'valor': ['lt', 'gt'],
             'data': ['exact', 'lt', 'gt'],
         }
+
+    def filter_gratuito(self, queryset, name, value):
+        return queryset.filter(Q(valor__isnull=True) | Q(valor=0))

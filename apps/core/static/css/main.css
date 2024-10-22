@@ -456,3 +456,7 @@
     justify-content: center;
     align-items: center;
 }
+
+.offcanvas::-webkit-scrollbar{
+    display: none;
+}

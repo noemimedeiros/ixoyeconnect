@@ -13,7 +13,7 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
-{% include "core/includes/default_actions.html" with link_list='evento:evento_list_view' %}
+{% include "core/includes/default_actions.html" %}
 {% if request.user.is_admin %}
 <a role="button" href="{% url 'evento:evento_create_view' %}" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>

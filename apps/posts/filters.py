@@ -7,7 +7,6 @@ register = template.Library()
 
 @register.filter
 def icons_arquivos(ext):
-    print(ext)
     if ext in ['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif']:
         return 'fa-image text-danger'
     if ext in ['.xls', '.xlsx']:
