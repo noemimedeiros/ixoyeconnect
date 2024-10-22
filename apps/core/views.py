@@ -41,7 +41,12 @@ class MyDetailViewIxoyeConnect(MyViewIxoyeConnect, DetailView):
     pass
     
 class MyListViewIxoyeConnect(MyViewIxoyeConnect, SearchableListMixin, ListView):
-    pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET:
+            filtros_aplicados = {k: v for k, v in self.request.GET.items() if v and v != ['']}
+            context["filtros_aplicados"] = len(filtros_aplicados) - 1
+        return context
     
 class MyCreateViewIxoyeConnect(MyViewIxoyeConnect, CreateView):
     def form_valid(self, form):

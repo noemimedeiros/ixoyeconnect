@@ -439,7 +439,7 @@
     padding-inline: 20%;
 }
 
-.notificacao-btn{
+.notificacao-btn, .filter-btn{
     position: relative;
 }
 .notificacao-push-icon{
@@ -459,4 +459,29 @@
 
 .offcanvas::-webkit-scrollbar{
     display: none;
+}
+
+.filtros_aplicados{
+    margin-top: 1rem;
+    background-color: var(--green-transparent);
+    padding: 10px;
+    padding-inline: 15px;
+    border-radius: var(--rounded-pill);
+    color: var(--green);
+    width: fit-content;
+}
+
+.filter-btn .possui-filtros-icon{
+    position: absolute;
+    top: -5%;
+    right: 15%;
+    color: white;
+    background-color: red;
+    font-size: .75rem;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

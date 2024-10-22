@@ -5,8 +5,13 @@
         <input name="q" class="form-primary" type="text" placeholder="Pesquisar" value="{{ request.GET.q }}">
     </form>
 </div>
-<button type="button" data-bs-toggle="offcanvas" data-bs-target="#modal_filtar" class="btn button-filled-tonal">
+<button type="button" data-bs-toggle="offcanvas" data-bs-target="#modal_filtar" class="btn button-filled-tonal filter-btn">
     <i class="fa-solid fa-filter fa-xl"></i>
+    {% if filtros_aplicados %}
+    <div class="possui-filtros-icon">
+        {{ filtros_aplicados }}
+    </div>
+    {% endif %}
 </button>
 <div class="offcanvas offcanvas-end offcanvas-filter overflow-auto" id="modal_filtar" data-bs-scroll="true" tabindex="-1" aria-labelledby="modal_filtar_label">
     <div class="offcanvas-content p-2">

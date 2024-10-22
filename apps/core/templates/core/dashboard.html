@@ -15,7 +15,9 @@
         {% include "core/partials/_topnav.html" %}
         <div class="dashboard-card">
             <div class="dashboard-head">
-                <h3 class="titulo-dashboard">{% block app_title %}{% endblock app_title %}</h3>
+                <h3 class="titulo-dashboard">
+                    {% block app_title %}{% endblock app_title %}
+                </h3>
                 <div class="dashboard-head-actions">
                     {% block dashboard_actions %}
                     {% endblock dashboard_actions %}
