@@ -45,7 +45,11 @@ class MyListViewIxoyeConnect(MyViewIxoyeConnect, SearchableListMixin, ListView):
         context = super().get_context_data(**kwargs)
         if self.request.GET:
             filtros_aplicados = {k: v for k, v in self.request.GET.items() if v and v != ['']}
-            context["filtros_aplicados"] = len(filtros_aplicados) - 1
+            if filtros_aplicados.get('q'):
+                filtros_aplicados = len(filtros_aplicados) - 1
+            else:
+                filtros_aplicados = len(filtros_aplicados)
+            context["filtros_aplicados"] = filtros_aplicados
         return context
     
 class MyCreateViewIxoyeConnect(MyViewIxoyeConnect, CreateView):

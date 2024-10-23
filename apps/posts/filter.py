@@ -13,6 +13,8 @@ class PostFilter(FilterSet):
         super().__init__(*args, **kwargs)
         floating_fields(self.form)
 
+        self.form.helper.disable_csrf = True
+
         self.form.fields['user'].label = 'Publicado por'
         self.form.fields['data'].label = 'Data exata'
         self.form.fields['data__gt'].label = 'Após a data'

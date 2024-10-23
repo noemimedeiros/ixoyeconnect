@@ -8,6 +8,7 @@ class ContribuicaoFilter(FilterSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         floating_fields(self.form)
+        self.form.helper.disable_csrf = True
 
     class Meta:
         model = Contribuicao

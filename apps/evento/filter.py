@@ -13,6 +13,8 @@ class EventoFilter(FilterSet):
         super().__init__(*args, **kwargs)
         floating_fields(self.form)
 
+        self.form.helper.disable_csrf = True
+
         self.form.helper.layout = Layout(
             Div(
                 HTML('<h6 class="mb-3">Data:</h6>'),
