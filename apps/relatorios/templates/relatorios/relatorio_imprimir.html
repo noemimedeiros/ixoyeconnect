@@ -1,143 +1,182 @@
 {% extends "layouts/base.html" %}
 {% load static %}
+{% load get_atividade %}
+
+{% block css %}
+<style>
+    .section-relatorios{
+        border-top: 20px var(--green) solid
+    }
+    .logo-relatorio {
+        height: 100px;
+        object-fit: contain;
+        border-radius: 50%;
+        margin-left: auto;
+    }
+    .header-relatorio-cultos{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        row-gap: 20px;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        padding-inline: 40px;
+    }
+    .table-relatorio{
+        table-layout: fixed;
+    }
+    .titulo-relatorio{
+        font-weight: 500;
+        text-transform: uppercase;
+
+    }
+    .table-titulo * {
+        font-size: 1.25rem;
+        background-color: var(--green-transparent) !important;
+    }
+    {% comment %} .table-light *{
+        background-color: var(--green-transparent) !important;
+    } {% endcomment %}
+</style>
+{% endblock css %}
 
 {% block content %}
-<style>
-  .logo-relatorio {
-    height: 100px;
-    object-fit: contain;
-    margin-inline: auto;
-  }
-</style>
-<div class="w-100 text-center mb-3">
-  <img src="{{ instituicao.logo.url }}" class="logo-relatorio" alt="" />
-  <h4><b>Relatório de Cultos - {{ instituicao }}</b></h4>
-</div>
-<!-- Por periodo -->
-{% if filtragem.data__gt %}
-<table class="table table-info">
-  <tr class="text-center">
-    <th colspan="20">Relatório de Cultos - {{ instituicao }} por Período</th>
-    <th>
-      {{ filtragem.data__gt }} - {{ filtragem.data__lt|default_if_none:hoje }}
-    </th>
-  </tr>
-</table>
-{% endif %}
-<table class="table text-center">
-  {% for relatorio in relatorios %}
-  <tr class="table-info">
-    <th colspan="2">Culto/Evento</th>
-    <th>Data</th>
-    <th>Hora Início</th>
-    <th>Hora Término</th>
-    <th>Ministro/Pregador</th>
-  </tr>
-  <tr>
-    <td colspan="2">{{ relatorio.culto|default_if_none:relatorio.evento }}</td>
-    <td>{{ relatorio.data }}</td>
-    <td>{{ relatorio.hora_inicio }}</td>
-    <td>{{ relatorio.hora_termino }}</td>
-    <td>{{ relatorio.ministro }}</td>
-  </tr>
-  <tr class="table-info">
-    <th>Total Participantes (Geral)</th>
-    <th>Total Mulheres</th>
-    <th>Total Homens</th>
-    <th>Total Juniores</th>
-    <th>Total Jovens</th>
-    <th>Total Visitantes</th>
-  </tr>
-  <tr>
-    <td>{{ relatorio.total_pessoas }}</td>
-    <td>{{ relatorio.total_mulheres }}</td>
-    <td>{{ relatorio.total_homens }}</td>
-    <td>{{ relatorio.total_juniores }}</td>
-    <td>{{ relatorio.total_jovens }}</td>
-    <td>{{ relatorio.total_visitantes }}</td>
-  </tr>
-  <tr class="table-info">
-    <th colspan="3">Total Dízimos (R$)</th>
-    <th colspan="3">Total Ofertas (R$)</th>
-  </tr>
-  <tr>
-    <td colspan="3">{{ relatorio.total_dizimos }}</td>
-    <td colspan="3">{{ relatorio.total_ofertas }}</td>
-  </tr>
-  <tr class="table-info">
-    <th colspan="3">Total Novos Convertidos</th>
-    <th colspan="3">Total Novos Batizandos</th>
-  </tr>
-  <tr>
-    <td colspan="3">{{ relatorio.total_novos_convertidos }}</td>
-    <td colspan="3">{{ relatorio.total_novos_batizandos }}</td>
-  </tr>
-  <tr class="table-info">
-    <th colspan="6">Atividades Realizadas</th>
-  </tr>
-  <tr class="table-info">
-    {% for relatorio_id, atividade_list in atividades.items %}
-        {% if relatorio_id == relatorio.id %}
-            {% for atividade, resposta in atividade_list.items %}
-                {% if forloop.counter <= 6 %}
-                <th>{{ atividade }}</th>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+<section class="section-relatorios">
+    <div class="header-relatorio-cultos">
+        <h3 class="titulo-relatorio">Relatório de Cultos - {{ instituicao }}</h3>
+        <img src="{{ instituicao.logo.url }}" class="logo-relatorio" alt="" />
+    </div>
+    {% if filtragem.data__gt %}
+    <table class="table table-light mb-0">
+        <tr class="text-center">
+            <th>Período</th>
+            <th>
+                {{ filtragem.data__gt }} - {{ filtragem.data__lt|default_if_none:hoje }}
+            </th>
+        </tr>
+    </table>
+    {% elif filtragem.data__year %}
+    <table class="table table-light mb-0">
+        <tr class="text-center">
+            <th>Por ano</th>
+            <th>
+                {{ filtragem.data__year__gt }} - {{ filtragem.data__year__lt|default_if_none:hoje }}
+            </th>
+        </tr>
+    </table>
+    {% elif filtragem.data__year__lt %}
+    <table class="table table-light mb-0">
+        <tr class="text-center">
+            <th>Por ano</th>
+            <th>
+                {{ filtragem.ano }}
+            </th>
+        </tr>
+    </table>
+    {% endif %}
+
+    {% for relatorio in relatorios %}
+    <table class="table text-center table-relatorio table-bordered">
+        <tr class="table-titulo">
+            <th colspan="4">{{ relatorio.culto.titulo|default_if_none:relatorio.evento }}</th>
+            <th colspan="2">{{ relatorio.data|date:'d/m/Y' }}</th>
+        </tr>
+        <tr class="table-light">
+            <th colspan="6">Informações Gerais</th>
+        </tr>
+        <tr class="table-light">
+            <th>Hora Início</th>
+            <th>Hora Término</th>
+            <th colspan="4">Ministro/Pregador</th>
+        </tr>
+        <tr>
+            <td>{{ relatorio.hora_inicio }}</td>
+            <td>{{ relatorio.hora_termino }}</td>
+            <td colspan="4">{{ relatorio.ministro }}</td>
+        </tr>
+        <tr class="table-light">
+            <th colspan="6">Total de participantes</th>
+        </tr>
+        <tr class="table-light">
+            <th>Total Geral</th>
+            <th>Total Mulheres</th>
+            <th>Total Homens</th>
+            <th>Total Juniores</th>
+            <th>Total Jovens</th>
+            <th>Total Visitantes</th>
+        </tr>
+        <tr>
+            <td>{{ relatorio.total_pessoas }}</td>
+            <td>{{ relatorio.total_mulheres }}</td>
+            <td>{{ relatorio.total_homens }}</td>
+            <td>{{ relatorio.total_juniores }}</td>
+            <td>{{ relatorio.total_jovens }}</td>
+            <td>{{ relatorio.total_visitantes }}</td>
+        </tr>
+        <tr class="table-light">
+            <th colspan="6">Dízimos e Ofertas</th>
+        </tr>
+        <tr class="table-light">
+            <th colspan="3">Total Dízimos (R$)</th>
+            <th colspan="3">Total Ofertas (R$)</th>
+        </tr>
+        <tr>
+            <td colspan="3">{{ relatorio.total_dizimos }}</td>
+            <td colspan="3">{{ relatorio.total_ofertas }}</td>
+        </tr>
+        <tr class="table-light">
+            <th colspan="6">Eventos Especiais</th>
+        </tr>
+        <tr class="table-light">
+            <th colspan="3">Total Novos Convertidos</th>
+            <th colspan="3">Total Novos Batizandos</th>
+        </tr>
+        <tr>
+            <td colspan="3">{{ relatorio.total_novos_convertidos }}</td>
+            <td colspan="3">{{ relatorio.total_novos_batizandos }}</td>
+        </tr>
+        <tr class="table-light">
+            <th colspan="6">Atividades Realizadas</th>
+        </tr>
+        <tr class="table-light">
+            <th>Louvor e Adoração</th>
+            <th>Leitura Bíblica</th>
+            <th>Oração Coletiva</th>
+            <th>Momentos de Ofertas e Dízimos</th>
+            <th>Sermão/Pregação</th>
+            <th>Apresentações Artísticas</th>
+        </tr>
+        <tr>
+            <td>{{ relatorio|get_atividade:'Louvor e Adoração'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Leitura Bíblica'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Oração Coletiva'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Momentos de Ofertas e Dízimos'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Sermão/Pregação'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Apresentações Artísticas'|safe }}</td>
+        </tr>
+        <tr class="table-light">
+            <th>Ceia do Senhor</th>
+            <th>Batismos</th>
+            <th>Testemunho de Membros</th>
+            <th>Intercessão</th>
+            <th colspan="2">Eventos para Crianças ou Adolescentes</th>
+        </tr>
+        <tr>
+            <td>{{ relatorio|get_atividade:'Ceia do Senhor'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Batismos'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Testemunho de Membros'|safe }}</td>
+            <td>{{ relatorio|get_atividade:'Intercessão'|safe }}</td>
+            <td colspan="2">{{ relatorio|get_atividade:'Eventos para Crianças ou Adolescentes'|safe }}</td>
+        </tr>
+    </table>
     {% endfor %}
-  </tr>
-  <tr>
-    {% for relatorio_id, atividade_list in atividades.items %}
-        {% if relatorio_id == relatorio.id %}
-            {% for atividade, resposta in atividade_list.items %}
-                {% if forloop.counter <= 6 %}
-                <th>
-                    {% if resposta == "Sim" %}
-                    <i class="fa-solid fa-check text-success"></i>
-                    {% else %}
-                    <i class="fa-solid fa-xmark text-danger"></i>
-                    {% endif %}
-                </th>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
-  </tr>
-  <tr class="table-info">
-    {% for relatorio_id, atividade_list in atividades.items %}
-        {% if relatorio_id == relatorio.id %}
-            {% for atividade, resposta in atividade_list.items %}
-                {% if forloop.counter > 6 %}
-                <th>{{ atividade }}</th>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
-  </tr>
-  <tr>
-    {% for relatorio_id, atividade_list in atividades.items %}
-        {% if relatorio_id == relatorio.id %}
-            {% for atividade, resposta in atividade_list.items %}
-                {% if forloop.counter > 6 %}
-                <th>
-                    {% if resposta == "Sim" %}
-                    <i class="fa-solid fa-check text-success"></i>
-                    {% else %}
-                    <i class="fa-solid fa-xmark text-danger"></i>
-                    {% endif %}
-                </th>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
-  </tr>
-  {% endfor %}
-</table>
+</section>
 {% endblock content %}
 {% block scripts %}
-<script>
-  $(function () {
-    window.print();
-  });
-</script>
+{% comment %} <script>
+    $(function () {
+        window.print();
+    });
+</script> {% endcomment %}
 {% endblock scripts %}

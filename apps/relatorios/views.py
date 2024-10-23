@@ -91,20 +91,10 @@ def RelatorioImprimir(request, instituicao_pk):
     hoje = date.today()
     hoje = datetime.strftime(hoje, '%d/%m/%Y')
 
-    atividades = {}
-
-    for relatorio in qs:
-        atividades[relatorio.id] = {}
-        for atividade in AtividadesCulto.objects.all():
-            atividades[relatorio.id][atividade.atividade] = "Não"
-        for atividade in relatorio.atividades.all():
-            atividades[relatorio.id][atividade.atividade] = "Sim"
-
     context = {
         'instituicao': InstituicaoSede.objects.get(pk=instituicao_pk),
         'filtragem': request.GET,
         'relatorios': qs,
-        'hoje': hoje,
-        'atividades': atividades
+        'hoje': hoje
     }
     return render(request, 'relatorios/relatorio_imprimir.html', context=context)

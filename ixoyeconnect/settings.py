@@ -129,7 +129,8 @@ TEMPLATES = [
                 "salvo": "posts.filters",
                 "get_tipo_display": "contribuicao.filters",
                 "evento_passado": "evento.filters",
-                "icone_notificacao": "notificacao.filters"
+                "icone_notificacao": "notificacao.filters",
+                "get_atividade": "relatorios.filters"
             }
         },
     },
