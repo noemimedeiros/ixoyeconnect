@@ -1,0 +1,143 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .logo-relatorio {
+    height: 100px;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+</style>
+<div class="w-100 text-center mb-3">
+  <img src="{{ instituicao.logo.url }}" class="logo-relatorio" alt="" />
+  <h4><b>Relatório de Cultos - {{ instituicao }}</b></h4>
+</div>
+<!-- Por periodo -->
+{% if filtragem.data__gt %}
+<table class="table table-info">
+  <tr class="text-center">
+    <th colspan="20">Relatório de Cultos - {{ instituicao }} por Período</th>
+    <th>
+      {{ filtragem.data__gt }} - {{ filtragem.data__lt|default_if_none:hoje }}
+    </th>
+  </tr>
+</table>
+{% endif %}
+<table class="table text-center">
+  {% for relatorio in relatorios %}
+  <tr class="table-info">
+    <th colspan="2">Culto/Evento</th>
+    <th>Data</th>
+    <th>Hora Início</th>
+    <th>Hora Término</th>
+    <th>Ministro/Pregador</th>
+  </tr>
+  <tr>
+    <td colspan="2">{{ relatorio.culto|default_if_none:relatorio.evento }}</td>
+    <td>{{ relatorio.data }}</td>
+    <td>{{ relatorio.hora_inicio }}</td>
+    <td>{{ relatorio.hora_termino }}</td>
+    <td>{{ relatorio.ministro }}</td>
+  </tr>
+  <tr class="table-info">
+    <th>Total Participantes (Geral)</th>
+    <th>Total Mulheres</th>
+    <th>Total Homens</th>
+    <th>Total Juniores</th>
+    <th>Total Jovens</th>
+    <th>Total Visitantes</th>
+  </tr>
+  <tr>
+    <td>{{ relatorio.total_pessoas }}</td>
+    <td>{{ relatorio.total_mulheres }}</td>
+    <td>{{ relatorio.total_homens }}</td>
+    <td>{{ relatorio.total_juniores }}</td>
+    <td>{{ relatorio.total_jovens }}</td>
+    <td>{{ relatorio.total_visitantes }}</td>
+  </tr>
+  <tr class="table-info">
+    <th colspan="3">Total Dízimos (R$)</th>
+    <th colspan="3">Total Ofertas (R$)</th>
+  </tr>
+  <tr>
+    <td colspan="3">{{ relatorio.total_dizimos }}</td>
+    <td colspan="3">{{ relatorio.total_ofertas }}</td>
+  </tr>
+  <tr class="table-info">
+    <th colspan="3">Total Novos Convertidos</th>
+    <th colspan="3">Total Novos Batizandos</th>
+  </tr>
+  <tr>
+    <td colspan="3">{{ relatorio.total_novos_convertidos }}</td>
+    <td colspan="3">{{ relatorio.total_novos_batizandos }}</td>
+  </tr>
+  <tr class="table-info">
+    <th colspan="6">Atividades Realizadas</th>
+  </tr>
+  <tr class="table-info">
+    {% for relatorio_id, atividade_list in atividades.items %}
+        {% if relatorio_id == relatorio.id %}
+            {% for atividade, resposta in atividade_list.items %}
+                {% if forloop.counter <= 6 %}
+                <th>{{ atividade }}</th>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+  </tr>
+  <tr>
+    {% for relatorio_id, atividade_list in atividades.items %}
+        {% if relatorio_id == relatorio.id %}
+            {% for atividade, resposta in atividade_list.items %}
+                {% if forloop.counter <= 6 %}
+                <th>
+                    {% if resposta == "Sim" %}
+                    <i class="fa-solid fa-check text-success"></i>
+                    {% else %}
+                    <i class="fa-solid fa-xmark text-danger"></i>
+                    {% endif %}
+                </th>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+  </tr>
+  <tr class="table-info">
+    {% for relatorio_id, atividade_list in atividades.items %}
+        {% if relatorio_id == relatorio.id %}
+            {% for atividade, resposta in atividade_list.items %}
+                {% if forloop.counter > 6 %}
+                <th>{{ atividade }}</th>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+  </tr>
+  <tr>
+    {% for relatorio_id, atividade_list in atividades.items %}
+        {% if relatorio_id == relatorio.id %}
+            {% for atividade, resposta in atividade_list.items %}
+                {% if forloop.counter > 6 %}
+                <th>
+                    {% if resposta == "Sim" %}
+                    <i class="fa-solid fa-check text-success"></i>
+                    {% else %}
+                    <i class="fa-solid fa-xmark text-danger"></i>
+                    {% endif %}
+                </th>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+{% endblock content %}
+{% block scripts %}
+<script>
+  $(function () {
+    window.print();
+  });
+</script>
+{% endblock scripts %}

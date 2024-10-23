@@ -1,14 +1,18 @@
 from django import forms
+from django.db.models import Q
 from agenda.models import AgendaSemanal
 from usuario.models import InstituicaoSede, Membro
 from core.forms import FormBaseIxoye
 from relatorios.models import AtividadesCulto, RelatorioCulto
 from crispy_forms.layout import Layout, Div, HTML, Row, Column, Submit, Hidden
 from crispy_forms.bootstrap import InlineCheckboxes
-from crispy_bootstrap5.bootstrap5 import FloatingField
+from crispy_bootstrap5.bootstrap5 import FloatingField, Switch
 
 class RelatorioCultoForm(FormBaseIxoye):
     atividades = forms.ModelMultipleChoiceField(queryset=AtividadesCulto.objects.all(), widget=forms.CheckboxSelectMultiple, required=True)
+    ministro = forms.ModelChoiceField(queryset=Membro.objects.none(), required=False, to_field_name='nome')
+    ministro_texto = forms.CharField(required=False, label='Ministro')
+    ministro_externo = forms.BooleanField(required=False, label='Ministro de fora? (Digitar nome)')
 
     class Meta:
         model = RelatorioCulto
@@ -16,8 +20,16 @@ class RelatorioCultoForm(FormBaseIxoye):
         widgets = {
             'instituicao': forms.HiddenInput(),
             'hora_inicio': forms.TimeInput(attrs={'type': 'time'}),
-            'hora_termino': forms.TimeInput(attrs={'type': 'time'})
+            'hora_termino': forms.TimeInput(attrs={'type': 'time'}),
+            'total_dizimos': forms.TextInput(),
+            'total_ofertas': forms.TextInput()
         }
+
+    def clean_ministro(self):
+        data = self.cleaned_data['ministro']
+        if self.data.get('ministro_externo') == 'on':
+            data = self.data.get('ministro_texto')
+        return data
 
     def clean(self):
         cleaned_data = super().clean()
@@ -36,26 +48,48 @@ class RelatorioCultoForm(FormBaseIxoye):
             self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
 
-            self.fields['ministro'].queryset = Membro.objects.filter(sede_id=instituicao.pk, admin=True)
+            membros = Membro.objects.filter(
+                Q(sede_id=instituicao.pk) & (Q(admin=True) |
+                Q(funcoes__funcao__funcao__icontains='pastor') |
+                Q(funcoes__funcao__funcao__icontains='ministro') |
+                Q(funcoes__funcao__funcao__icontains='pregador'))
+            )
+
+            self.fields['ministro'].queryset = membros
             self.fields['culto'].queryset = AgendaSemanal.objects.filter(instituicao_id=instituicao.pk)
+
+        self.fields['total_dizimos'].localize = True
+        self.fields['total_ofertas'].localize = True
+
+        if self.instance.pk:
+            if self.instance.ministro not in membros.values_list('nome', flat=True):
+                self.fields['ministro_externo'].initial = True
+                self.fields['ministro_texto'].initial = self.instance.ministro
+            else:
+                self.fields['ministro'].initial = self.instance.ministro
 
         self.helper.layout = Layout(
             Hidden('instituicao', value=instituicao.pk),
             Div(
-                HTML('<h6 class="mb-3">Informações:</h6>'),
                 Row(
                     Column(
+                        HTML('<h6 class="mb-3">Informações:</h6>'),
                         FloatingField('data', css_class='form-primary datepicker')
                     ),
                     Column(
-                        FloatingField('hora_inicio', css_class='form-primary datepicker')
+                        FloatingField('hora_inicio', css_class='form-primary')
                     ),
                     Column(
                         FloatingField('hora_termino', css_class='form-primary')
                     ),
                     Column(
-                        FloatingField('ministro', css_class='form-primary')
-                    )
+                        Div(
+                            Switch('ministro_externo'),
+                            FloatingField('ministro', css_class='form-primary'),
+                            FloatingField('ministro_texto', css_class='form-primary'),
+                        )
+                    ),
+                    css_class='align-items-end'
                 )
             ),
             Div(
@@ -96,10 +130,10 @@ class RelatorioCultoForm(FormBaseIxoye):
                 HTML('<h6 class="mb-3">Dízimos e Ofertas:</h6>'),
                 Row(
                     Column(
-                        FloatingField('total_dizimos', css_class='form-primary')
+                        FloatingField('total_dizimos', css_class='form-primary money')
                     ),
                     Column(
-                        FloatingField('total_ofertas', css_class='form-primary')
+                        FloatingField('total_ofertas', css_class='form-primary money')
                     )
                 )
             ),

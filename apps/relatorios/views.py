@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect
@@ -5,9 +6,10 @@ from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.shortcuts import render
 from django.urls import reverse
 
+from usuario.models import InstituicaoSede
 from relatorios.filter import RelatorioCultoFilter
 from relatorios.forms import RelatorioCultoForm
-from relatorios.models import RelatorioCulto
+from relatorios.models import AtividadesCulto, RelatorioCulto
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyListViewIxoyeConnect, MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect
 
@@ -26,6 +28,7 @@ class RelatorioCultoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        instituicao = InstituicaoSede.objects.get(pk=self.kwargs['instituicao_pk'])
         context["titulo"] = "Relatório de Cultos"
         context["active"] = ["relatorio"]
         context["filter"] = RelatorioCultoFilter()
@@ -82,5 +85,26 @@ def RelatorioCultoDeleteView(request, pk):
     return HttpResponseRedirect(reverse('relatorio:relatorio_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))
 
 @login_required(login_url="/login/")
-def RelatorioImprimir(request):
-    return render('relatorios/relatorio_imprimir.html', context={})
+def RelatorioImprimir(request, instituicao_pk):
+    qs = RelatorioCulto.objects.filter(instituicao_id=instituicao_pk)
+    qs = RelatorioCultoFilter(request.GET, queryset=qs).qs
+    hoje = date.today()
+    hoje = datetime.strftime(hoje, '%d/%m/%Y')
+
+    atividades = {}
+
+    for relatorio in qs:
+        atividades[relatorio.id] = {}
+        for atividade in AtividadesCulto.objects.all():
+            atividades[relatorio.id][atividade.atividade] = "Não"
+        for atividade in relatorio.atividades.all():
+            atividades[relatorio.id][atividade.atividade] = "Sim"
+
+    context = {
+        'instituicao': InstituicaoSede.objects.get(pk=instituicao_pk),
+        'filtragem': request.GET,
+        'relatorios': qs,
+        'hoje': hoje,
+        'atividades': atividades
+    }
+    return render(request, 'relatorios/relatorio_imprimir.html', context=context)

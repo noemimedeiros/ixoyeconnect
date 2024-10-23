@@ -64,8 +64,8 @@
 </section>
 
 <div class="modal" tabindex="-1" id="gerar-relatorio">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <form method="GET" action="{% url 'relatorio:imprimir_relatorio' %}">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <form method="GET" action="{% url 'relatorio:imprimir_relatorio' instituicao.pk %}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
@@ -74,14 +74,30 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-info">
+                        <i class="fa-solid fa-circle-info me-1"></i> Os campos deixados em branco não serão considerados na filtragem.
+                    </div>
                     {% crispy filter.form %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn button-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn button-filled">Gerar Relatório</button>
+                    <button type="submit" class="btn button-filled">Gerar Relatório</button>
                 </div>
             </div>
         </form>
     </div>
   </div>
 {% endblock dashboard_content %}
+{% block _scripts %}
+<script src='{% static "relatorios/js/relatorio.js" %}'></script>
+<script>
+    $('#id_selecionar_todas_atividades').change(function(){
+        let selecionar_todas_atividades = $(this).is(':checked')
+        if (selecionar_todas_atividades){
+            $('[name="atividades"]').prop('checked', true)
+        }else{
+            $('[name="atividades"]').prop('checked', false)
+        }
+    })
+</script>
+{% endblock _scripts %}
