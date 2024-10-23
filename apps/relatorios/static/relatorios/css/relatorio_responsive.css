@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+    .table-relatorios tbody td:not(:first-child):not(:nth-child(2)):not(:nth-child(5)):not(:last-child),
+    .table-relatorios thead th:not(:first-child):not(:nth-child(2)):not(:nth-child(5)):not(:last-child){
+        display: none;
+    }
+    .dashboard-head-actions button, .dashboard-head-actions a{
+        width: 100%;
+    }
+}

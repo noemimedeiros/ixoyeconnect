@@ -17,10 +17,10 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
-<a role="button" href="{% url 'relatorio:relatorio_create_view' %}" class="btn button-filled button-adicionar gap-2">
+<a role="button" href="{% url 'relatorio:relatorio_create_view' %}" class="btn button-filled gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar Registros</span>
 </a>
-<button data-bs-toggle="modal" data-bs-target="#gerar-relatorio" class="btn button-outlined button-adicionar gap-2">
+<button data-bs-toggle="modal" data-bs-target="#gerar-relatorio" class="btn button-outlined gap-2">
     <i class="fa-solid fa-print fa-lg"></i> <span>Gerar Relatório</span>
 </button>
 {% endblock dashboard_actions %}
@@ -41,14 +41,17 @@
         <tbody>
             {% for relatorio in relatorios %}
             <tr>
-                <td>{{ relatorio.data }}</td>
+                <td>{{ relatorio.data|date:'d/m/Y' }}</td>
                 <td>{{ relatorio.culto|default_if_none:relatorio.evento }}</td>
                 <td class="text-center">{{ relatorio.total_visitantes }}</td>
                 <td class="text-center">{{ relatorio.total_pessoas }}</td>
                 <td>
-                    <button type="button" onclick="gerarRelatorio({{ relatorio.pk }})" class="btn btn-sm button-filled">
-                        <i class="fa-solid fa-print fa-lg"></i>
-                    </button>
+                    <form target="_blank" method="GET" action="{% url 'relatorio:imprimir_relatorio' instituicao.pk %}">
+                        <input type="hidden" name="data" value="{{ relatorio.data|date:'Y-m-d' }}">
+                        <button type="submit" class="btn btn-sm button-filled">
+                            <i class="fa-solid fa-print fa-lg"></i>
+                        </button>
+                    </form>
                 </td>
                 <td class="text-right">
                     {% include "core/includes/default_item_actions.html" with object=relatorio edit_link='relatorio:relatorio_update_view' delete_link='relatorio:relatorio_delete_view' item_pk=relatorio.pk %}
