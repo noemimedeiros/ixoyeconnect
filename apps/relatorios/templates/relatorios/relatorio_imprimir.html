@@ -3,42 +3,7 @@
 {% load get_atividade %}
 
 {% block css %}
-<style>
-    .section-relatorios{
-        border-top: 20px var(--green) solid
-    }
-    .logo-relatorio {
-        height: 100px;
-        object-fit: contain;
-        border-radius: 50%;
-        margin-left: auto;
-    }
-    .header-relatorio-cultos{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        row-gap: 20px;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-        padding-inline: 40px;
-    }
-    .table-relatorio{
-        table-layout: fixed;
-    }
-    .titulo-relatorio{
-        font-weight: 500;
-        text-transform: uppercase;
-
-    }
-    .table-titulo * {
-        font-size: 1.25rem;
-        background-color: var(--green-transparent) !important;
-    }
-    {% comment %} .table-light *{
-        background-color: var(--green-transparent) !important;
-    } {% endcomment %}
-</style>
+<link rel="stylesheet" href="{% static 'relatorios/css/relatorio_imprimir.css' %}">
 {% endblock css %}
 
 {% block content %}
@@ -169,14 +134,31 @@
             <td>{{ relatorio|get_atividade:'Intercessão'|safe }}</td>
             <td colspan="2">{{ relatorio|get_atividade:'Eventos para Crianças ou Adolescentes'|safe }}</td>
         </tr>
+        {% if escalas %}
+            <tr class="table-light">
+                <th colspan="6">Escala de Obreiros</th>
+            </tr>
+            {% for escala in escalas %}
+                {% if escala.data == relatorio.data %}
+                    <tr class="table-light">
+                        <th colspan="2">Cargo</th>
+                        <th colspan="4">Membro</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{{ escala.funcao_membro }}</td>
+                        <td colspan="4">{{ escala.membro }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </table>
     {% endfor %}
 </section>
 {% endblock content %}
 {% block scripts %}
-{% comment %} <script>
+<script>
     $(function () {
         window.print();
     });
-</script> {% endcomment %}
+</script>
 {% endblock scripts %}

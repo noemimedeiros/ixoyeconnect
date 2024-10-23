@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.shortcuts import render
 from django.urls import reverse
 
+from escala.models import Escala
 from usuario.models import InstituicaoSede
 from relatorios.filter import RelatorioCultoFilter
 from relatorios.forms import RelatorioCultoForm
@@ -91,10 +92,15 @@ def RelatorioImprimir(request, instituicao_pk):
     hoje = date.today()
     hoje = datetime.strftime(hoje, '%d/%m/%Y')
 
+    escalas = None
+    if request.GET.get('incluir_escalas'):
+        escalas = Escala.objects.filter(instituicao_id=instituicao_pk)
+
     context = {
         'instituicao': InstituicaoSede.objects.get(pk=instituicao_pk),
         'filtragem': request.GET,
         'relatorios': qs,
-        'hoje': hoje
+        'hoje': hoje,
+        'escalas': escalas
     }
     return render(request, 'relatorios/relatorio_imprimir.html', context=context)
