@@ -33,12 +33,14 @@
         background: none;
         box-shadow: none;
         width: 100dvw;
-        padding: 5%;
         padding-bottom: 100px;
         box-sizing: border-box;
     }
     .dashboard-card > *:first-child{
-        margin-top: 8rem;
+        margin-top: 7rem;
+    }
+    .dashboard-content{
+        padding: 5%;
     }
 
     .top-nav-mobile{

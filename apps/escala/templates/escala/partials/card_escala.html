@@ -44,7 +44,7 @@
                         {% else %}
                         <div class="profile-escala-card"><h4>{{ escala.membro.nome.0 }}</h4></div>
                         {% endif %}
-                        <span><b>{{ escala.membro.nome }}</b> {% if not filtrado_para %}- {{ escala.funcao_membro }}{% endif %}</span>
+                        <span><b>{{ escala.membro.primeiro_nome }}</b> {% if not filtrado_para %}- {{ escala.funcao_membro }}{% endif %}</span>
                     </div>
                     <div class="escala-card-hora">
                         <i class="fa-solid fa-clock fa-lg"></i> <span>{{ escala.hora }}</span>

@@ -18,11 +18,33 @@
 
 {% block dashboard_actions %}
 {% if request.user.is_admin %}
+<button data-bs-toggle="modal" data-bs-target="#solicitacoes-troca" class="btn button-outlined button-adicionar gap-2">
+    <i class="fa-solid fa-arrow-right-arrow-left"></i> <span>Solicitações de troca</span>
+</button>
 <button data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
 </button>
 {% endif %}
 {% endblock dashboard_actions %}
+
+{% block dashboard_alerts %}
+{% if usuario.proxima_escala.data == hoje and usuario.proxima_escala.status.id == 2 %}
+    <div class="div-confirmar-escala">
+        <div class="div-confirmar-escala-titulo">
+            <i class="fa-solid fa-exclamation-triangle fa-2xl"></i>
+            <h6>
+                Você possui uma escala para <b>hoje às {{ usuario.proxima_escala.hora }}: {{ usuario.proxima_escala.funcao_membro }}</b>. Deseja confirmar?
+            </h6>
+        </div>
+        <div class="d-flex gap-1 justify-content-end">
+            <form method="get" action="{% url 'escala:confirmar_escala' usuario.proxima_escala.pk %}">
+                <button class="btn text-primary" type="submit">Sim, Confirmar</button>
+            </form>
+            <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#solicitar-troca">Não, Solicitar troca</button>
+        </div>
+    </div>
+{% endif %}
+{% endblock dashboard_alerts %}
 
 {% block dashboard_content %}
 <section class="escala-section">
@@ -43,19 +65,8 @@
                 <span class="escala-titulo-filtro">Escalados para <b>todos os departamentos.</b></span>
                 {% endif %}
             </section>
-            
-            {% if usuario.proxima_escala.data == hoje and not usuario.proxima_escala.confirmado %}
-                <div class="alert div-confirmar-escala alert-warning">
-                    <h6> <i class="fa-solid fa-exclamation-triangle"></i> <b>Você possui uma escala para hoje. Deseja confirmar?</b></h6>
-                    <div class="d-flex gap-2 justify-content-center">
-                        <form method="get" action="{% url 'escala:confirmar_escala' usuario.proxima_escala.pk %}">
-                            <button class="btn button-filled btn-sm" type="submit">Confirmar</button>
-                        </form>
-                        <button class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal">Solicitar troca</button>
-                    </div>
-                </div>
-            {% endif %}
 
+            {% if escalas_porvir %}
             <h5 class="titulo-escala-porvir">Escalas por vir</h5>
             <section class="escala-list">
                 {% regroup escalas_porvir by data as escalas_porvir_list %}
@@ -67,6 +78,7 @@
                 </div>
                 {% endfor %}
             </section>
+            {% endif %}
             {% if escalas_passadas %}
             <h5 class="titulo-escala-passados">Escalas anteriores</h5>
             <section class="escala-list">
@@ -85,6 +97,7 @@
         </div>
     </form>
 </section>
+{% if request.user.is_admin %}
 <div class="modal fade" tabindex="-1" id="criar-escala">
     <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
         <div class="modal-content">
@@ -103,6 +116,61 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" id="criar-escala">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-4 border-0">
+                <div>
+                    <h4 class="modal-title-criar"><b>Nova Escala</b></h4>
+                    <small>Preencha os dados abaixo</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% for solicitacao in trocas_solicitadas %}
+                <div class="div-solicitacao-troca">
+                    <div>
+                        {{ solicitacao }}
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="submit" name="acao_solicitacao" value="1">Negar</button>
+                        <button type="submit" name="acao_solicitacao" value="">Aceitar</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if usuario.proxima_escala.all %}
+<div class="modal fade" tabindex="-1" id="solicitar-troca">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
+        <form method="GET" action="{% url 'escala:solicitar_troca_escala' usuario.proxima_escala.pk %}">
+            <div class="modal-content">
+                <div class="modal-header p-4 border-0">
+                    <div>
+                        <h4 class="modal-title-criar"><b>Solicitar troca de escala</b></h4>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Você deseja prosseguir com a troca de escala? Após confirmar, será necessário aguardar a instituição validar a sua solicitação.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-seconday">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn button-filled">
+                        Solicitar troca
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
 {% endblock dashboard_content %}
 
 {% block _scripts %}

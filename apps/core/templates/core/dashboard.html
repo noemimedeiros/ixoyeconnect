@@ -11,19 +11,22 @@
 {% block content %}
 <section class="main-dashboard">
     {% include "core/partials/_navbar.html" %}
-    <section class="dashboard-content">
+    <section class="dashboard-sidecontent">
         {% include "core/partials/_topnav.html" %}
         <div class="dashboard-card">
-            <div class="dashboard-head">
-                <h3 class="titulo-dashboard">
-                    {% block app_title %}{% endblock app_title %}
-                </h3>
-                <div class="dashboard-head-actions">
-                    {% block dashboard_actions %}
-                    {% endblock dashboard_actions %}
+            {% block dashboard_alerts %}{% endblock dashboard_alerts %}
+            <div class="dashboard-content">
+                <div class="dashboard-head">
+                    <h3 class="titulo-dashboard">
+                        {% block app_title %}{% endblock app_title %}
+                    </h3>
+                    <div class="dashboard-head-actions">
+                        {% block dashboard_actions %}
+                        {% endblock dashboard_actions %}
+                    </div>
                 </div>
+                {% block dashboard_content %}{% endblock dashboard_content %}
             </div>
-            {% block dashboard_content %}{% endblock dashboard_content %}
         </div>
     </section>
 </section>

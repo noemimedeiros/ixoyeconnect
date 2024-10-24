@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from usuario.models import FuncaoMembro, InstituicaoSede, Membro
 from core.forms import FormBaseIxoye
 from django import forms
-from .models import Escala
+from .models import Escala, TrocaSolicitada
 from crispy_forms.layout import Submit
 
 class EscalaForm(FormBaseIxoye):
@@ -31,3 +31,9 @@ class EscalaForm(FormBaseIxoye):
         self.fields['membro'].queryset = Membro.objects.filter(pk__in=funcoes_membros)
         if not self.is_bound:
             self.fields['funcao_membro'].queryset = FuncaoMembro.objects.none()
+
+class TrocaSolicitadaForm(FormBaseIxoye):
+    class Meta:
+        model = TrocaSolicitada
+        fields = '__all__'
+        exclude = ('status', )

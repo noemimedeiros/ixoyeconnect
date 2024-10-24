@@ -17,4 +17,5 @@ urlpatterns = [
     path('funcoes_por_membro/', views.funcoes_por_membro, name="funcoes_por_membro"),
     path('carregar_infos_editar/', views.carregar_infos_editar, name="carregar_infos_editar"),
     path('confirmar_escala/<int:pk>/', views.confirmar_escala, name="confirmar_escala"),
+    path('solicitar_troca_escala/<int:pk>/', views.solicitar_troca_escala, name="solicitar_troca_escala"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

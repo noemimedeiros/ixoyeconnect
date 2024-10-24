@@ -11,7 +11,7 @@
 .dashboard-card{
     margin-bottom: 0;
 }
-.dashboard-card, .dashboard-content{
+.dashboard-card, .dashboard-sidecontent{
     background-color: transparent;
     box-shadow: none;
     border-radius: 0;

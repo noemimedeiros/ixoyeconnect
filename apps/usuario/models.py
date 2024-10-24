@@ -146,6 +146,10 @@ class Membro(UsuarioAbstract):
     def __str__(self):
         return self.nome
     
+    @property
+    def primeiro_nome(self):
+        return self.nome.split(" ")[0]
+    
     def save(self, *args, **kwargs):
         super(Membro, self).save(*args, **kwargs)
         if self.foto:

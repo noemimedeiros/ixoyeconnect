@@ -114,10 +114,12 @@
     margin-top: 10px;
     border-radius: 40px;
     background-color: var(--body-bg);
-    padding: 20px;
     box-shadow: rgba(99, 99, 99, 0.055) 0px 0px 5px 0px;
     margin-bottom: 20px;
     overflow-y: scroll;
+}
+.dashboard-content{
+    padding: 20px;
 }
 .dashboard-card::-webkit-scrollbar{
     display: none;
@@ -274,7 +276,7 @@
     z-index: 1000;
   }
 
-.dashboard-content{
+.dashboard-sidecontent{
     display: flex;
     flex-direction: column;
     flex: 1;

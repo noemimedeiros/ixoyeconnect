@@ -10,7 +10,7 @@ from core.messages_utils import message_delete_registro, message_error_registro,
 from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
 from .filter import EscalaFilter
-from .models import Escala
+from .models import Escala, TrocaSolicitada
 from .forms import EscalaForm
 
 class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
@@ -38,6 +38,7 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["hoje"] = hoje
         context["escalas_porvir"] = self.get_queryset().filter(data__gte=hoje).order_by('data', 'hora')
         context["escalas_passadas"] = self.get_queryset().filter(data__lt=hoje).order_by('-data', '-hora')
+        context["trocas_solicitadas"] = self.get_queryset().filter(data__gte=hoje, status_id=3).order_by('data', 'hora')
 
         if self.request.GET:
             if self.request.GET.get("funcao_membro"):
@@ -103,5 +104,10 @@ def carregar_infos_editar(request):
 
 @login_required(login_url='/login/')
 def confirmar_escala(request, pk):
-    Escala.objects.filter(pk=pk, membro_id=request.user.pk).update(confirmado=True)
+    Escala.objects.filter(pk=pk, membro_id=request.user.pk).update(status_id=1)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/login/')
+def solicitar_troca_escala(request, pk):
+    Escala.objects.filter(pk=pk, membro_id=request.user.pk).update(status_id=3)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
