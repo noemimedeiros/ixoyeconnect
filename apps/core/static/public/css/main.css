@@ -495,3 +495,11 @@ a.btn{
 a.text-primary:hover{
     color: var(--aqua-blue);
 }
+.alert{
+    border-radius: 40px;
+}
+.alert-primary{
+    background-color: var(--green-transparent);
+    color: var(--green);
+    border-color: var(--green);
+}

@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect, JsonResponse
@@ -28,11 +29,15 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        hoje = date.today()
         instituicao = InstituicaoSede.objects.get(pk=self.kwargs['instituicao_pk'])
         context["titulo"] = "Escala de Obreiros"
         context["active"] = ["escala"]
         context["form"] = EscalaForm(instituicao=instituicao, prefix="escala")
         context["filter"] = EscalaFilter(queryset=self.get_queryset())
+        context["hoje"] = hoje
+        context["escalas_porvir"] = self.get_queryset().filter(data__gte=hoje).order_by('data', 'hora')
+        context["escalas_passadas"] = self.get_queryset().filter(data__lt=hoje).order_by('-data', '-hora')
 
         if self.request.GET:
             if self.request.GET.get("funcao_membro"):
@@ -95,3 +100,8 @@ def funcoes_por_membro(request):
 def carregar_infos_editar(request):
     escala = Escala.objects.filter(pk=request.GET.get('escala_id')).values().first()
     return JsonResponse(escala, safe=False)
+
+@login_required(login_url='/login/')
+def confirmar_escala(request, pk):
+    Escala.objects.filter(pk=pk, membro_id=request.user.pk).update(confirmado=True)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

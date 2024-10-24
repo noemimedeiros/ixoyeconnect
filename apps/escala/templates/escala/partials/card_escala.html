@@ -1,4 +1,5 @@
-<div  class="escala-grid">
+{% load evento_passado %}
+<div class="escala-grid">
     <div class="linha-tempo-escala">
         <div class="escala-dia">
             <h6 class="escala-dia">
@@ -11,7 +12,7 @@
         <div class="escala-linha"></div>
     </div>
     <div class="escala-cards">
-        <div role="button" class="escala-card" data-bs-target="#escala-card-{{forloop.counter}}" data-bs-toggle="collapse">
+        <div role="button" class="escala-card {% if data and data|evento_passado %}escala-passado{% endif %}" data-bs-target="#escala-card-{{counter}}" data-bs-toggle="collapse">
             <div class="escala-membros">
                 {% for escala in escalas %}
                     {% if forloop.counter <= 3 %}
@@ -33,7 +34,7 @@
                 <i class="fa-solid fa-chevron-down fa-lg"></i>
             </div>
         </div>
-        <div class="collapse escala-cards" id="escala-card-{{forloop.counter}}">
+        <div class="collapse escala-cards" id="escala-card-{{counter}}">
             {% for escala in escalas %}
             <div class="div-items-actions">
                 <div class="escala-card escala-card-infos">

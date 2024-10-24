@@ -32,6 +32,7 @@ class MyViewIxoyeConnect:
         context = super().get_context_data(**kwargs)
         context["instituicao"] = self.request.user.instituicao
         context["conteudos"] = CategoriaPost.objects.all()
+        context["usuario"] = self.request.user.conta
         return context
 
 class MyTemplateViewIxoyeConnect(MyViewIxoyeConnect, TemplateView):
@@ -69,6 +70,10 @@ class MyDeleteViewIxoyeConnect(MyViewIxoyeConnect, DeleteView):
     
 class DashboradView(MyTemplateViewIxoyeConnect):
     template_name = 'core/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 class MyLoginView(LoginView):
     form_class = MyLoginForm

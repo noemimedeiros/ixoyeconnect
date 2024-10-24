@@ -36,21 +36,52 @@
                 </button>
                 {% endif %}
             </section>
-            <section class="escala-list">
+            <section class="mb-3">
                 {% if filtrado_para %}
                 <span class="escala-titulo-filtro">Escalados para <b>{{ filtrado_para }}</b>.</span>
                 {% else %}
                 <span class="escala-titulo-filtro">Escalados para <b>todos os departamentos.</b></span>
                 {% endif %}
-                {% regroup escalas by data as escalas_list %}
-                {% for escalas in escalas_list %}
-                    {% include "escala/partials/card_escala.html" with filtrado_para=filtrado_para escalas=escalas.list data=escalas.grouper %}
+            </section>
+            
+            {% if usuario.proxima_escala.data == hoje and not usuario.proxima_escala.confirmado %}
+                <div class="alert div-confirmar-escala alert-warning">
+                    <h6> <i class="fa-solid fa-exclamation-triangle"></i> <b>Você possui uma escala para hoje. Deseja confirmar?</b></h6>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <form method="get" action="{% url 'escala:confirmar_escala' usuario.proxima_escala.pk %}">
+                            <button class="btn button-filled btn-sm" type="submit">Confirmar</button>
+                        </form>
+                        <button class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal">Solicitar troca</button>
+                    </div>
+                </div>
+            {% endif %}
+
+            <h5 class="titulo-escala-porvir">Escalas por vir</h5>
+            <section class="escala-list">
+                {% regroup escalas_porvir by data as escalas_porvir_list %}
+                {% for escalas in escalas_porvir_list %}
+                    {% include "escala/partials/card_escala.html" with counter=forloop.counter filtrado_para=filtrado_para escalas=escalas.list data=escalas.grouper %}
                 {% empty %}
                 <div class="text-muted text-center">
                     Ainda não há nenhuma escala definida.
                 </div>
                 {% endfor %}
             </section>
+            {% if escalas_passadas %}
+            <h5 class="titulo-escala-passados">Escalas anteriores</h5>
+            <section class="escala-list">
+                {% regroup escalas_passadas by data as escalas_passadas_list %}
+                {% for escalas in escalas_passadas_list %}
+                    {% with escalas_anteriores_loop=forloop.counter|add:escalas_porvir.count %}
+                    {% include "escala/partials/card_escala.html" with counter=escalas_anteriores_loop filtrado_para=filtrado_para escalas=escalas.list data=escalas.grouper %}
+                    {% endwith %}
+                {% empty %}
+                <div class="text-muted text-center">
+                    Ainda não há nenhuma escala definida.
+                </div>
+                {% endfor %}
+            </section>
+            {% endif %}
         </div>
     </form>
 </section>

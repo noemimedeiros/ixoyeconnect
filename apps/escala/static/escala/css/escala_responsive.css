@@ -16,4 +16,10 @@
     .escala-filter{
         margin-top: 0;
     }
+    .div-confirmar-escala{
+        padding-inline: 40px;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+    }
 }

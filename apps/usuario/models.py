@@ -1,3 +1,4 @@
+from datetime import date
 from django.utils import timezone
 from django.db import connection, models
 from PIL import Image
@@ -186,6 +187,11 @@ class Membro(UsuarioAbstract):
     
     def eventos_confirmados_pks(self):
         return self.eventos_confirmados.values_list("evento", flat=True)
+    
+    def proxima_escala(self):
+        if self.escalas.all():
+            return self.escalas.filter(data__gte=date.today()).order_by('-data').last()
+        return 'Não há escalas.'
 
 class Funcao(models.Model):
     instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)

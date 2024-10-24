@@ -9,6 +9,7 @@ class EscalaForm(FormBaseIxoye):
     class Meta:
         model = Escala
         fields = '__all__'
+        exclude = ('confirmado', )
         widgets = {
             'instituicao': forms.HiddenInput(),
             'data': forms.DateInput(attrs={'class': 'date datepicker'}),

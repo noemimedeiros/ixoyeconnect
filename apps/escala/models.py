@@ -4,10 +4,11 @@ from usuario.models import FuncaoMembro, InstituicaoSede, Membro
 
 class Escala(models.Model):
     instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
-    membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False)
+    membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False, related_name="escalas")
     funcao_membro = models.ForeignKey(FuncaoMembro, on_delete=models.CASCADE, null=False, blank=False, verbose_name="Cargo", help_text="Selecione um membro para carregar os respectivos cargos.")
     data = models.DateField(null=False, blank=False, default=timezone.now)
     hora = models.TimeField(null=False, blank=False)
+    confirmado = models.BooleanField(default=0)
 
     class Meta:
         db_table = "escala"

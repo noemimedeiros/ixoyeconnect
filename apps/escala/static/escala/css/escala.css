@@ -12,6 +12,9 @@
     color: inherit;
     flex: 1;
 }
+.escala-grid:last-child{
+    margin-bottom: 1rem;
+}
 .escala-grid:hover{
     color: inherit;
 }
@@ -30,6 +33,11 @@
     width: 1px;
     border: .5px dashed var(--gray-2);
     height: 100%;
+}
+.linha-porvir{
+    margin-left: 30px;
+    height: 20px;
+    margin-bottom: 1rem;
 }
 
 .escala-card{
@@ -131,4 +139,36 @@
 }
 .escala-card[aria-expanded="true"] .escala-card-seta{
     rotate: 180deg
+}
+
+.titulo-escala-porvir, .titulo-escala-passados{
+    padding-left: 20px;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+.titulo-escala-porvir{
+    color: var(--aqua-blue);
+}
+.titulo-escala-passados{
+    color: var(--gray-3);
+}
+
+.escala-passado{
+    filter: grayscale();
+}
+.escala-passado[aria-expanded="true"]{
+    filter: none;
+}
+
+.div-confirmar-escala{
+    border-radius: 40px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-inline: auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
 }
