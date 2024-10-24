@@ -90,7 +90,12 @@ class InstituicaoSede(UsuarioAbstract):
         super(Membro, self).save(*args, **kwargs)
         if self.logo:
             img = Image.open(self.logo.path)
-            img.save(self.logo.path,quality=10,optimize=True)
+            width, height = img.size
+            TARGET_WIDTH = 300
+            coefficient = width / 300
+            new_height = height / coefficient
+            img = img.resize((int(TARGET_WIDTH),int(new_height)), Image.Resampling.LANCZOS)
+            img.save(self.logo.path,quality=80,optimize=True)
 
     def __str__(self):
         return self.nome
@@ -144,7 +149,12 @@ class Membro(UsuarioAbstract):
         super(Membro, self).save(*args, **kwargs)
         if self.foto:
             img = Image.open(self.foto.path)
-            img.save(self.foto.path,quality=10,optimize=True)
+            width, height = img.size
+            TARGET_WIDTH = 300
+            coefficient = width / 300
+            new_height = height / coefficient
+            img = img.resize((int(TARGET_WIDTH),int(new_height)), Image.Resampling.LANCZOS)
+            img.save(self.foto.path,quality=80,optimize=True)
 
     @property
     def idade(self):
