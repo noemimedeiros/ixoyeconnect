@@ -15,10 +15,6 @@ class RelatorioCultoFilter(FilterSet):
     )
 
     apenas_eventos_ou_cultos = ChoiceFilter(choices=EVENTOS_OU_CULTOS, empty_label='Todos', widget=forms.RadioSelect(), method='filter_apenas_eventos_ou_cultos', label='', required=False)
-    incluir_escalas = BooleanFilter(widget=forms.CheckboxInput, label='Incluir Escalas de Obreiros?', required=False, method='filter_incluir_escalas')
-
-    def filter_incluir_escalas(self, queryset, name, value):
-        return queryset
     
     def filter_apenas_eventos_ou_cultos(self, queryset, name, value):
         if value == 'apenas_cultos':
@@ -57,9 +53,8 @@ class RelatorioCultoFilter(FilterSet):
                     )
                 ),
             ),
-            Switch('incluir_escalas'),
             Div(
-                HTML('<h6 class="mb-3">Filtrar relatório:</h6>'),
+                HTML('<h6 class="mb-3">Filtrar apenas:</h6>'),
                 InlineRadios('apenas_eventos_ou_cultos')
             ),
         )
@@ -69,3 +64,13 @@ class RelatorioCultoFilter(FilterSet):
         fields = {
             'data': ['exact', 'lt', 'gt', 'year__exact', 'year__lt', 'year__gt'],
         }
+
+class GerarRelatorioCultoFilter(RelatorioCultoFilter):
+    incluir_escalas = BooleanFilter(widget=forms.CheckboxInput, label='Incluir Escalas de Obreiros?', required=False, method='filter_incluir_escalas')
+
+    def filter_incluir_escalas(self, queryset, name, value):
+        return queryset
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form.helper.layout.append(Switch('incluir_escalas'))

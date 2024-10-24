@@ -53,12 +53,14 @@
         <tr class="table-light">
             <th>Hora Início</th>
             <th>Hora Término</th>
-            <th colspan="4">Ministro/Pregador</th>
+            <th colspan="2">Mensagem/Tema</th>
+            <th colspan="2">Ministro/Pregador</th>
         </tr>
         <tr>
             <td>{{ relatorio.hora_inicio }}</td>
             <td>{{ relatorio.hora_termino }}</td>
-            <td colspan="4">{{ relatorio.ministro }}</td>
+            <td colspan="2">{{ relatorio.tema }}</td>
+            <td colspan="2">{{ relatorio.ministro }}</td>
         </tr>
         <tr class="table-light">
             <th colspan="6">Total de participantes</th>
@@ -109,7 +111,7 @@
             <th>Leitura Bíblica</th>
             <th>Oração Coletiva</th>
             <th>Momentos de Ofertas e Dízimos</th>
-            <th>Sermão/Pregação</th>
+            <th>Sermão / Pregação</th>
             <th>Apresentações Artísticas</th>
         </tr>
         <tr>
@@ -141,14 +143,18 @@
             {% for escala in escalas %}
                 {% if escala.data == relatorio.data %}
                     <tr class="table-light">
-                        <th colspan="2">Cargo</th>
-                        <th colspan="4">Membro</th>
+                        <th colspan="2">Cargo/Função</th>
+                        <th colspan="4">Nome</th>
                     </tr>
                     <tr>
                         <td colspan="2">{{ escala.funcao_membro }}</td>
                         <td colspan="4">{{ escala.membro }}</td>
                     </tr>
                 {% endif %}
+            {% empty %}
+            <tr>
+                <td colspan="6">Nenhuma escala definida para este dia.</td>
+            </tr>
             {% endfor %}
         {% endif %}
     </table>

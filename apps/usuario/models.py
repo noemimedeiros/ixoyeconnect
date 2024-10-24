@@ -1,5 +1,6 @@
 from django.utils import timezone
 from django.db import connection, models
+from PIL import Image
 from core.models import Endereco
 from django.contrib.auth.models import AbstractUser
 
@@ -85,6 +86,12 @@ class InstituicaoSede(UsuarioAbstract):
     codigo = models.CharField(max_length=8, null=False, blank=False, unique=True)
     logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/')
 
+    def save(self, *args, **kwargs):
+        super(Membro, self).save(*args, **kwargs)
+        if self.logo:
+            img = Image.open(self.logo.path)
+            img.save(self.logo.path,quality=10,optimize=True)
+
     def __str__(self):
         return self.nome
 
@@ -132,6 +139,12 @@ class Membro(UsuarioAbstract):
 
     def __str__(self):
         return self.nome
+    
+    def save(self, *args, **kwargs):
+        super(Membro, self).save(*args, **kwargs)
+        if self.foto:
+            img = Image.open(self.foto.path)
+            img.save(self.foto.path,quality=10,optimize=True)
 
     @property
     def idade(self):

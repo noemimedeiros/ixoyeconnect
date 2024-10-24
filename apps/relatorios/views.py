@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from escala.models import Escala
 from usuario.models import InstituicaoSede
-from relatorios.filter import RelatorioCultoFilter
+from relatorios.filter import GerarRelatorioCultoFilter, RelatorioCultoFilter
 from relatorios.forms import RelatorioCultoForm
 from relatorios.models import AtividadesCulto, RelatorioCulto
 from core.messages_utils import message_delete_registro, message_error_registro
@@ -33,7 +33,9 @@ class RelatorioCultoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["titulo"] = "Relatório de Cultos"
         context["active"] = ["relatorio"]
         context["filter"] = RelatorioCultoFilter()
+        context["gerar_relatorio"] = GerarRelatorioCultoFilter()
         if self.request.GET:
+            context["gerar_relatorio"] = GerarRelatorioCultoFilter(self.request.GET)
             context["filter"] = RelatorioCultoFilter(self.request.GET)
         return context
 

@@ -71,9 +71,9 @@ class RelatorioCultoForm(FormBaseIxoye):
         self.helper.layout = Layout(
             Hidden('instituicao', value=instituicao.pk),
             Div(
+                HTML('<h6 class="mb-3">Informações:</h6>'),
                 Row(
                     Column(
-                        HTML('<h6 class="mb-3">Informações:</h6>'),
                         FloatingField('data', css_class='form-primary datepicker')
                     ),
                     Column(
@@ -81,6 +81,11 @@ class RelatorioCultoForm(FormBaseIxoye):
                     ),
                     Column(
                         FloatingField('hora_termino', css_class='form-primary')
+                    ),
+                ),
+                Row(
+                    Column(
+                        FloatingField('tema', css_class='form-primary'),
                     ),
                     Column(
                         Div(

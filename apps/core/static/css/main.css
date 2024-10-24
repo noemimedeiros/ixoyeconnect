@@ -299,7 +299,6 @@
     display: flex;
     align-content: center;
     gap: 10px;
-    width: 100%;
 }
 .item-actions{
     text-align: center;

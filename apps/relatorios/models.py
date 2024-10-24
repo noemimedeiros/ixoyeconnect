@@ -27,6 +27,7 @@ class RelatorioCulto(models.Model):
 	evento = models.ForeignKey(Evento, on_delete=models.CASCADE, null=True, blank=True)
 	culto = models.ForeignKey(AgendaSemanal, on_delete=models.CASCADE, null=True, blank=True)
 	ministro = models.CharField(max_length=100, null=True, blank=True)
+	tema = models.CharField(max_length=100, null=True, blank=True, verbose_name="Mensagem/Tema")
 	total_dizimos = models.DecimalField(decimal_places=2, max_digits=12, default=0, verbose_name='Total Dízimos', null=True, blank=True)
 	total_ofertas = models.DecimalField(decimal_places=2, max_digits=12, default=0, null=True, blank=True)
 	total_novos_convertidos = models.IntegerField(default=0)

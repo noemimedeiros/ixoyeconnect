@@ -5,7 +5,7 @@
         </div>
         <div>
             <div class="card-contribuicao-metodo">
-                Chave Pix Aleatória:
+                Chave Pix Aleatória {% if contribuicao and contribuicao.departamento %}- {{contribuicao.departamento}}{% endif %}:
             </div>
             <div class="card-contribuicao-chave" data-chave="{{ contribuicao.chave_pix|default:"" }}" id="chave-pix-{{ forloop.counter|default:"0" }}">
                 {{ contribuicao.chave_pix|truncatechars:25|default:"----------" }}

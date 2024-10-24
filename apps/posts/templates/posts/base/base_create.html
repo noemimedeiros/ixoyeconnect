@@ -28,7 +28,11 @@
 <section class="form-posts">
     <form method="POST" enctype="multipart/form-data">
         {{ arquivos_formset.management_form }}
+        {% if object and object.capa %}
         {% include "core/includes/foto_preview.html" with img_src=object.capa.url  %}
+        {% else %}
+        {% include "core/includes/foto_preview.html"  %}
+        {% endif %}
         {% crispy form %}
         <div id="lista_arquivos_post" class="mb-3">
             {% for arquivo_form in arquivos_formset %}

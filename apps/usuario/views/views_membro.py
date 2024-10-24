@@ -11,7 +11,7 @@ from core.forms import EnderecoForm, MySignUpForm
 from core.messages_utils import message_delete_registro, message_error_registro, message_success_generic
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
-from ..models import Departamento, FuncaoDepartamento, Membro
+from ..models import Departamento, FuncaoDepartamento, Membro, User
 from ..forms import FuncaoForm, NewMembroForm, FuncaoMembroFormset, UserForm
 
 from ..forms import DepartamentoForm
@@ -37,7 +37,7 @@ class MembroListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(sede_id=self.kwargs['instituicao_pk'])
+        qs = qs.filter(sede_id=self.kwargs['instituicao_pk'], user__is_active=True)
         if self.request.GET:
             qs = MembroFilter(self.request.GET, queryset=qs).qs
         return qs
@@ -191,9 +191,9 @@ class MembroProfileUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
 @login_required(login_url="/login/")
 def MembroDeleteView(request, pk):
     try:
-        Membro.objects.get(pk=pk).delete()
+        User.objects.filter(pk=pk).update(is_active=False)
         message_delete_registro(request)
-    except Membro.DoesNotExist:
+    except User.DoesNotExist:
         message_error_registro(request)
     return HttpResponseRedirect(reverse('usuario:membro_list_view', kwargs={'instituicao_pk': request.user.instituicao.pk}))
 

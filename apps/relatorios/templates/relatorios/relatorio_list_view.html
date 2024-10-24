@@ -17,10 +17,11 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
-<a role="button" href="{% url 'relatorio:relatorio_create_view' %}" class="btn button-filled gap-2">
+{% include "core/includes/default_actions.html" %}
+<a role="button" href="{% url 'relatorio:relatorio_create_view' %}" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar Registros</span>
 </a>
-<button data-bs-toggle="modal" data-bs-target="#gerar-relatorio" class="btn button-outlined gap-2">
+<button data-bs-toggle="modal" data-bs-target="#gerar-relatorio" class="btn button-outlined button-adicionar gap-2">
     <i class="fa-solid fa-print fa-lg"></i> <span>Gerar Relatório</span>
 </button>
 {% endblock dashboard_actions %}
@@ -32,7 +33,6 @@
             <tr>
                 <th>Data</th>
                 <th>Culto/Evento</th>
-                <th class="text-center">Total Visitantes</th>
                 <th class="text-center">Total Participantes (Geral)</th>
                 <th>Ações</th>
                 <th></th>
@@ -43,7 +43,6 @@
             <tr>
                 <td>{{ relatorio.data|date:'d/m/Y' }}</td>
                 <td>{{ relatorio.culto|default_if_none:relatorio.evento }}</td>
-                <td class="text-center">{{ relatorio.total_visitantes }}</td>
                 <td class="text-center">{{ relatorio.total_pessoas }}</td>
                 <td>
                     <form target="_blank" method="GET" action="{% url 'relatorio:imprimir_relatorio' instituicao.pk %}">
@@ -66,9 +65,9 @@
     </table>
 </section>
 
-<div class="modal" tabindex="-1" id="gerar-relatorio">
+<div class="modal fade" tabindex="-1" id="gerar-relatorio">
+    <form target="_blank" method="GET" action="{% url 'relatorio:imprimir_relatorio' instituicao.pk %}">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <form target="_blank" method="GET" action="{% url 'relatorio:imprimir_relatorio' instituicao.pk %}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
@@ -77,15 +76,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {% crispy filter.form %}
+                    {% crispy gerar_relatorio.form %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn button-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn button-filled">Gerar Relatório</button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
   </div>
 {% endblock dashboard_content %}
 {% block _scripts %}
