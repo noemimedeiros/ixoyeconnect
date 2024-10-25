@@ -4,7 +4,7 @@ from core.forms import FormBaseIxoye
 from django.db.models import Q
 from .models import (Denominacao, Departamento, Funcao, FuncaoDepartamento, FuncaoMembro, Instituicao,
                      InstituicaoSede, Membro, RedeSocialInstituicaoSede, User)
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Field
 from crispy_bootstrap5.bootstrap5 import FloatingField, Switch
 
 class UserForm(FormBaseIxoye):
@@ -34,9 +34,7 @@ class InstituicaoForm(FormBaseIxoye):
         self.helper.form_action = '/usuario/cadastrar_instituicao/'
         self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="btn button-filled w-100"))
 
-        for id, field in enumerate(self.helper.layout.fields):
-            if field.get_field_names()[0].name == 'denominacao':
-                self.helper.layout.fields[id] = FloatingField('denominacao', template="usuario/partials/custom_denominacao_select.html")
+        self.helper['denominacao'].wrap(FloatingField('denominacao', template="usuario/partials/custom_denominacao_select.html"))
 
 class InstituicaoSedeForm(FormBaseIxoye):
     class Meta:
@@ -140,12 +138,24 @@ class DepartamentoForm(FormBaseIxoye):
             self.fields['instituicao'].initial = instituicao
 
 class FuncaoForm(FormBaseIxoye):
+    departamento = forms.ModelChoiceField(Departamento.objects.all(), label='Relacione a um departamento', required=True)
+
     class Meta:
         model = Funcao
         fields = '__all__'
         widgets = {
             'instituicao': forms.HiddenInput()
         }
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        departamento = self.cleaned_data['departamento']
+
+        if commit:
+            instance.save()
+            if departamento:
+                FuncaoDepartamento.objects.create(funcao=instance, departamento=departamento, instituicao=instance.instituicao)
+        return instance
 
     def __init__(self, *args, **kwargs):
         instituicao = kwargs.pop('instituicao', None)
@@ -157,6 +167,12 @@ class FuncaoForm(FormBaseIxoye):
         if instituicao:
             self.fields['instituicao'].queryset = InstituicaoSede.objects.filter(pk=instituicao.pk)
             self.fields['instituicao'].initial = instituicao
+
+        self.helper.layout = Layout(
+            FloatingField('funcao', css_class='form-primary'),
+            FloatingField('departamento', css_class='form-primary'),
+            Field('descricao', css_class='form-primary')
+        )
 
 class FuncaoMembroForm(FormBaseIxoye):
     class Meta:

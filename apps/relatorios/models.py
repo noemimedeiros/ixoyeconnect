@@ -14,7 +14,7 @@ class AtividadesCulto(models.Model):
 		db_table = 'atividadesculto'
 
 class RelatorioCulto(models.Model):
-	instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
+	instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False, related_name='relatorios')
 	data = models.DateField(null=False, blank=False)
 	hora_inicio = models.TimeField(null=False, blank=False, verbose_name='Horário Começo')
 	hora_termino = models.TimeField(null=False, blank=False, verbose_name='Horário Fim')
@@ -35,4 +35,27 @@ class RelatorioCulto(models.Model):
 	atividades = models.ManyToManyField(AtividadesCulto, db_table='atividadesrelatorioculto')
 	
 	class Meta:
-	    db_table = 'relatorioculto'
+		db_table = 'relatorioculto'
+	
+	def calcular_porcentagens(self):
+		if self.total_pessoas > 0:
+			porcentagem_mulheres = (self.total_mulheres / self.total_pessoas) * 100
+			porcentagem_homens = (self.total_homens / self.total_pessoas) * 100
+			porcentagem_jovens = (self.total_jovens / self.total_pessoas) * 100
+			porcentagem_juniores = (self.total_juniores / self.total_pessoas) * 100
+			porcentagem_visitantes = (self.total_visitantes / self.total_pessoas) * 100
+			
+			return {
+                "mulheres": porcentagem_mulheres,
+                "homens": porcentagem_homens,
+                "jovens": porcentagem_jovens,
+                "juniores": porcentagem_juniores,
+                "visitantes": porcentagem_visitantes,
+            }
+		return {
+            "mulheres": 0,
+            "homens": 0,
+            "jovens": 0,
+            "juniores": 0,
+            "visitantes": 0,
+        }

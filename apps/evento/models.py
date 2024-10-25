@@ -13,7 +13,7 @@ class Evento(models.Model):
     valor = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, help_text="Para que o evento seja considerado gratuito, basta deixar o campo de valor em branco.")
     data = models.DateField(null=False, blank=False)
     hora = models.TimeField(null=False, blank=False)
-    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False, related_name='eventos')
     endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, null=False, blank=False)
 
     class Meta:
@@ -21,6 +21,10 @@ class Evento(models.Model):
 
     def __str__(self):
         return f'{self.titulo} - {localize(self.data)}'
+    
+    @property
+    def total_participantes(self):
+        return self.participantes.count()
 
 class ParticipanteEvento(models.Model):
     membro = models.ForeignKey(Membro, on_delete=models.CASCADE, null=False, blank=False, related_name="eventos_confirmados")

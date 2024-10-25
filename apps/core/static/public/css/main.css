@@ -503,3 +503,10 @@ a.text-primary:hover{
     color: var(--green);
     border-color: var(--green);
 }
+
+.bg-primary{
+    background-color: var(--green) !important;
+}
+.bg-primary *{
+    color: white !important;
+}

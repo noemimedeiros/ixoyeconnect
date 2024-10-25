@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.template.loader import get_template
 from django.views.generic import (View, CreateView, DeleteView, DetailView, FormView,
                                   ListView, TemplateView, UpdateView)
 from allauth.account.views import SignupView, LoginView
@@ -69,11 +70,19 @@ class MyDeleteViewIxoyeConnect(MyViewIxoyeConnect, DeleteView):
         return super().form_valid(form)
     
 class DashboradView(MyTemplateViewIxoyeConnect):
-    template_name = 'core/dashboard.html'
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_instituicao:
+            self.template_name = 'core/dashboard_instituicao.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            self.template_name = 'core/dashboard_membro.html'
+            get_template(self.template_name)
+            return super().dispatch(request, *args, **kwargs)
 
 class MyLoginView(LoginView):
     form_class = MyLoginForm

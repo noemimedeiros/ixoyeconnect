@@ -181,12 +181,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'pt-BR'
-
-TIME_ZONE = 'America/Sao_Paulo'
-
+TIME_ZONE = "America/Recife"
 USE_I18N = True
-
 USE_TZ = True
+USE_THOUSAND_SEPARATOR = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

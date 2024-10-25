@@ -17,7 +17,7 @@ from core.views import MyListViewIxoyeConnect, MyCreateViewIxoyeConnect, MyUpdat
 class RelatorioCultoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     template_name = 'relatorios/relatorio_list_view.html'
     model = RelatorioCulto
-    ordering = ['data']
+    ordering = ['-data']
     context_object_name = 'relatorios'
 
     def get_queryset(self):

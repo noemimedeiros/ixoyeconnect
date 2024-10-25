@@ -1,0 +1,36 @@
+.dashboard-card{
+    background-color: transparent;
+    box-shadow: none;
+}
+.dashboard-instituicao{
+    display: grid;
+    row-gap: 20px;
+}
+.dashboard-top-cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+.card-dashboard{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    border-radius: 20px;
+    background-color: var(--body-bg);
+    padding: 20px;
+    width: 100%;
+    box-shadow: rgba(99, 99, 99, 0.055) 0px 0px 5px 0px;
+}
+.card-dashboard h2{
+    font-weight: 400;
+    color: var(--green);
+}
+.porcentagem.negativo{
+    color: brown;
+}
+.porcentagem.negativo i{
+    rotate: 180deg;
+}
+.porcentagem.positivo{
+    color: var(--green);
+}

@@ -108,11 +108,61 @@ class InstituicaoSede(UsuarioAbstract):
     def quantidade_membros(self):
         with connection.cursor() as cursor:
             cursor.execute(f'''
-            select count(*) from membro where sede = {self.pk}
+            select count(*) from membro where sede_id = {self.pk}
             ''')
-            row = cursor.fetchall()
+            row = cursor.fetchone()
             if row[0]:
                 return row[0]
+        return 0
+
+    @property
+    def ultimo_evento(self):
+        return self.eventos.last()
+    
+    @property
+    def penultimo_culto(self):
+        cultos = self.relatorios.all().order_by('-data')
+        if len(cultos)>1:
+            penultimo_culto = cultos[1]
+            return penultimo_culto
+        return None
+    
+    @property
+    def ultimo_culto(self):
+        cultos = self.relatorios.all().order_by('-data')
+        if len(cultos)>1:
+            ultimo_culto = cultos[0]
+            return ultimo_culto
+        return None
+    
+    @property
+    def porcentagem_presenca_cultos(self):
+        if self.penultimo_culto:
+            presenca_ultimo_culto = int(self.ultimo_culto.total_pessoas)
+            presenca_penultimo_culto = int(self.penultimo_culto.total_pessoas)
+
+            percentual = ((presenca_ultimo_culto - presenca_penultimo_culto) * 100) / presenca_penultimo_culto
+            return int(percentual)
+        return 0
+    
+    @property
+    def porcentagem_dizimo_cultos(self):
+        if self.penultimo_culto:
+            presenca_ultimo_culto = self.ultimo_culto.total_dizimos
+            presenca_penultimo_culto = self.penultimo_culto.total_dizimos
+
+            percentual = ((presenca_ultimo_culto - presenca_penultimo_culto) * 100) / presenca_penultimo_culto
+            return int(percentual)
+        return 0
+    
+    @property
+    def porcentagem_oferta_cultos(self):
+        if self.penultimo_culto:
+            presenca_ultimo_culto = self.ultimo_culto.total_ofertas
+            presenca_penultimo_culto = self.penultimo_culto.total_ofertas
+
+            percentual = ((presenca_ultimo_culto - presenca_penultimo_culto) * 100) / presenca_penultimo_culto
+            return int(percentual)
         return 0
 
 class RedeSocial(models.Model):
@@ -220,6 +270,7 @@ class Departamento(models.Model):
         db_table = 'departamento'
 
 class FuncaoDepartamento(models.Model):
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)
     funcao = models.ForeignKey(Funcao, on_delete=models.CASCADE, null=False, blank=False)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=False, blank=False)
 

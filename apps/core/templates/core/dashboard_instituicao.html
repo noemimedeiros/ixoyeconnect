@@ -1,0 +1,69 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard_responsive.css' %}">
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="dashboard-instituicao">
+    <section class="dashboard-top-cards">
+        <div class="card-dashboard bg-primary">
+            <h6>Total de Membros</h6>
+            <h2>{{ instituicao.quantidade_membros }}</h2>
+            <small>Registrados no aplicativo.</small>
+        </div>
+        <div class="card-dashboard">
+            <div class="d-flex align-items-center gap-2">
+                <h6>Presença nos Cultos</h6>
+                <span class="porcentagem
+                {% if instituicao.porcentagem_presenca_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
+                {{ instituicao.porcentagem_presenca_cultos }}% <i class="fa-solid fa-caret-up "></i>
+            </span>
+            </div>
+            <h2>{{ instituicao.ultimo_culto.total_pessoas }}</h2>
+            <div class="d-flex align-items-center justify-content-between">
+                <small>vs. último mês</small> <small><b>{{ instituicao.penultimo_culto.total_pessoas }}</b></small>
+            </div>
+        </div>
+        <div class="card-dashboard">
+            <div class="d-flex align-items-center gap-2">
+                <h6>Entrada Dízimos</h6>
+                <span class="porcentagem
+                {% if instituicao.porcentagem_dizimo_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
+                {{ instituicao.porcentagem_dizimo_cultos }}% <i class="fa-solid fa-caret-up "></i>
+            </span>
+            </div>
+            <h2>R${{ instituicao.ultimo_culto.total_dizimos }}</h2>
+            <div class="d-flex align-items-center justify-content-between">
+                <small>vs. último mês</small> <small><b>R${{ instituicao.penultimo_culto.total_dizimos }}</b></small>
+            </div>
+        </div>
+        <div class="card-dashboard">
+            <div class="d-flex align-items-center gap-2">
+                <h6>Entrada Ofertas</h6>
+                <span class="porcentagem
+                {% if instituicao.porcentagem_oferta_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
+                {{ instituicao.porcentagem_oferta_cultos }}% <i class="fa-solid fa-caret-up "></i>
+            </span>
+            </div>
+            <h2>R${{ instituicao.ultimo_culto.total_ofertas }}</h2>
+            <div class="d-flex align-items-center justify-content-between">
+                <small>vs. último mês</small> <small><b>R${{ instituicao.penultimo_culto.total_ofertas }}</b></small>
+            </div>
+        </div>
+    </section>
+    <section class="dashboard-second-cards">
+        <div class="card-dashboard">
+        </div>
+    </section>
+</section>
+{% endblock dashboard_content %}
