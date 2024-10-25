@@ -27,25 +27,6 @@
 {% endif %}
 {% endblock dashboard_actions %}
 
-{% block dashboard_alerts %}
-{% if usuario.proxima_escala.data == hoje and usuario.proxima_escala.status.id == 2 %}
-    <div class="div-confirmar-escala">
-        <div class="div-confirmar-escala-titulo">
-            <i class="fa-solid fa-exclamation-triangle fa-2xl"></i>
-            <h6>
-                Você possui uma escala para <b>hoje às {{ usuario.proxima_escala.hora }}: {{ usuario.proxima_escala.funcao_membro }}</b>. Deseja confirmar?
-            </h6>
-        </div>
-        <div class="d-flex gap-1 justify-content-end">
-            <form method="get" action="{% url 'escala:confirmar_escala' usuario.proxima_escala.pk %}">
-                <button class="btn text-primary" type="submit">Sim, Confirmar</button>
-            </form>
-            <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#solicitar-troca">Não, Solicitar troca</button>
-        </div>
-    </div>
-{% endif %}
-{% endblock dashboard_alerts %}
-
 {% block dashboard_content %}
 <section class="escala-section">
     <form method="get">
@@ -114,60 +95,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="criar-escala">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header p-4 border-0">
-                <div>
-                    <h4 class="modal-title-criar"><b>Nova Escala</b></h4>
-                    <small>Preencha os dados abaixo</small>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {% for solicitacao in trocas_solicitadas %}
-                <div class="div-solicitacao-troca">
-                    <div>
-                        {{ solicitacao }}
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <button type="submit" name="acao_solicitacao" value="1">Negar</button>
-                        <button type="submit" name="acao_solicitacao" value="">Aceitar</button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-{% if usuario.proxima_escala.all %}
-<div class="modal fade" tabindex="-1" id="solicitar-troca">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm modal-dialog-centered">
-        <form method="GET" action="{% url 'escala:solicitar_troca_escala' usuario.proxima_escala.pk %}">
-            <div class="modal-content">
-                <div class="modal-header p-4 border-0">
-                    <div>
-                        <h4 class="modal-title-criar"><b>Solicitar troca de escala</b></h4>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Você deseja prosseguir com a troca de escala? Após confirmar, será necessário aguardar a instituição validar a sua solicitação.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-seconday">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn button-filled">
-                        Solicitar troca
-                    </button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 {% endif %}
@@ -269,5 +196,13 @@
         $('.modal-title-criar').html('<b>Nova Escala</b>')
         $('#criar-escala').find('input, select').not('[name="csrfmiddlewaretoken"], #id_escala-instituicao, [type="submit"]').val('')
     })
+
+    function confirmarTrocaEscala(id){
+        if($(`#selecionar-membro-${id}`).hasClass('show')){
+            $(`#form-solicitacao-${id}`).submit()
+        }else{
+            $(`#selecionar-membro-${id}`).collapse('show')
+        }
+    }
 </script>
 {% endblock _scripts %}

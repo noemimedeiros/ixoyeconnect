@@ -5,12 +5,12 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
-from usuario.models import FuncaoMembro, InstituicaoSede
+from usuario.models import FuncaoMembro, InstituicaoSede, Membro
 from core.messages_utils import message_delete_registro, message_error_registro, message_create_registro, message_update_registro
-from core.views import MyCreateViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
+from core.views import MyListViewIxoyeConnect
 
 from .filter import EscalaFilter
-from .models import Escala, TrocaSolicitada
+from .models import Escala
 from .forms import EscalaForm
 
 class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
@@ -29,6 +29,7 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        usuario = self.request.user.conta
         hoje = date.today()
         instituicao = InstituicaoSede.objects.get(pk=self.kwargs['instituicao_pk'])
         context["titulo"] = "Escala de Obreiros"
@@ -38,7 +39,6 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["hoje"] = hoje
         context["escalas_porvir"] = self.get_queryset().filter(data__gte=hoje).order_by('data', 'hora')
         context["escalas_passadas"] = self.get_queryset().filter(data__lt=hoje).order_by('-data', '-hora')
-        context["trocas_solicitadas"] = self.get_queryset().filter(data__gte=hoje, status_id=3).order_by('data', 'hora')
 
         if self.request.GET:
             if self.request.GET.get("funcao_membro"):
@@ -101,13 +101,3 @@ def funcoes_por_membro(request):
 def carregar_infos_editar(request):
     escala = Escala.objects.filter(pk=request.GET.get('escala_id')).values().first()
     return JsonResponse(escala, safe=False)
-
-@login_required(login_url='/login/')
-def confirmar_escala(request, pk):
-    Escala.objects.filter(pk=pk, membro_id=request.user.pk).update(status_id=1)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-@login_required(login_url='/login/')
-def solicitar_troca_escala(request, pk):
-    Escala.objects.filter(pk=pk, membro_id=request.user.pk).update(status_id=3)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -195,7 +195,7 @@ class Membro(UsuarioAbstract):
     def proxima_escala(self):
         if self.escalas.all():
             return self.escalas.filter(data__gte=date.today()).order_by('-data').last()
-        return 'Não há escalas.'
+        return None
 
 class Funcao(models.Model):
     instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)
