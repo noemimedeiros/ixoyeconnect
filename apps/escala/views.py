@@ -41,11 +41,7 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context["escalas_passadas"] = self.get_queryset().filter(data__lt=hoje).order_by('-data', '-hora')
 
         if self.request.GET:
-            if self.request.GET.get("funcao_membro"):
-                context["filtrado_para"] = FuncaoMembro.objects.get(pk=self.request.GET.get("funcao_membro"))
-
             context["filter"] = EscalaFilter(self.request.GET, queryset=self.get_queryset())
-
         return context
 
 @login_required(login_url="/login/")

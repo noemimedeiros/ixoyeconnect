@@ -24,6 +24,7 @@ class RelatorioCultoFilter(FilterSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         floating_fields(self.form)
+        self.form.helper.disable_csrf = True
 
         self.form.fields['data'].label = 'Data exata'
         self.form.fields['data__year'].label = 'Ano'

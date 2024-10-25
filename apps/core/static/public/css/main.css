@@ -510,3 +510,16 @@ a.text-primary:hover{
 .bg-primary *{
     color: white !important;
 }
+
+.input-calendar {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.input-calendar .calendar-icon {
+    position: absolute;
+    right: 15px;
+    top: 60%;
+    transform: translateY(-50%);
+}

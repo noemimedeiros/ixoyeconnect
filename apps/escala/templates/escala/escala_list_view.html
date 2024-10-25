@@ -17,6 +17,7 @@
 {% endblock style %}
 
 {% block dashboard_actions %}
+{% include "core/includes/default_actions.html" %}
 {% if request.user.is_admin %}
 <button data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
     <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
@@ -28,14 +29,6 @@
 <section class="escala-section">
     <form method="get">
         <div>
-            <section class="escala-filter">
-                {% crispy filter.form %}
-                {% if request.user.is_admin %}
-                <button type="button" data-bs-toggle="modal" data-bs-target="#criar-escala" class="btn button-filled button-adicionar gap-2">
-                    <i class="fa-solid fa-plus"></i> <span>Adicionar</span>
-                </button>
-                {% endif %}
-            </section>
             <section class="mb-3">
                 {% if filtrado_para %}
                 <span class="escala-titulo-filtro">Escalados para <b>{{ filtrado_para }}</b>.</span>
@@ -50,12 +43,18 @@
                 {% regroup escalas_porvir by data as escalas_porvir_list %}
                 {% for escalas in escalas_porvir_list %}
                     {% include "escala/partials/card_escala.html" with counter=forloop.counter filtrado_para=filtrado_para escalas=escalas.list data=escalas.grouper %}
-                {% empty %}
+                {% endfor %}
+            </section>
+            {% else %}
+                {% if request.GET %}
+                <div class="text-muted text-center">
+                    Nenhuma escala encontrada para esta consulta.
+                </div>
+                {% else %}
                 <div class="text-muted text-center">
                     Ainda não há nenhuma escala definida.
                 </div>
-                {% endfor %}
-            </section>
+                {% endif %}
             {% endif %}
             {% if escalas_passadas %}
             <h5 class="titulo-escala-passados">Escalas anteriores</h5>
@@ -65,10 +64,6 @@
                     {% with escalas_anteriores_loop=forloop.counter|add:escalas_porvir.count %}
                     {% include "escala/partials/card_escala.html" with counter=escalas_anteriores_loop filtrado_para=filtrado_para escalas=escalas.list data=escalas.grouper %}
                     {% endwith %}
-                {% empty %}
-                <div class="text-muted text-center">
-                    Ainda não há nenhuma escala definida.
-                </div>
                 {% endfor %}
             </section>
             {% endif %}

@@ -109,6 +109,14 @@
             $(".toast").toast('show');
         });
     {% endif %}
+
+    $(function(){
+        $('.datepicker').parents('.form-floating').append('<span class="calendar-icon">&#x1F4C5;</span>')
+        $('.datepicker').parents('.form-floating').addClass('input-calendar');
+        $(".calendar-icon").on("click", function() {
+            $(".datepicker").focus();
+        });
+    })
 </script>
 {% block scripts %}{% endblock scripts %}
 </html>
