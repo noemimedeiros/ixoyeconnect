@@ -1,9 +1,15 @@
-from datetime import date
+from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from django.db import connection, models
+from django.db.models import Sum
 from PIL import Image
 from core.models import Endereco
 from django.contrib.auth.models import AbstractUser
+
+data_atual = timezone.now()
+mes_anterior_inicio = (data_atual - relativedelta(months=1)).replace(day=1)
+mes_anterior_fim = data_atual.replace(day=1) - timezone.timedelta(days=1)
 
 class User(AbstractUser):
 
@@ -120,50 +126,86 @@ class InstituicaoSede(UsuarioAbstract):
         return self.eventos.last()
     
     @property
-    def penultimo_culto(self):
-        cultos = self.relatorios.all().order_by('-data')
-        if len(cultos)>1:
-            penultimo_culto = cultos[1]
-            return penultimo_culto
-        return None
+    def relatorios_mes_atual(self):
+        return self.relatorios.filter(data__month=timezone.now().month)
     
     @property
-    def ultimo_culto(self):
-        cultos = self.relatorios.all().order_by('-data')
-        if len(cultos)>1:
-            ultimo_culto = cultos[0]
-            return ultimo_culto
-        return None
+    def relatorios_mes_anterior(self):
+        return self.relatorios.filter(data__range=(mes_anterior_inicio, mes_anterior_fim))
     
     @property
-    def porcentagem_presenca_cultos(self):
-        if self.penultimo_culto:
-            presenca_ultimo_culto = int(self.ultimo_culto.total_pessoas)
-            presenca_penultimo_culto = int(self.penultimo_culto.total_pessoas)
+    def calcular_total(self):
+        pessoas_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_pessoas'))['total_pessoas__sum']
+        pessoas_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_pessoas'))['total_pessoas__sum']
+        dizimos_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_dizimos'))['total_dizimos__sum']
+        dizimos_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_dizimos'))['total_dizimos__sum']
+        ofertas_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_ofertas'))['total_ofertas__sum']
+        ofertas_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_ofertas'))['total_ofertas__sum']
+        
+        return {
+            "pessoas_mes_atual": pessoas_mes_atual,
+            "pessoas_mes_anterior": pessoas_mes_anterior,
+            "dizimos_mes_atual": dizimos_mes_atual,
+            "dizimos_mes_anterior": dizimos_mes_anterior,
+            "ofertas_mes_atual": ofertas_mes_atual,
+            "ofertas_mes_anterior": ofertas_mes_anterior,
+        }
+    
+    @property
+    def calcular_porcentagem(self):
+        porcentagem_presenca_cultos = 0
+        porcentagem_dizimo_cultos = 0
+        porcentagem_oferta_cultos = 0
 
-            percentual = ((presenca_ultimo_culto - presenca_penultimo_culto) * 100) / presenca_penultimo_culto
-            return int(percentual)
-        return 0
+        porcentagem_presenca_cultos = ((self.calcular_total['pessoas_mes_atual'] - self.calcular_total['pessoas_mes_anterior']) / self.calcular_total['pessoas_mes_anterior']) * 100
+        porcentagem_dizimo_cultos = ((self.calcular_total['dizimos_mes_atual'] - self.calcular_total['dizimos_mes_anterior']) / self.calcular_total['dizimos_mes_anterior']) * 100
+        porcentagem_oferta_cultos = ((self.calcular_total['ofertas_mes_atual'] - self.calcular_total['ofertas_mes_anterior']) / self.calcular_total['ofertas_mes_anterior']) * 100
+
+        return {
+            "presenca_cultos": int(porcentagem_presenca_cultos),
+            "dizimo_cultos": int(porcentagem_dizimo_cultos),
+            "oferta_cultos": int(porcentagem_oferta_cultos),
+        }
+
+    @property
+    def porcentagem_distribuicao_participantes(self):
+        total_pessoas = (self.relatorios.aggregate(Sum('total_pessoas'))['total_pessoas__sum'] or 0)
+        total_mulheres = (self.relatorios.aggregate(Sum('total_mulheres'))['total_mulheres__sum'] or 0)
+        total_homens = (self.relatorios.aggregate(Sum('total_homens'))['total_homens__sum'] or 0)
+        total_jovens = (self.relatorios.aggregate(Sum('total_jovens'))['total_jovens__sum'] or 0)
+        total_juniores = (self.relatorios.aggregate(Sum('total_juniores'))['total_juniores__sum'] or 0)
+        total_visitantes = (self.relatorios.aggregate(Sum('total_visitantes'))['total_visitantes__sum'] or 0)
+
+        porcentagem_mulheres = (total_mulheres / total_pessoas) * 100
+        porcentagem_homens = (total_homens / total_pessoas) * 100
+        porcentagem_jovens = (total_jovens / total_pessoas) * 100
+        porcentagem_juniores = (total_juniores / total_pessoas) * 100
+        porcentagem_visitantes = (total_visitantes / total_pessoas) * 100
+        
+        return {
+            "homens": int(porcentagem_homens),
+            "mulheres": int(porcentagem_mulheres),
+            "jovens": int(porcentagem_jovens),
+            "juniores": int(porcentagem_juniores),
+            "visitantes": int(porcentagem_visitantes),
+        }
     
     @property
-    def porcentagem_dizimo_cultos(self):
-        if self.penultimo_culto:
-            presenca_ultimo_culto = self.ultimo_culto.total_dizimos
-            presenca_penultimo_culto = self.penultimo_culto.total_dizimos
-
-            percentual = ((presenca_ultimo_culto - presenca_penultimo_culto) * 100) / presenca_penultimo_culto
-            return int(percentual)
-        return 0
-    
-    @property
-    def porcentagem_oferta_cultos(self):
-        if self.penultimo_culto:
-            presenca_ultimo_culto = self.ultimo_culto.total_ofertas
-            presenca_penultimo_culto = self.penultimo_culto.total_ofertas
-
-            percentual = ((presenca_ultimo_culto - presenca_penultimo_culto) * 100) / presenca_penultimo_culto
-            return int(percentual)
-        return 0
+    def grafico_entradas(self):
+        relatorios = self.relatorios.all().order_by('data')
+        grafico = {
+            'data': [],
+            'valor': []
+        }
+        for i in range(0, len(relatorios[:7]), 1):
+            try:
+                data = datetime.strftime(relatorios[i].data, '%d %b')
+                soma = (relatorios[i].total_dizimos or 0) + (relatorios[i].total_ofertas or 0)
+                grafico['data'].append(data)
+                grafico['valor'].append(soma)
+            except Exception as e:
+                print(e)
+        return grafico
 
 class RedeSocial(models.Model):
     nome = models.CharField(max_length=20)

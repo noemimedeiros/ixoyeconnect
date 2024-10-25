@@ -1,0 +1,12 @@
+@media (max-width: 768px){
+    .dashboard-card{
+        background-color: var(--gray-1);
+        box-shadow: none;
+    }
+    .dashboard-cards{
+        grid-template-areas: unset;
+    }
+    .card-dashboard{
+        grid-area: unset;
+    }
+}

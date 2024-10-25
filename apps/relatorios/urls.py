@@ -14,5 +14,7 @@ urlpatterns = [
     path('editar_relatorio/<int:pk>/', views.RelatorioCultoUpdateView.as_view(), name="relatorio_update_view"),
     path('excluir_relatorio/<int:pk>/', views.RelatorioCultoDeleteView, name="relatorio_delete_view"),
 
-    path('imprimir_relatorio/<int:instituicao_pk>/', views.RelatorioImprimir, name="imprimir_relatorio")
+    path('imprimir_relatorio/<int:instituicao_pk>/', views.RelatorioImprimir, name="imprimir_relatorio"),
+    path('porcentagem_presenca_cultos_mes_anterior/', views.porcentagem_presenca_cultos_mes_anterior, name="porcentagem_presenca_cultos_mes_anterior"),
+    path('grafico_entradas/', views.grafico_entradas, name="grafico_entradas")
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

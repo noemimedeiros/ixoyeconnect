@@ -15,7 +15,7 @@
 
 {% block dashboard_content %}
 <section class="dashboard-instituicao">
-    <section class="dashboard-top-cards">
+    <section class="dashboard-cards">
         <div class="card-dashboard bg-primary">
             <h6>Total de Membros</h6>
             <h2>{{ instituicao.quantidade_membros }}</h2>
@@ -23,47 +23,137 @@
         </div>
         <div class="card-dashboard">
             <div class="d-flex align-items-center gap-2">
-                <h6>Presença nos Cultos</h6>
+                <h6>Presença Cultos (mês atual)</h6>
                 <span class="porcentagem
-                {% if instituicao.porcentagem_presenca_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
-                {{ instituicao.porcentagem_presenca_cultos }}% <i class="fa-solid fa-caret-up "></i>
+                {% if instituicao.calcular_porcentagem.presenca_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
+                {{ instituicao.calcular_porcentagem.presenca_cultos }}% <i class="fa-solid fa-caret-up "></i>
             </span>
             </div>
-            <h2>{{ instituicao.ultimo_culto.total_pessoas }}</h2>
+            <h2>{{ instituicao.calcular_total.pessoas_mes_atual }}</h2>
             <div class="d-flex align-items-center justify-content-between">
-                <small>vs. último mês</small> <small><b>{{ instituicao.penultimo_culto.total_pessoas }}</b></small>
+                <small>vs. último mês</small> <small><b>{{ instituicao.calcular_total.pessoas_mes_anterior }}</b></small>
             </div>
         </div>
         <div class="card-dashboard">
             <div class="d-flex align-items-center gap-2">
-                <h6>Entrada Dízimos</h6>
+                <h6>Dízimos (mês atual)</h6>
                 <span class="porcentagem
-                {% if instituicao.porcentagem_dizimo_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
-                {{ instituicao.porcentagem_dizimo_cultos }}% <i class="fa-solid fa-caret-up "></i>
+                {% if instituicao.calcular_porcentagem.dizimo_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
+                {{ instituicao.calcular_porcentagem.dizimo_cultos }}% <i class="fa-solid fa-caret-up "></i>
             </span>
             </div>
-            <h2>R${{ instituicao.ultimo_culto.total_dizimos }}</h2>
+            <h2>R${{ instituicao.calcular_total.dizimos_mes_atual }}</h2>
             <div class="d-flex align-items-center justify-content-between">
-                <small>vs. último mês</small> <small><b>R${{ instituicao.penultimo_culto.total_dizimos }}</b></small>
+                <small>vs. último mês</small> <small><b>R${{ instituicao.calcular_total.dizimos_mes_anterior }}</b></small>
             </div>
         </div>
         <div class="card-dashboard">
             <div class="d-flex align-items-center gap-2">
-                <h6>Entrada Ofertas</h6>
+                <h6>Ofertas (mês atual)</h6>
                 <span class="porcentagem
-                {% if instituicao.porcentagem_oferta_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
-                {{ instituicao.porcentagem_oferta_cultos }}% <i class="fa-solid fa-caret-up "></i>
+                {% if instituicao.calcular_porcentagem.oferta_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
+                {{ instituicao.calcular_porcentagem.oferta_cultos }}% <i class="fa-solid fa-caret-up "></i>
             </span>
             </div>
-            <h2>R${{ instituicao.ultimo_culto.total_ofertas }}</h2>
+            <h2>R${{ instituicao.calcular_total.ofertas_mes_atual }}</h2>
             <div class="d-flex align-items-center justify-content-between">
-                <small>vs. último mês</small> <small><b>R${{ instituicao.penultimo_culto.total_ofertas }}</b></small>
+                <small>vs. último mês</small> <small><b>R${{ instituicao.calcular_total.ofertas_mes_anterior }}</b></small>
             </div>
         </div>
-    </section>
-    <section class="dashboard-second-cards">
-        <div class="card-dashboard">
+
+        <div class="card-dashboard dashboard-first-chart">
+            <canvas id="graficoEntradas" height="300"></canvas>
+        </div>
+        <div class="card-dashboard dashboard-second-chart text-center">
+            <small>Distribuição de Participantes (%)</small>
+            <canvas id="graficoParticipantes" height="300"></canvas>
         </div>
     </section>
+    
 </section>
 {% endblock dashboard_content %}
+{% block _scripts %}
+<script>
+    const porcentagem_presenca_cultos_mes_anterior = '{% url "relatorio:porcentagem_presenca_cultos_mes_anterior" %}';
+    const grafico_entradas = '{% url "relatorio:grafico_entradas" %}'
+    const graficoParticipantes = document.getElementById('graficoParticipantes').getContext('2d');
+    const graficoEntradas = document.getElementById('graficoEntradas').getContext('2d');
+    $.ajax({
+        url: porcentagem_presenca_cultos_mes_anterior,
+        type: 'GET',
+        success: function(resposta){
+            new Chart(graficoParticipantes, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Homens', 'Mulheres', 'Jovens', 'Juniores', 'Visitantes'],
+                    datasets: [{
+                        label: 'Distribuição de Participantes (%)',
+                        data: Object.values(resposta),
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(153, 102, 255, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+    })
+    $.ajax({
+        url: grafico_entradas,
+        type: 'GET',
+        success: function(resposta){
+            new Chart(graficoEntradas, {
+                type: 'line',
+                data: {
+                    labels: resposta.data,
+                    datasets: [{
+                        label: 'Entradas de Dízimos',
+                        data: resposta.valor,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'category',
+                            title: {
+                                display: true,
+                                text: 'Datas dos Cultos'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Entradas (R$)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    })
+</script>
+{% endblock _scripts %}

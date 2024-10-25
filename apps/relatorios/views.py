@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.shortcuts import render
 from django.urls import reverse
@@ -106,3 +106,13 @@ def RelatorioImprimir(request, instituicao_pk):
         'escalas': escalas
     }
     return render(request, 'relatorios/relatorio_imprimir.html', context=context)
+
+@login_required(login_url='/login/')
+def porcentagem_presenca_cultos_mes_anterior(request):
+    instituicao = request.user.instituicao
+    return JsonResponse(instituicao.porcentagem_distribuicao_participantes, safe=False)
+
+@login_required(login_url='/login/')
+def grafico_entradas(request):
+    instituicao = request.user.instituicao
+    return JsonResponse(instituicao.grafico_entradas, safe=False)
