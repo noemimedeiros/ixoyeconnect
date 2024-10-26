@@ -16,27 +16,29 @@
 {% block dashboard_content %}
 <section class="dashboard-instituicao">
     <section class="dashboard-cards">
-        <div class="card-dashboard bg-primary">
+        <div class="card-dashboard bg-primary card-quantidade-membros">
             <h6>Total de Membros</h6>
             <h2>{{ instituicao.quantidade_membros }}</h2>
             <small>Registrados no aplicativo.</small>
         </div>
-        <div class="card-dashboard">
+        <div class="card-dashboard card-media-presenca">
             <div class="d-flex align-items-center gap-2">
-                <h6>Presença Cultos (mês atual)</h6>
+                <h6>Média de Presença</h6>
                 <span class="porcentagem
                 {% if instituicao.calcular_porcentagem.presenca_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
                 {{ instituicao.calcular_porcentagem.presenca_cultos }}% <i class="fa-solid fa-caret-up "></i>
             </span>
             </div>
-            <h2>{{ instituicao.calcular_total.pessoas_mes_atual }}</h2>
+            <div class="d-flex gap-1 align-items-end">
+                <h2>{{ instituicao.calcular_total.media_pessoas_mes_atual }}</h2>
+            </div>
             <div class="d-flex align-items-center justify-content-between">
-                <small>vs. último mês</small> <small><b>{{ instituicao.calcular_total.pessoas_mes_anterior }}</b></small>
+                <small>vs. último mês</small> <small><b>{{ instituicao.calcular_total.media_pessoas_mes_anterior }}</b></small>
             </div>
         </div>
-        <div class="card-dashboard">
+        <div class="card-dashboard card-dizimos">
             <div class="d-flex align-items-center gap-2">
-                <h6>Dízimos (mês atual)</h6>
+                <h6>Dízimos (este mês)</h6>
                 <span class="porcentagem
                 {% if instituicao.calcular_porcentagem.dizimo_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
                 {{ instituicao.calcular_porcentagem.dizimo_cultos }}% <i class="fa-solid fa-caret-up "></i>
@@ -47,7 +49,7 @@
                 <small>vs. último mês</small> <small><b>R${{ instituicao.calcular_total.dizimos_mes_anterior }}</b></small>
             </div>
         </div>
-        <div class="card-dashboard">
+        <div class="card-dashboard card-ofertas">
             <div class="d-flex align-items-center gap-2">
                 <h6>Ofertas (mês atual)</h6>
                 <span class="porcentagem
@@ -60,13 +62,66 @@
                 <small>vs. último mês</small> <small><b>R${{ instituicao.calcular_total.ofertas_mes_anterior }}</b></small>
             </div>
         </div>
-
         <div class="card-dashboard dashboard-first-chart">
-            <canvas id="graficoEntradas" height="300"></canvas>
+            <canvas id="graficoEntradas" style="height: 22rem"></canvas>
         </div>
         <div class="card-dashboard dashboard-second-chart text-center">
             <small>Distribuição de Participantes (%)</small>
-            <canvas id="graficoParticipantes" height="300"></canvas>
+            <canvas id="graficoParticipantes" style="height: 22rem"></canvas>
+        </div>
+        <div class="card-dashboard card-dashboard-escala">
+            <div class="d-flex align-items-center justify-content-between">
+                <small><b>Escala de Obreiros para Hoje</b></small>
+                <a href="{% url 'escala:escala_list_view' instituicao.pk %}" class="btn button-filled-tonal btn-sm">Adicionar <i class="fa-solid fa-plus ms-2"></i></a>
+            </div>
+            <div class="dashboard-escalas">
+                {% for escala in escala_hoje %}
+                <div class="escala-card">
+                    <div class="d-flex gap-3 align-items-center">
+                        {% if escala.membro.foto %}
+                        <img src="{% if escala.membro.foto %}{{ escala.membro.foto.url }}{% endif %}" class="user-profile"></img>
+                        {% else %}
+                        <div class="user-profile"><h2>{{ escala.membro.nome.0 }}</h2></div>
+                        {% endif %}
+                        <span>{{ escala.membro }} - <b>{{ escala.funcao_membro }}</b></span>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <i class="fa-solid fa-clock text-primary"></i>
+                        <span>{{ escala.hora }}</span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center my-auto">
+                    <small>Não há escalas definidas para hoje.</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-dashboard card-programacao-hoje">
+            <div class="div-programacao-hoje">
+                <div class="d-flex align-items-center justify-content-between">
+                    <small><b>Programações de hoje</b></small>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="{% url 'agenda:agendas_create_view' %}" class="btn button-filled-tonal btn-sm">Adicionar programação<i class="fa-solid fa-plus ms-2"></i></a>
+                        <a href="{% url 'evento:evento_create_view' %}" class="btn button-filled-tonal btn-sm">Adicionar evento <i class="fa-solid fa-plus ms-2"></i></a>
+                    </div>
+                </div>
+                <div class="programacoes-list">
+                    {% if instituicao.programacoes_hoje %}
+                        {% for programacao in instituicao.programacoes_hoje %}
+                            <div class="escala-card">
+                                <span><b>{{ programacao }}</b></span>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <i class="fa-solid fa-clock text-primary"></i>
+                                    <span>{{ programacao.hora }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <b>Não há programações para hoje.</b>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </section>
     
@@ -103,7 +158,8 @@
                             'rgba(255, 206, 86, 1)',
                             'rgba(153, 102, 255, 1)'
                         ],
-                        borderWidth: 1
+                        borderWidth: 1,
+                        
                     }]
                 },
                 options: {
@@ -126,7 +182,7 @@
                 data: {
                     labels: resposta.data,
                     datasets: [{
-                        label: 'Entradas de Dízimos',
+                        label: 'Entradas - Dízimos e Ofertas (R$)',
                         data: resposta.valor,
                         borderColor: 'rgba(75, 192, 192, 1)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -141,7 +197,7 @@
                             title: {
                                 display: true,
                                 text: 'Datas dos Cultos'
-                            }
+                            },
                         },
                         y: {
                             beginAtZero: true,
@@ -149,7 +205,7 @@
                                 display: true,
                                 text: 'Entradas (R$)'
                             }
-                        }
+                        },
                     }
                 }
             });

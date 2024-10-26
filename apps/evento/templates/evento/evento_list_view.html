@@ -31,7 +31,7 @@
         <div class="evento-linha linha-porvir"></div>
         {% endif %}
         <div class="evento-component">
-            {% include "evento/partials/card_evento.html" with evento=evento index=forloop.counter %}
+            {% include "evento/partials/card_evento_grid.html" with evento=evento index=forloop.counter %}
             {% if request.user.is_admin %}
                 {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
             {% endif %}
@@ -46,7 +46,7 @@
         <div class="evento-linha linha-porvir"></div>
         {% for evento in eventos_passados %}
             <div class="evento-component">
-                {% include "evento/partials/card_evento.html" with evento=evento index=forloop.counter %}
+                {% include "evento/partials/card_evento_grid.html" with evento=evento index=forloop.counter %}
                 {% if request.user.is_admin %}
                     {% include "core/includes/default_item_actions.html" with object=evento edit_link='evento:evento_update_view' delete_link='evento:evento_delete_view' item_pk=evento.pk %}
                 {% endif %}

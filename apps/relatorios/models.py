@@ -36,5 +36,3 @@ class RelatorioCulto(models.Model):
 	
 	class Meta:
 		db_table = 'relatorioculto'
-	
-	

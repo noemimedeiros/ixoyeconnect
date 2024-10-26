@@ -34,7 +34,7 @@ class InstituicaoForm(FormBaseIxoye):
         self.helper.form_action = '/usuario/cadastrar_instituicao/'
         self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="btn button-filled w-100"))
 
-        self.helper['denominacao'].wrap(FloatingField('denominacao', template="usuario/partials/custom_denominacao_select.html"))
+        self.helper['denominacao'].wrap(FloatingField, template="usuario/partials/custom_denominacao_select.html")
 
 class InstituicaoSedeForm(FormBaseIxoye):
     class Meta:

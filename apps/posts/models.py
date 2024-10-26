@@ -12,7 +12,7 @@ class CategoriaPost(models.Model):
         return self.nome
 
 class Post(models.Model):
-    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False, related_name="posts")
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
     capa = models.ImageField(upload_to='posts/capa/',max_length=255, null=True, blank=True)
     fixado = models.BooleanField(default=False, verbose_name="Deseja fixar esse post?")

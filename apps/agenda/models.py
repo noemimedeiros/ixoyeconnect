@@ -24,7 +24,7 @@ class IconeAgendaSemanal(models.Model):
         return self.descricao
 
 class AgendaSemanal(models.Model):
-    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False)
+    instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=False, blank=False, related_name="agendas_semanais")
     titulo = models.CharField(max_length=50, null=False, blank=False)
     dia_semana = models.CharField(choices=DIAS_SEMANA, max_length=15, null=False, blank=False)
     hora = models.TimeField(null=False, blank=False)

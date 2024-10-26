@@ -208,10 +208,18 @@
 }
 @media (min-width: 1025px) {
     .side-nav{
-        transition: max-width 0.3s ease;
+        transition: max-width 0.3s ease, border-radius 0.3s linear;
         max-width: 200px;
         overflow: hidden;
-        height: 100vh;
+        height: calc(100vh - 30px);
+        box-shadow: rgba(99, 99, 99, 0.055) 0px 0px 5px 0px;
+        background-color: var(--body-bg);
+        border-radius: 20px;
+        padding-inline: 10px;
+        margin-top: 15px;
+    }
+    .side-nav-items{
+        height: calc(100dvh - 75px);
     }
     .side-nav-text{
         margin-left: 40px;
@@ -237,7 +245,8 @@
         visibility: hidden;
     }
     .side-nav.collapsed{
-        max-width: 40px;
+        max-width: 60px;
+        border-radius: 40px;
     }
 }
 .side-nav-subitem ul a:hover li::before,

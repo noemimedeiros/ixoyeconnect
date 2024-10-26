@@ -1,54 +1,41 @@
 {% load evento_passado %}
-<a href="{% if evento %}{% url 'evento:evento_detail_view' evento.pk %} {% else %} #{% endif %}" class="eventos-grid">
-    <div class="linha-tempo-evento">
-        <div class="evento-dia">
-            <h6 class="evento-dia">
-                {{ evento.data|date:"d"|default:"--" }}
-            </h6>
-            <h6 class="evento-mes">
-                {{ evento.data|date:"N"|default:"---" }}
-            </h6>
-        </div>
-        <div class="evento-linha"></div>
-    </div>
-    <div class="card-evento">
-        <img {% if evento %}src="{{ evento.capa.url }}"{% endif %} class="evento-capa {% if evento and evento.data|evento_passado %}evento-capa-passou{% endif %}" alt="">
-        <div class="card-evento-content">
-            <div class="card-evento-header">
-                <div>
-                    <h3 class="evento-titulo">{{ evento.titulo|default:"-------" }}</h3>
-                    <div class="evento-infos button-filled-tonal">
-                        <small>
-                            <i class="fa-solid fa-calendar-day me-1"></i>
-                            <span class="evento-data">{{ evento.data|date:"d/m/Y"|default:"-- de -------" }}</span>
-                        </small>
-                        <small>
-                            <i class="fa-solid fa-clock me-1"></i>
-                            <span class="evento-hora">{{ evento.hora|time:'H:i'|default:"--:--" }}</span>
-                        </small>
-                    </div>
+<div class="card-evento">
+    <img {% if evento %}src="{{ evento.capa.url }}"{% endif %} class="evento-capa {% if evento and evento.data|evento_passado %}evento-capa-passou{% endif %}" alt="">
+    <div class="card-evento-content">
+        <div class="card-evento-header">
+            <div>
+                <h3 class="evento-titulo">{{ evento.titulo|default:"-------" }}</h3>
+                <div class="evento-infos button-filled-tonal">
+                    <small>
+                        <i class="fa-solid fa-calendar-day me-1"></i>
+                        <span class="evento-data">{{ evento.data|date:"d/m/Y"|default:"-- de -------" }}</span>
+                    </small>
+                    <small>
+                        <i class="fa-solid fa-clock me-1"></i>
+                        <span class="evento-hora">{{ evento.hora|time:'H:i'|default:"--:--" }}</span>
+                    </small>
                 </div>
-                {% if not evento.data|evento_passado %}
-                {% if not request.user.is_admin %}
-                    {% if evento.pk not in request.user.conta.eventos_confirmados_pks %}
-                    <form class="btn-confirmar-participacao" class="mb-auto" action="{% url 'evento:confirmar_participacao_evento' evento.pk request.user.pk %}">
-                        <button type="submit" class="btn button-filled btn-sm">Confirmar Participação</button>
-                    </form>
-                    {% else %}
-                    <div class="btn-confirmar-participacao button-filled-tonal mb-auto p-2 px-4 rounded-pill">
-                        Presença confirmada!
-                    </div>
-                    {% endif %}
+            </div>
+            {% if not evento.data|evento_passado %}
+            {% if not request.user.is_admin %}
+                {% if evento.pk not in request.user.conta.eventos_confirmados_pks %}
+                {% comment %} <form class="btn-confirmar-participacao" class="mb-auto" action="{% url 'evento:confirmar_participacao_evento' evento.pk request.user.pk %}">
+                    <button type="submit" class="btn button-filled btn-sm">Confirmar Participação</button>
+                </form> {% endcomment %}
+                {% else %}
+                <div class="btn-confirmar-participacao button-filled-tonal mb-auto p-2 px-4 rounded-pill">
+                    Presença confirmada!
+                </div>
                 {% endif %}
-                {% endif %}
-            </div>
-            <div class="evento-descricao">
-                {{ evento.descricao|safe|default:"" }}
-            </div>
-            <div class="evento-pessoas">
-                <i class="fa-solid fa-users"></i>
-                {{ evento.participantes.all.count|default:"0" }} pessoas confirmadas
-            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+        <div class="evento-descricao">
+            {{ evento.descricao|safe|default:"" }}
+        </div>
+        <div class="evento-pessoas">
+            <i class="fa-solid fa-users"></i>
+            {{ evento.participantes.all.count|default:"0" }} pessoas confirmadas
         </div>
     </div>
-</a>
+</div>

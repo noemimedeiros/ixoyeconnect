@@ -1,0 +1,69 @@
+{% extends "core/dashboard.html" %}
+{% load static %}
+{% load evento_passado %}
+
+{% block app_title %}
+{{ titulo }}
+{% endblock app_title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
+<link rel="stylesheet" href="{% static 'evento/css/evento_responsive.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard_responsive.css' %}">
+
+{% endblock style %}
+
+{% block dashboard_actions %}
+{% endblock dashboard_actions %}
+
+{% block dashboard_content %}
+<section class="dashboard-membro">
+    <div class="introducao-dashboard">
+        <h4>Bem-vindo(a) {{ usuario }}!</h4>
+    </div>
+    <section class="dashboard-membros-cards">
+        <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="card-dashboard card-proxima-programacao">
+            <div class="programacao-icone"><i class="fa-solid fa-clock"></i></div>
+            <div>
+                <div class="mb-2"><h6>Próxima programação</h6></div>
+                <div><h4>{{ instituicao.proxima_agenda }}</h4></div>
+            </div>
+        </a>
+        {% if not instituicao.ultimo_evento.data|evento_passado %}
+        <section class="dashboard-items-section">
+            <div class="d-flex align-items-center justify-content-between">
+                <h4 class="text-primary">Eventos</h4>
+                <h6><a href="{% url 'evento:evento_list_view' instituicao.pk %}">Ver todos</a></h6>
+            </div>
+            <div class="">
+                {% include "evento/partials/card_evento.html" with evento=instituicao.ultimo_evento %}
+            </div>
+        </section>
+        {% endif %}
+        <section class="dashboard-items-section">
+            <div class="">
+                <h4 class="text-primary">Atividade</h4>
+            </div>
+            {% for atividade in instituicao.atividades %}
+                {% if forloop.counter <= 20 %}
+                <a href="" class="dashboard-atividade-card">
+                    <div class="card-atividade-body">
+                        {% if atividade.capa %}<img src="{{ atividade.capa.url }}" class="capa-atividade" alt="">{% endif %}
+                        <div>
+                            <small class="atividade-tipo">{{ atividade.titulo }}</small>
+                            <div><span><b>{{ atividade.titulo }}</b></span></div>
+                            <small>{{ atividade.data|date:'d/m/Y' }}</small>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right fa-xl"></i>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </section>
+</section>
+{% endblock dashboard_content %}
+
+{% block _scripts %}
+{% endblock _scripts %}

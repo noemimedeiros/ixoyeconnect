@@ -94,7 +94,7 @@ class InstituicaoSede(UsuarioAbstract):
     logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/')
 
     def save(self, *args, **kwargs):
-        super(Membro, self).save(*args, **kwargs)
+        super(InstituicaoSede, self).save(*args, **kwargs)
         if self.logo:
             img = Image.open(self.logo.path)
             width, height = img.size
@@ -110,6 +110,27 @@ class InstituicaoSede(UsuarioAbstract):
     class Meta:
         db_table = "instituicaosede"
 
+    def atividades(self):
+        eventos = list(self.eventos.all())
+        posts = list(self.posts.all())
+        return eventos + posts
+
+    def proxima_agenda(self):
+        dia_semana = str((datetime.today().isoweekday() % 7) + 1)
+        if self.agendas_semanais.filter(dia_semana=dia_semana):
+            return self.agendas_semanais.filter(dia_semana=dia_semana).order_by('hora').first()
+        else:
+            return 'Não há programações para hoje.'
+    
+    def programacoes_hoje(self):
+        dia_semana = str((datetime.today().isoweekday() % 7) + 1)
+        programacoes = []
+        if self.agendas_semanais.filter(dia_semana=dia_semana):
+            programacoes += list(self.agendas_semanais.filter(dia_semana=dia_semana))
+        if self.eventos.filter(data=datetime.today()):
+            programacoes += list()
+        return programacoes
+
     @property
     def quantidade_membros(self):
         with connection.cursor() as cursor:
@@ -123,7 +144,7 @@ class InstituicaoSede(UsuarioAbstract):
 
     @property
     def ultimo_evento(self):
-        return self.eventos.last()
+        return self.eventos.order_by('-data', '-hora').last()
     
     @property
     def relatorios_mes_atual(self):
@@ -136,15 +157,19 @@ class InstituicaoSede(UsuarioAbstract):
     @property
     def calcular_total(self):
         pessoas_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_pessoas'))['total_pessoas__sum']
+        media_pessoas_mes_atual = pessoas_mes_atual/self.relatorios_mes_atual.count()
+
         pessoas_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_pessoas'))['total_pessoas__sum']
+        media_pessoas_mes_anterior = pessoas_mes_anterior/self.relatorios_mes_anterior.count()
+
         dizimos_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_dizimos'))['total_dizimos__sum']
         dizimos_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_dizimos'))['total_dizimos__sum']
         ofertas_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_ofertas'))['total_ofertas__sum']
         ofertas_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_ofertas'))['total_ofertas__sum']
         
         return {
-            "pessoas_mes_atual": pessoas_mes_atual,
-            "pessoas_mes_anterior": pessoas_mes_anterior,
+            "media_pessoas_mes_atual": int(media_pessoas_mes_atual),
+            "media_pessoas_mes_anterior": int(media_pessoas_mes_anterior),
             "dizimos_mes_atual": dizimos_mes_atual,
             "dizimos_mes_anterior": dizimos_mes_anterior,
             "ofertas_mes_atual": ofertas_mes_atual,
@@ -157,7 +182,7 @@ class InstituicaoSede(UsuarioAbstract):
         porcentagem_dizimo_cultos = 0
         porcentagem_oferta_cultos = 0
 
-        porcentagem_presenca_cultos = ((self.calcular_total['pessoas_mes_atual'] - self.calcular_total['pessoas_mes_anterior']) / self.calcular_total['pessoas_mes_anterior']) * 100
+        porcentagem_presenca_cultos = ((self.calcular_total['media_pessoas_mes_atual'] - self.calcular_total['media_pessoas_mes_anterior']) / self.calcular_total['media_pessoas_mes_anterior']) * 100
         porcentagem_dizimo_cultos = ((self.calcular_total['dizimos_mes_atual'] - self.calcular_total['dizimos_mes_anterior']) / self.calcular_total['dizimos_mes_anterior']) * 100
         porcentagem_oferta_cultos = ((self.calcular_total['ofertas_mes_atual'] - self.calcular_total['ofertas_mes_anterior']) / self.calcular_total['ofertas_mes_anterior']) * 100
 

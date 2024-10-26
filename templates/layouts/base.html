@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{% static 'public/css/responsive.css' %}">
     {% block css %}{% endblock css %}
 </head>
-
+    
 <script>
     function darkMode(){
         const btnDarkmode = document.querySelector('.icon-dark-mode');
@@ -60,6 +60,7 @@
         document.querySelector('html').classList.add('darkmode');
     }
 </script>
+{% block scripts_before_body %}{% endblock scripts_before_body %}
 <body>
     {% include "core/messages/messages_toast.html" %}
     {% block content %}{% endblock content %}

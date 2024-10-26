@@ -1,3 +1,4 @@
+from datetime import date
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -5,9 +6,11 @@ from django.template.loader import get_template
 from django.views.generic import (View, CreateView, DeleteView, DetailView, FormView,
                                   ListView, TemplateView, UpdateView)
 from allauth.account.views import SignupView, LoginView
+from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.db import transaction
 from extra_views import SearchableListMixin
 
+from escala.models import Escala
 from notificacao.models import ConfiguracoesNotificacao, Notificacao
 from core.messages_utils import *
 from posts.models import CategoriaPost
@@ -65,20 +68,23 @@ class MyDeleteViewIxoyeConnect(MyViewIxoyeConnect, DeleteView):
         message_delete_registro(self.request)
         return super().form_valid(form)
     
-class DashboradView(MyTemplateViewIxoyeConnect):
+class DashboradView(LoginRequiredMixin, MyTemplateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        instituicao = self.request.user.instituicao
+        context["escala_hoje"] = Escala.objects.filter(instituicao=instituicao, data=date.today())
+
         return context
     
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.is_instituicao:
-            self.template_name = 'core/dashboard_instituicao.html'
-            get_template(self.template_name)
-            return super().dispatch(request, *args, **kwargs)
-        else:
-            self.template_name = 'core/dashboard_membro.html'
-            get_template(self.template_name)
-            return super().dispatch(request, *args, **kwargs)
+        if self.request.user.is_authenticated:
+            if self.request.user.is_instituicao:
+                self.template_name = 'core/dashboard_instituicao.html'
+                get_template(self.template_name)
+            else:
+                self.template_name = 'core/dashboard_membro.html'
+                get_template(self.template_name)
+        return super().dispatch(request, *args, **kwargs)
 
 class MyLoginView(LoginView):
     form_class = MyLoginForm

@@ -1,0 +1,15 @@
+{% load evento_passado %}
+<a href="{% if evento %}{% url 'evento:evento_detail_view' evento.pk %} {% else %} #{% endif %}" class="eventos-grid">
+    <div class="linha-tempo-evento">
+        <div class="evento-dia">
+            <h6 class="evento-dia">
+                {{ evento.data|date:"d"|default:"--" }}
+            </h6>
+            <h6 class="evento-mes">
+                {{ evento.data|date:"N"|default:"---" }}
+            </h6>
+        </div>
+        <div class="evento-linha"></div>
+    </div>
+    {% include "evento/partials/card_evento.html" %}
+</a>

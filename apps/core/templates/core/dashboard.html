@@ -8,6 +8,12 @@
 
 {% endblock css %}
 
+{% block scripts_before_body %}
+<script>
+    
+</script>
+{% endblock scripts_before_body %}
+
 {% block content %}
 <section class="main-dashboard">
     {% include "core/partials/_navbar.html" %}
@@ -36,12 +42,20 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    {% comment %} var menuCollapsedStatus = localStorage.getItem('menuCollapsed');
+    if (menuCollapsedStatus === 'enabled') {
+        $('.side-nav').addClass('collapsed');
+    } {% endcomment %}
+
     function menu_collapse(){
         let collapsed = $('.side-nav').toggleClass("collapsed");
+        let isMenuCollapsed = $('.side-nav').hasClass('collapsed');
         if ($('.side-nav').hasClass('collapsed')){
+            localStorage.setItem('menuCollapsed', isMenuCollapsed ? 'enabled' : 'disabled');
             $('.side-nav-subitem a').tooltip('enable')
         }else{
             $('.side-nav-subitem a').tooltip('disable')
+            localStorage.setItem('menuCollapsed', isMenuCollapsed ? 'enabled' : 'disabled');
         }
         if (window.innerWidth <= 768) {
             if($('#overlay-sidenav').length > 0){

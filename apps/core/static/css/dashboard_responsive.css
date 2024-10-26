@@ -5,8 +5,9 @@
     }
     .dashboard-cards{
         grid-template-areas: unset;
+        grid-template-columns: unset;
     }
     .card-dashboard{
-        grid-area: unset;
+        grid-area: unset !important;
     }
 }
