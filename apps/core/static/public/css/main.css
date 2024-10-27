@@ -523,3 +523,19 @@ a.text-primary:hover{
     top: 60%;
     transform: translateY(-50%);
 }
+
+.conta-inativa{
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    justify-content: center;
+    padding-inline: 15%;
+    text-align: justify;
+}
+.conta-inativa i{
+    color: var(--gray-2);
+    font-size: 8rem;
+}
+.darkmode .conta-inativa i{
+    color: var(--gray-3);
+}

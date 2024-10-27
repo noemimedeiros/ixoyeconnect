@@ -1,6 +1,7 @@
 from datetime import date
+from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.template.loader import get_template
 from django.views.generic import (View, CreateView, DeleteView, DetailView, FormView,
@@ -28,6 +29,10 @@ def index(request):
 class MyViewIxoyeConnect:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            if hasattr(request.user.conta, 'desvinculado'):
+                if request.user.conta.desvinculado:
+                    logout(request)
+                return render(request, 'account/desvinculado.html')
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect('/login/')
