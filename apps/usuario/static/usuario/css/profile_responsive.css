@@ -1,6 +1,9 @@
 @media (max-width: 768px) {
-    .dashboard-card{
+    /* .dashboard-card{
         background-color: var(--gray-1);
+    } */
+    .dashboard-sidecontent{
+        background-color: var(--gray-1) !important;
     }
     .profile-view{
         grid-template-columns: 1fr;

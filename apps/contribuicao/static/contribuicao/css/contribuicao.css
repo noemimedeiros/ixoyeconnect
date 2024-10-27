@@ -1,12 +1,12 @@
 .contribuicao-form-section{
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     display: grid;
     gap: 20px;
     grid-template-columns: calc(50% - 10px) calc(50% - 10px);
 }
-.contribuicao-section{
+/* .contribuicao-section{
     margin-top: 1rem;
-}
+} */
 
 .div-cards-contribuicoes{
     display: flex;

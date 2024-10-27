@@ -1,6 +1,12 @@
 @media (max-width: 768px){
-    .dashboard-card{
+    .dashboard-sidecontent{
+        background-color: var(--gray-1) !important;
+    }
+    .darkmode .dashboard-sidecontent{
         background-color: var(--body-bg) !important;
+    }
+    .dashboard-card{
+        /* background-color: var(--body-bg) !important; */
         box-shadow: none;
     }
     .darkmode .notificacao-card{
@@ -22,7 +28,7 @@
         padding: 0;
         box-shadow: none;
     }
-    .dashboard-atividade-card, .escala-card{
+    .darkmode .dashboard-atividade-card, .darkmode .escala-card{
         background-color: var(--gray-1);
     }
     .evento-capa{
@@ -36,6 +42,7 @@
         padding-bottom: 20px;
     }
     .dashboard-atividade-card, .escala-card{
+        background-color: var(--body-bg);
         border-color: var(--body-bg);
     }
 }

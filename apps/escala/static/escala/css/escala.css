@@ -1,6 +1,6 @@
-.escala-filter{
+/* .escala-filter{
     margin-top: 1rem;
-}
+} */
 .escala-list, .escala-cards{
     display: flex;
     flex-direction: column;

@@ -6,13 +6,13 @@
     font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
 }
 .form-posts{
-    margin-top: 20px;
+    /* margin-top: 20px; */
     display: grid;
     grid-template-columns: calc(50% - 10px) calc(50% - 10px);
     gap: 20px;
 }
 .posts-section{
-    margin-top: 20px;
+    /* margin-top: 20px; */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;

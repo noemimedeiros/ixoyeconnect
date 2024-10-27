@@ -1,6 +1,6 @@
-.membro-form-section{
+/* .membro-form-section{
     margin-top: 1.5rem;
-}
+} */
 
 .form-membro{
     display: grid;
@@ -10,7 +10,7 @@
 
 .table-membros{
     width: 100%;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     border-collapse: separate; 
     border-collapse: separate;
     border-spacing: 0 10px;

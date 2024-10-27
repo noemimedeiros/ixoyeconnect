@@ -3,9 +3,9 @@
     --gray-1: #1e2128;
 }
 
-.titulo-dashboard{
-    font-weight: 400;
-}
+/* .titulo-dashboard{
+    color: var(--aqua-blue);
+} */
 
 .main-dashboard{
     height: 100dvh;
@@ -292,11 +292,14 @@
 }
 
 .dashboard-head{
+    margin-top: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
+.dashboard-head-actions .search-input input{
+    background-color: var(--body-bg);
+}
 .dashboard-head-actions{
     display: flex;
     gap: 10px;

@@ -1,17 +1,17 @@
 @media (max-width: 768px) {
-    .dashboard-card{
+    .dashboard-sidecontent{
         background-color: var(--gray-1);
     }
     .notificacao-card{
         background-color: var(--body-bg);
     }
-    .search-input input{
+    .dashboard-head-actions .search-input input{
         background-color: var(--body-bg);
     }
-    .notificacoes-section{
+    /* .notificacoes-section{
         margin-top: 2rem;
-    }
-    .darkmode .dashboard-card{
+    } */
+    .darkmode .dashboard-sidecontent{
         background-color: var(--body-bg);
     }
     .darkmode .notificacao-card{

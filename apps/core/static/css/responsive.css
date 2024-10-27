@@ -30,17 +30,32 @@
         position: relative;
     }
     .dashboard-card{
+        /* margin-top: 0; */
         background: none;
         box-shadow: none;
         width: 100dvw;
         padding-bottom: 100px;
         box-sizing: border-box;
+        overflow-y: unset;
     }
-    .dashboard-card > *:first-child{
-        margin-top: 7rem;
+    .dashboard-head{
+        /* padding-top: 5%; */
+        padding-inline: 5%;
+        
+    }
+    .dashboard-sidecontent{
+        overflow-y: scroll;
+        padding-top: 8rem;
+    }
+    .dashboard-sidecontent::-webkit-scrollbar{
+        display: none;
+    }
+    .dashboard-head-actions .search-input input{
+        background-color: var(--gray-1);
     }
     .dashboard-content{
         padding: 5%;
+        padding-top: 0;
     }
 
     .top-nav-mobile{

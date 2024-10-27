@@ -32,7 +32,7 @@ class MyViewIxoyeConnect:
             if hasattr(request.user.conta, 'desvinculado'):
                 if request.user.conta.desvinculado:
                     logout(request)
-                return render(request, 'account/desvinculado.html')
+                    return render(request, 'account/desvinculado.html')
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect('/login/')

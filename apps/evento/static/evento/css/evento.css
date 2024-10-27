@@ -2,18 +2,18 @@
     --card-evento-height: 13rem;
     --evento-capa-width: 20%;
 }
-.evento-section{
+/* .evento-section{
     margin-top: 20px;
-}
+} */
 
 .evento-form-section{
     display: grid;
     grid-template-columns: calc(50% - 10px) calc(50% - 10px);
     gap: 20px;
 }
-.evento-form-section{
+/* .evento-form-section{
     margin-top: 1rem;
-}
+} */
 
 .eventos-grid{
     display: grid;
