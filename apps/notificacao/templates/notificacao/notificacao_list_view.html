@@ -43,22 +43,7 @@
             <h6 class="text-muted mb-3">{{ notif_data.grouper }}</h6>
             {% endif %}
             {% for notificacao in notif_data.list %}
-            <a class="notificacao-card mb-2" {% if not notificacao.lida %}onclick="lerNotificacao('{{ notificacao.pk }}')"{% endif %} href="{{ notificacao.link|default:"#" }}">
-                <div class="notificacao-icone-div">
-                    <div id="lido-{{ notificacao.pk }}" class="notificacao-nao-lida {% if notificacao.lida %}d-none{% endif %}"><i class="fa-solid fa-circle"></i></div>
-                    <div class="notificacao-icone"><i class="fa-solid {{ notificacao.modulo|icone_notificacao }}"></i></div>
-                </div>
-                <div>
-                    <div class="notificacao-mensagem">{{ notificacao.mensagem }}</div>
-                    <div class="notificacao-data">
-                        {% if notificacao.data.date == hoje %}
-                            {{ notificacao.data|time:"H:i" }}
-                        {% else %}
-                            {{ notificacao.data|date:"d/m/Y H:i" }}
-                        {% endif %}
-                    </div>
-                </div>
-            </a>
+                {% include "notificacao/partials/notificacao_card.html" with notificacao=notificacao %}
             {% endfor %}
         </div>
     {% endfor %}

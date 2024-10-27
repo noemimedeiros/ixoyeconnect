@@ -1,4 +1,6 @@
 from datetime import date, datetime, timedelta
+from itertools import chain
+from operator import attrgetter
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from django.db import connection, models
@@ -111,9 +113,9 @@ class InstituicaoSede(UsuarioAbstract):
         db_table = "instituicaosede"
 
     def atividades(self):
-        eventos = list(self.eventos.all())
-        posts = list(self.posts.all())
-        return eventos + posts
+        eventos = list(self.eventos.all()[:10])
+        posts = list(self.posts.all()[:10])
+        return sorted(chain(eventos, posts), key=attrgetter('data'), reverse=True)
 
     def proxima_agenda(self):
         dia_semana = str((datetime.today().isoweekday() % 7) + 1)
@@ -145,6 +147,10 @@ class InstituicaoSede(UsuarioAbstract):
     @property
     def ultimo_evento(self):
         return self.eventos.order_by('-data', '-hora').last()
+    
+    @property
+    def ultimo_post(self):
+        return self.posts.order_by('-data', '-hora').last()
     
     @property
     def relatorios_mes_atual(self):
@@ -297,6 +303,8 @@ class Membro(UsuarioAbstract):
         )
         if membro_ha <= 0:
             return f'{membro_ha} meses'
+        if membro_ha == 1:
+            return f'{membro_ha} ano'
         return f'{membro_ha} anos'
     
     def get_funcoes(self):
@@ -313,6 +321,9 @@ class Membro(UsuarioAbstract):
         if self.escalas.all():
             return self.escalas.filter(data__gte=date.today()).order_by('-data').last()
         return None
+
+    def ultimas_notificacoes(self):
+        return self.user.notificacoes.all()[:5]
 
 class Funcao(models.Model):
     instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)

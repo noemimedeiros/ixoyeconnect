@@ -3,11 +3,33 @@
         background-color: var(--gray-1);
         box-shadow: none;
     }
-    .dashboard-cards{
+    .darkmode .card-dashboard, .darkmode .dashboard-atividade-card{
+        background-color: var(--gray-1);
+    }
+    .dashboard-cards, .dashboard-membros-cards{
         grid-template-areas: unset;
         grid-template-columns: unset;
     }
     .card-dashboard{
         grid-area: unset !important;
+    }
+    .card-eventos-dashboard, .card-atividades-dashboard, .card-dashboard-post, .card-notificacoes,
+    .darkmode .card-eventos-dashboard, .darkmode .card-atividades-dashboard, .darkmode .card-dashboard-post, .darkmode .card-notificacoes{
+        background: none;
+        padding: 0;
+        box-shadow: none;
+    }
+    .dashboard-atividade-card, .escala-card{
+        background-color: var(--body-bg);
+    }
+    .evento-capa{
+        width: 100%;
+    }
+    .dashboard-notificacoes-list, .dashboard-escalas, .programacoes-list{
+        height: unset;
+        
+    }
+    .dashboard-escalas, .programacoes-list{
+        padding-bottom: 20px;
     }
 }

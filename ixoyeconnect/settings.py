@@ -130,7 +130,8 @@ TEMPLATES = [
                 "get_tipo_display": "contribuicao.filters",
                 "evento_passado": "evento.filters",
                 "icone_notificacao": "notificacao.filters",
-                "get_atividade": "relatorios.filters"
+                "get_atividade": "relatorios.filters",
+                "instance_name": "core.filters"
             }
         },
     },

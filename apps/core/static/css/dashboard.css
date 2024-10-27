@@ -6,15 +6,22 @@
 }
 .introducao-dashboard{
     margin-bottom: 1rem;
-    color: var(--green);
+    color: var(--aqua-blue);
 }
-.dashboard-instituicao, .dashboard-membros-cards{
+.dashboard-instituicao{
     display: grid;
     row-gap: 20px;
 }
 .dashboard-cards{
     display: grid;
     grid-template-areas: "a b c d" "e e e f" "g g h h";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+}
+.dashboard-membros-cards{
+    display: grid;
+    grid-template-areas: "a a a b" "c c d d" "e e e e";
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto auto auto;
     gap: 20px;
@@ -28,6 +35,9 @@
     padding: 20px;
     min-width: 240px;
     box-shadow: rgba(99, 99, 99, 0.055) 0px 0px 5px 0px;
+}
+.darkmode .card-dashboard{
+    color: white;
 }
 .card-quantidade-membros{
     grid-area: a;
@@ -105,17 +115,16 @@
 }
 .card-proxima-programacao{
     background-image: linear-gradient(to left, var(--green), var(--aqua-blue));
-    color: var(--body-bg);
+    color: white;
     display: flex;
     gap: 20px;
     align-items: center;
-    border-radius: var(--rounded-pill);
     flex-direction: row;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 .card-proxima-programacao:hover{
-    color: var(--body-bg);
+    color: white;
 }
 .programacao-icone{
     font-size: 4rem;
@@ -129,8 +138,14 @@
 .dashboard-items-section h6 a{
     color: var(--gray-2);
 }
-.card-evento{
+.card-evento, .card-post-dashboard{
+    border: 1px solid var(--gray-1);
     background-color: var(--body-bg);
+}
+.card-post-dashboard{
+    display: flex;
+    height: 13rem;
+    border-radius: 20px;
 }
 .dashboard-atividade-card, .card-atividade-body{
     display: flex;
@@ -141,14 +156,14 @@
 }
 .dashboard-atividade-card{
     border-radius: 20px;
-    background-color: var(--body-bg);
+    border: 1px solid var(--gray-1);
     padding: 10px;
     justify-content: space-between;
 }
 .capa-atividade{
     width: 5rem;
     height: 5rem;
-    border-radius: 5px;
+    border-radius: 10px;
     object-fit: cover;
 }
 .atividade-tipo{
@@ -156,4 +171,39 @@
 }
 .dashboard-items-section .fa-chevron-right{
     color: var(--gray-2);
+}
+.card-membro-ha{
+    grid-area: b;
+}
+.card-proxima-programacao{
+    grid-area: a;
+}
+.card-eventos-dashboard{
+    grid-area: c;
+}
+.card-atividades-dashboard{
+    grid-area: e;
+}
+.card-notificacoes{
+    grid-area: d;
+}
+.card-atividades-dashboard-body::-webkit-scrollbar, .dashboard-notificacoes-list::-webkit-scrollbar{
+    display: none;
+}
+.evento-capa{
+    width: 50%;
+}
+.card-eventos-dashboard a{
+    font-weight: unset;
+    color: unset;
+}
+.btn-confirmar-participacao{
+    display: none;
+}
+.dashboard-notificacoes-list{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    height: 13rem;
 }

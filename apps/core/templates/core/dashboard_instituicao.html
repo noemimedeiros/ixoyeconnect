@@ -15,6 +15,9 @@
 
 {% block dashboard_content %}
 <section class="dashboard-instituicao">
+    <div class="introducao-dashboard">
+        <h4>Bem-vindo(a) {{ usuario }}!</h4>
+    </div>
     <section class="dashboard-cards">
         <div class="card-dashboard bg-primary card-quantidade-membros">
             <h6>Total de Membros</h6>
@@ -99,11 +102,11 @@
         </div>
         <div class="card-dashboard card-programacao-hoje">
             <div class="div-programacao-hoje">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex gap-2 flex-wrap-reverse align-items-center justify-content-between">
                     <small><b>Programações de hoje</b></small>
-                    <div class="d-flex align-items-center gap-2">
-                        <a href="{% url 'agenda:agendas_create_view' %}" class="btn button-filled-tonal btn-sm">Adicionar programação<i class="fa-solid fa-plus ms-2"></i></a>
-                        <a href="{% url 'evento:evento_create_view' %}" class="btn button-filled-tonal btn-sm">Adicionar evento <i class="fa-solid fa-plus ms-2"></i></a>
+                    <div class="d-flex align-items-center gap-2 ms-auto">
+                        <a href="{% url 'agenda:agendas_create_view' %}" class="btn button-filled-tonal button-adicionar btn-sm"><span>Adicionar</span> Programação<i class="fa-solid fa-plus ms-2"></i></a>
+                        <a href="{% url 'evento:evento_create_view' %}" class="btn button-filled-tonal button-adicionar btn-sm"><span>Adicionar</span> Evento <i class="fa-solid fa-plus ms-2"></i></a>
                     </div>
                 </div>
                 <div class="programacoes-list">

@@ -1,6 +1,6 @@
 {% extends "core/dashboard.html" %}
 {% load static %}
-{% load evento_passado %}
+{% load instance_name %}
 
 {% block app_title %}
 {{ titulo }}
@@ -9,6 +9,8 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'evento/css/evento.css' %}">
 <link rel="stylesheet" href="{% static 'evento/css/evento_responsive.css' %}">
+<link rel="stylesheet" href="{% static 'notificacao/css/notificacao.css' %}">
+<link rel="stylesheet" href="{% static 'notificacao/css/notificacao_responsive.css' %}">
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 <link rel="stylesheet" href="{% static 'css/dashboard_responsive.css' %}">
 
@@ -30,36 +32,60 @@
                 <div><h4>{{ instituicao.proxima_agenda }}</h4></div>
             </div>
         </a>
-        {% if not instituicao.ultimo_evento.data|evento_passado %}
-        <section class="dashboard-items-section">
+        <div class="card-dashboard card-membro-ha">
+            <h6><b>Você é membro há</b></h6>
+            <h2>{{ usuario.membro_ha }}</h2>
+        </div>
+        <section class="dashboard-items-section card-dashboard card-eventos-dashboard">
             <div class="d-flex align-items-center justify-content-between">
-                <h4 class="text-primary">Eventos</h4>
-                <h6><a href="{% url 'evento:evento_list_view' instituicao.pk %}">Ver todos</a></h6>
+                <small><b>Próximo Evento</b></small>
+                <small><a href="{% url 'evento:evento_list_view' instituicao.pk %}">Ver todos</a></small>
             </div>
             <div class="">
-                {% include "evento/partials/card_evento.html" with evento=instituicao.ultimo_evento %}
+                {% if instituicao.ultimo_evento %}
+                <a href="{% url 'evento:evento_detail_view' instituicao.ultimo_evento.pk %}">
+                    {% include "evento/partials/card_evento.html" with evento=instituicao.ultimo_evento %}
+                </a>
+                {% else %}
+                <small>Ainda não há eventos para os próximos dias.</small>
+                {% endif %}
             </div>
         </section>
-        {% endif %}
-        <section class="dashboard-items-section">
+        <section class="card-dashboard card-notificacoes">
+            <div class="d-flex align-items-center justify-content-between">
+                <small>Últimas notificacões</small>
+                <small><a href="{% url 'notificacao:notificacoes_list_view' %}">Veja mais notificações</a></small>
+            </div>
+            <div class="dashboard-notificacoes-list">
+                {% for notificacao in request.user.notificacoes.all %}
+                    {% include "notificacao/partials/notificacao_card.html" with notificacao=notificacao %}
+                    {% empty %}
+                    <div class="text-center mt-3">
+                        <small>Não há notificações.</small>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="dashboard-items-section card-atividades-dashboard card-dashboard">
             <div class="">
-                <h4 class="text-primary">Atividade</h4>
+                <small><b>Atividade</b></small>
             </div>
             {% for atividade in instituicao.atividades %}
-                {% if forloop.counter <= 20 %}
-                <a href="" class="dashboard-atividade-card">
+                <a {% if atividade|instance_name == "Evento" %}href="{% url 'evento:evento_detail_view' atividade.pk %}" {% else %} href="{% url 'posts:conteudo_detail_view' atividade.pk %}" {% endif %} class="dashboard-atividade-card">
                     <div class="card-atividade-body">
                         {% if atividade.capa %}<img src="{{ atividade.capa.url }}" class="capa-atividade" alt="">{% endif %}
                         <div>
-                            <small class="atividade-tipo">{{ atividade.titulo }}</small>
+                            <small class="atividade-tipo">{{ atividade|instance_name }}</small>
                             <div><span><b>{{ atividade.titulo }}</b></span></div>
                             <small>{{ atividade.data|date:'d/m/Y' }}</small>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right fa-xl"></i>
                 </a>
-                {% endif %}
             {% endfor %}
+            <div class="text-center mt-3">
+                <small >Veja mais atividades em eventos ou conteúdos publicados.</small>
+            </div>
         </section>
     </section>
 </section>
