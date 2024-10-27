@@ -4,7 +4,7 @@ from core.forms import FormBaseIxoye
 from django.db.models import Q
 from .models import (Denominacao, Departamento, Funcao, FuncaoDepartamento, FuncaoMembro, Instituicao,
                      InstituicaoSede, Membro, RedeSocialInstituicaoSede, User)
-from crispy_forms.layout import Submit, Layout, Field
+from crispy_forms.layout import Submit, Layout, Field, Div, Row, Column, Hidden
 from crispy_bootstrap5.bootstrap5 import FloatingField, Switch
 
 class UserForm(FormBaseIxoye):
@@ -54,7 +54,18 @@ class InstituicaoSedeForm(FormBaseIxoye):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        self.helper.layout = Layout(
+            Div(
+                FloatingField('instituicao', type="hidden"),
+                FloatingField('nome', css_class='form-primary'),
+                Row(
+                    Column(FloatingField('cnpj', css_class='form-primary cnpj')),
+                    Column(FloatingField('celular', css_class='form-primary phone'))
+                ),
+                FloatingField('sigla', css_class='form-primary'),
+                Field('logo', css_class='form-primary')
+            )
+        )
 
 class MembroForm(FormBaseIxoye):
     codigo_sede = forms.CharField(required=True, max_length=8, label="Código da sua Igreja")

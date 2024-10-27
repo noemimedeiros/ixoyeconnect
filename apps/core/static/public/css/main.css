@@ -46,7 +46,7 @@
 }
 
 #dark-mode{
-    position: fixed;
+    position: absolute;
     top: 3%;
     right: 1.5%;
     color: var(--gray-2);
@@ -105,7 +105,9 @@ input[type=file]::file-selector-button {
 .card-login{
     width: 100%;
     background-color: var(--body-bg);
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 .section-login{
@@ -113,8 +115,9 @@ input[type=file]::file-selector-button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     box-sizing: border-box;
-    height: 100dvh;
+    min-height: 100dvh;
     width: 100dvw;
+    position: relative;
 }
 #id_password_helptext{
     text-align: end;
@@ -276,7 +279,7 @@ textarea.form-primary{
     padding: .375rem 1.5rem;
     font-weight: 500;
 }
-a.btn{
+a.btn, label.btn{
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -398,12 +401,13 @@ a.btn{
 }
 
 .retornar{
-    position: absolute;
+    /* position: absolute;
     left: calc(50% + 10px);
-    top: 1%;
+    top: 1%; */
+    height: min-content;
     padding: 10px;
     border-radius: var(--rounded-pill);
-    z-index: 3;
+    /* z-index: 3; */
     a{
         color: var(--green);
         font-weight: 300;
@@ -426,8 +430,9 @@ a.btn{
     flex-direction: column;
     height: 100%;
     justify-content: center;
-    padding-top: 10%;
-    padding-bottom: 10%;
+    /* padding-top: 10%;
+    padding-bottom: 10%; */
+    align-items: center;
 }
 
 .div-password-reset{
@@ -538,4 +543,12 @@ a.text-primary:hover{
 }
 .darkmode .conta-inativa i{
     color: var(--gray-3);
+}
+
+ #instituicoes-list{
+    max-height: 20rem;
+    overflow-y: scroll;
+}
+#instituicoes-list::-webkit-scrollbar{
+    display: none;
 }

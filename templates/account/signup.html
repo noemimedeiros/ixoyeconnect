@@ -70,8 +70,10 @@
                         <h6>Preencha os dados abaixo</h6>
                     </div>
                     <div class="d-flex gap-2 mb-3">
-                        <button onclick="mudar_formulario(this.dataset.value)" type="button" class="btn button-filled w-100" data-value="membro"><i class="fa-solid fa-circle-user align-middle me-2"></i> Membro</button>
-                        <button onclick="mudar_formulario(this.dataset.value)" type="button" class="btn button-outlined w-100" data-value="igreja"><i class="fa-solid fa-church align-middle me-2"></i> Igreja</button>
+                        <input {% if tipo_cadastro and tipo_cadastro == "membro" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_1" name="tipo_cadastro" value="membro" onchange="mudar_formulario(this.value)"/>
+                        <input {% if tipo_cadastro and tipo_cadastro == "igreja" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_2" name="tipo_cadastro" value="igreja" onchange="mudar_formulario(this.value)"/>
+                        <label for="id_tipo_cadastro_1" class="btn button-filled w-100"><i class="fa-solid fa-circle-user align-middle me-2"></i> Membro</label>
+                        <label for="id_tipo_cadastro_2" class="btn button-outlined w-100"><i class="fa-solid fa-church align-middle me-2"></i> Igreja</label>
                     </div>
                     <h6 class="mb-3" id="titulo-membro">
                         <b>Dados Pessoais</b>
@@ -85,7 +87,12 @@
                         </div>
                         <div id="cadastro-igreja" style="display: none;">
                             <div class="mb-3">
-                                <button  type="button" id="btn-selecionar-instituicao" class="btn button-filled w-100" data-bs-toggle="modal" data-bs-target="#selecionar-instituicao">Selecione uma Instituicao</button>
+                                <button type="button" id="btn-selecionar-instituicao" class="btn button-filled w-100" data-bs-toggle="modal" data-bs-target="#selecionar-instituicao">Selecione uma Instituicao</button>
+                                {% if instituicaosede_form.errors.instituicao %}
+                                <span class="invalid-feedback d-block">
+                                    <strong>{{ instituicaosede_form.errors.instituicao }}</strong>
+                                </span>
+                                {% endif %}
                             </div>
                             {% crispy instituicaosede_form %}
                         </div>
@@ -115,11 +122,11 @@
                 <div class="modal-body">
                     <div class="search-input">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" class="form-control rounded-pill" placeholder="Pesquisar Instituições">
+                        <input id="pesquisar-instituicao" type="text" class="form-control rounded-pill" placeholder="Pesquisar Instituições">
                     </div>
-                    <div class="pt-4">
+                    <div class="pt-4" id="instituicoes-list">
                         {% for instituicao in instituicoes %}
-                            <div class="mb-3" role="button" data-instituicaopk="{{ instituicao.pk }}" data-instituicao="{{ instituicao.nome }}" onclick="selecionar_instituicao('{{ instituicao.pk }}')">
+                            <div class="instituicao-item mb-3" role="button" data-instituicaopk="{{ instituicao.pk }}" data-instituicao="{{ instituicao.nome }}" onclick="selecionar_instituicao('{{ instituicao.pk }}')">
                                 <b>{{ instituicao.nome }}</b>
                             </div>
                         {% empty %}
@@ -171,6 +178,17 @@
 
 {% block scripts %}
 <script>
+    function pesquisarInstituicao() {
+        const pesquisa = $("#pesquisar-instituicao").val().toLowerCase();
+        const instituicoes = $("#instituicoes-list .instituicao-item");
+    
+        instituicoes.each((index, item) => {
+            const text = $(item).text().toLowerCase();
+            item.style.display = text.includes(pesquisa) ? "" : "none";
+        });
+    }
+    $('#pesquisar-instituicao').on('input', () => pesquisarInstituicao())
+
     const items = $(".page-singup").toArray();
     function initPagination() {
         $("#pagination-div").pagination({
@@ -225,9 +243,11 @@
 
 
     $(function(){
-        {% if instituicao_selecionada %}
+        {% if tipo_cadastro == "igreja" %}
         mudar_formulario('igreja');
-        selecionar_instituicao('{{ instituicao_selecionada }}')
+            {% if instituicao_selecionada and instituicao_selecionada != "" %}
+            selecionar_instituicao('{{ instituicao_selecionada }}')
+            {% endif %}
         {% else %}
         mudar_formulario('membro');
         {% endif %}

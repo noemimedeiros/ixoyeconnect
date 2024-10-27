@@ -120,7 +120,7 @@ class InstituicaoSede(UsuarioAbstract):
     def proxima_agenda(self):
         dia_semana = str((datetime.today().isoweekday() % 7) + 1)
         if self.agendas_semanais.filter(dia_semana=dia_semana):
-            return self.agendas_semanais.filter(dia_semana=dia_semana).order_by('hora').first()
+            return self.agendas_semanais.filter(dia_semana=dia_semana).order_by('-hora').first()
         else:
             return 'Não há programações para hoje.'
     

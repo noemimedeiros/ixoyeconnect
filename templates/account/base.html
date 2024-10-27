@@ -10,11 +10,6 @@
 {% block content %}
 <section class="section-login {% block section_login_classes %}{% endblock section_login_classes %}">
     <div class="card-login-logo {% block card_login_classes %}{% endblock card_login_classes %}">
-        {% if '/login/' not in request.path %}
-        <div class="retornar">
-            <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> <span>Retornar a página inicial</span></a>
-        </div>
-        {% endif %}
         {% block logo_content %}
             <div class="login-logo-content">
                 <div>
@@ -30,10 +25,15 @@
         <div class="wave-divisor"></div>
     </div>
     <div class="card-login">
+        {% if '/login/' not in request.path %}
+        <div class="retornar">
+            <a href="{% url 'account_login' %}"><i class="fa-solid fa-arrow-left mr-1"></i> <span>Retornar a página inicial</span></a>
+        </div>
+        {% endif %}
         {% block card_content %}{% endblock card_content %}
     </div>
+    <div id="dark-mode">
+        <i role="button" class="fa-regular fa-moon icon-dark-mode fa-2xl" onclick="darkMode()"></i>
+    </div>
 </section>
-<div id="dark-mode">
-    <i role="button" class="fa-regular fa-moon icon-dark-mode fa-2xl" onclick="darkMode()"></i>
-</div>
 {% endblock content %}

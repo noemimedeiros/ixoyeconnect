@@ -108,12 +108,12 @@ class MyCadastroView(SignupView):
 
         if self.request.POST:
             context["endereco_form"] = EnderecoForm(self.request.POST)
-
-            if self.request.POST.get('sede-instituicao'):
+            context["tipo_cadastro"] = self.request.POST.get('tipo_cadastro')
+            if self.request.POST.get('tipo_cadastro') == "igreja":
                 context["instituicaosede_form"] = InstituicaoSedeForm(self.request.POST, prefix="sede")
                 context["instituicao_selecionada"] = self.request.POST.get('sede-instituicao')
                 context["membro_form"] = MembroForm()
-            else:
+            if self.request.POST.get('tipo_cadastro') == "membro":
                 context["membro_form"] = MembroForm(self.request.POST)
                 context["instituicaosede_form"] = InstituicaoSedeForm(prefix="sede")
         else:
@@ -132,16 +132,17 @@ class MyCadastroView(SignupView):
         instituicao_form = InstituicaoSedeForm(request.POST, request.FILES, prefix="sede")
         membro_form = MembroForm(request.POST, request.FILES)
 
-        if request.POST.get('sede-instituicao'):
+        print(self.request.POST.get('tipo_cadastro'))
+        if self.request.POST.get('tipo_cadastro') == "igreja":
             membro_instituicao_form = instituicao_form.is_valid()
-        else:
+        if self.request.POST.get('tipo_cadastro') == "membro":
             membro_instituicao_form = membro_form.is_valid()
 
         if form.is_valid() and endereco_form.is_valid() and membro_instituicao_form:
             user = form.save(request=request)
             endereco_form = endereco_form.save()
             
-            if request.POST.get('sede-instituicao'):
+            if self.request.POST.get('tipo_cadastro') == "igreja":
                 instituicao_form = instituicao_form.save(commit=False)
                 instituicao_form.user = user
                 instituicao_form.endereco = endereco_form

@@ -75,12 +75,14 @@
         display: none;
     }
     .login-form{
+        margin-top: 20px;
         padding-inline: 6%;
     }
     .signup-desktop-title{
         display: none;
     }
     .retornar{
+        position: absolute;
         left: 0;
         top: 0;
     }
