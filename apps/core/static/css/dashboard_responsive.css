@@ -1,10 +1,13 @@
 @media (max-width: 768px){
     .dashboard-card{
-        background-color: var(--gray-1);
+        background-color: var(--body-bg) !important;
         box-shadow: none;
     }
-    .darkmode .card-dashboard, .darkmode .dashboard-atividade-card{
-        background-color: var(--gray-1);
+    .darkmode .notificacao-card{
+        background-color: var(--gray-1) !important;
+    }
+    .darkmode .card-dashboard{
+        background-color: var(--gray-1) !important;
     }
     .dashboard-cards, .dashboard-membros-cards{
         grid-template-areas: unset;
@@ -15,12 +18,12 @@
     }
     .card-eventos-dashboard, .card-atividades-dashboard, .card-dashboard-post, .card-notificacoes,
     .darkmode .card-eventos-dashboard, .darkmode .card-atividades-dashboard, .darkmode .card-dashboard-post, .darkmode .card-notificacoes{
-        background: none;
+        background: none !important;
         padding: 0;
         box-shadow: none;
     }
     .dashboard-atividade-card, .escala-card{
-        background-color: var(--body-bg);
+        background-color: var(--gray-1);
     }
     .evento-capa{
         width: 100%;
@@ -31,5 +34,8 @@
     }
     .dashboard-escalas, .programacoes-list{
         padding-bottom: 20px;
+    }
+    .dashboard-atividade-card, .escala-card{
+        border-color: var(--body-bg);
     }
 }
