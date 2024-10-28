@@ -79,8 +79,21 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend"
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env("EMAIL_HOST", default="")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="")
+
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_REQUIRED = False
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 ACCOUNT_FORMS = {
     'login': 'core.forms.MyLoginForm',
@@ -88,7 +101,8 @@ ACCOUNT_FORMS = {
     'change_password': 'core.forms.MyChangePasswordForm',
     'set_password': 'core.forms.MySetPasswordForm',
     'reset_password': 'core.forms.MyResetPasswordForm',
-    'add_email': 'core.forms.MyAddEmailForm'
+    'add_email': 'core.forms.MyAddEmailForm',
+    'reset_password_from_key': 'core.forms.MyResetPasswordKeyForm'
 }
 
 SOCIALACCOUNT_PROVIDERS = {

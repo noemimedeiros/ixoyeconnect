@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.template.loader import get_template
 from django.views.generic import (View, CreateView, DeleteView, DetailView, FormView,
                                   ListView, TemplateView, UpdateView)
-from allauth.account.views import SignupView, LoginView
+from allauth.account.views import SignupView, LoginView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.db import transaction
 from extra_views import SearchableListMixin
@@ -165,3 +165,7 @@ class MyCadastroView(SignupView):
     def form_invalid(self, form):
         return super().form_invalid(form)
     
+class MyRecuperarSenhaKeyDone(PasswordResetFromKeyDoneView):
+    def dispatch(self, request, *args, **kwargs):
+        message_success_generic(request, 'Senha alterada com sucesso.')
+        return redirect('/login/')

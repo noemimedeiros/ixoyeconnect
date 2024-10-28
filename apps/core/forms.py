@@ -1,4 +1,4 @@
-from allauth.account.forms import LoginForm, SignupForm, ChangePasswordForm, AddEmailForm, ConfirmLoginCodeForm, ResetPasswordForm
+from allauth.account.forms import LoginForm, SignupForm, ChangePasswordForm, AddEmailForm, ConfirmLoginCodeForm, ResetPasswordForm, ResetPasswordKeyForm
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Div, Submit
@@ -54,6 +54,13 @@ class MyConfirmLoginCodeForm(ConfirmLoginCodeForm):
         floating_fields(self)
 
 class MyResetPasswordForm(ResetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        floating_fields(self)
+        self.helper.form_tag = True
+        self.helper.add_input(Submit('submit', 'Redefinir minha senha', css_class='button button-filled w-100'))
+
+class MyResetPasswordKeyForm(ResetPasswordKeyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         floating_fields(self)

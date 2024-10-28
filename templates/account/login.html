@@ -5,6 +5,7 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
+
 {% endblock css %}
 
 {% block card_content %}
@@ -16,7 +17,7 @@
     <div>
         <button type="submit" class="btn button-filled w-100">Entrar</button>
     </div>
-    <div class="divisor-login">
+    {% comment %} <div class="divisor-login">
         <hr>
         <span>Ou</span>
         <hr>
@@ -27,7 +28,7 @@
                 <i class="fa-brands fa-google fa-2xl"></i> <span>Conectar-se com Google</span>
             </div>
         </button>
-    </div>
+    </div> {% endcomment %}
     <div class="text-center">
         <span>Ainda não possui uma conta? <a href="{{ signup_url }}">Registre-se</a></span>
     </div>

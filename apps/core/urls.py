@@ -13,4 +13,5 @@ urlpatterns = [
     path('dashboard/', views.DashboradView.as_view(), name='dashboard'),
     path('signup/', views.MyCadastroView.as_view(), name="signup_url"),
     path('login/', views.MyLoginView.as_view(), name="account_login"),
+    path("password/reset/key/done/", views.MyRecuperarSenhaKeyDone.as_view(), name="password_reset_done"),
 ] + static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)
