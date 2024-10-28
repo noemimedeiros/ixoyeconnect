@@ -72,8 +72,8 @@
                     <div class="d-flex gap-2 mb-3">
                         <input {% if tipo_cadastro and tipo_cadastro == "membro" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_1" name="tipo_cadastro" value="membro" onchange="mudar_formulario(this.value)"/>
                         <input {% if tipo_cadastro and tipo_cadastro == "igreja" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_2" name="tipo_cadastro" value="igreja" onchange="mudar_formulario(this.value)"/>
-                        <label for="id_tipo_cadastro_1" class="btn button-filled w-100"><i class="fa-solid fa-circle-user align-middle me-2"></i> Membro</label>
-                        <label for="id_tipo_cadastro_2" class="btn button-outlined w-100"><i class="fa-solid fa-church align-middle me-2"></i> Igreja</label>
+                        <label for="id_tipo_cadastro_1" data-value="membro" class="btn button-filled w-100"><i class="fa-solid fa-circle-user align-middle me-2"></i> Membro</label>
+                        <label for="id_tipo_cadastro_2" data-value="igreja" class="btn button-outlined w-100"><i class="fa-solid fa-church align-middle me-2"></i> Igreja</label>
                     </div>
                     <h6 class="mb-3" id="titulo-membro">
                         <b>Dados Pessoais</b>
@@ -237,8 +237,8 @@
         $('[id^=cadastro-]').find('input, select').prop('disabled', true)
         $(`#cadastro-${value}`).find('input, select').prop('disabled', false)
 
-        $('button[data-value="membro"], button[data-value="igreja"]').removeClass('button-filled').addClass('button-outlined')
-        $(`button[data-value="${value}"]`).removeClass('button-outlined').addClass('button-filled')
+        $('label[data-value="membro"], label[data-value="igreja"]').removeClass('button-filled').addClass('button-outlined')
+        $(`label[data-value="${value}"]`).removeClass('button-outlined').addClass('button-filled')
     }
 
 

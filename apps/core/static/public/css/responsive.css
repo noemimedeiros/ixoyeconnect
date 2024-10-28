@@ -28,6 +28,8 @@
     } */
     .section-signup{
         grid-template-rows: 20dvh 1fr;
+        background: none;
+        background-color: var(--aqua-blue);
     }
     .section-signup .card-login{
         padding-bottom: 10%;
