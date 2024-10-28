@@ -8,10 +8,14 @@
 .dashboard-head{
     margin: 0;
 }
+.titulo-dashboard{
+    display: none;
+}
 .dashboard-content{
     height: unset;
 }
 .dashboard-card{
+    overflow-y: scroll;
     margin-bottom: 0;
 }
 .dashboard-card, .dashboard-sidecontent{

@@ -88,6 +88,7 @@
 </script>
 <script src="{% static 'posts/js/arquivospost.js' %}"></script>
 <script>
+    $('#id_capa').change(() => fotoPreview('id_capa'));
     $('#foto-preview-div').click(() => $('#id_capa').trigger('click'));
     const usuario = '{{ request.user.conta.nome }}';
 
