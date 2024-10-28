@@ -23,6 +23,8 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     def get_queryset(self):
         qs = super().get_queryset()
         qs = qs.filter(instituicao_id=self.kwargs['instituicao_pk'])
+        if not self.request.user.is_admin:
+            qs = qs.filter(membro_id=self.request.user.pk)
         if self.request.GET:
             qs = EscalaFilter(self.request.GET, queryset=qs).qs
         return qs
