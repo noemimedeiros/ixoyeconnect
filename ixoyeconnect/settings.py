@@ -1,8 +1,8 @@
 
+import environ
 import os
 from pathlib import Path
 import sys
-import environ
 
 env = environ.Env()
 root_path = environ.Path(__file__) - 2
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'extra_views',
     'django_filters',
     'pwa_webpush',
+    'celery',
+    'redis',
 
     # Local,
     'core',
@@ -168,7 +170,7 @@ DATABASES = {
         'NAME': MYSQL_DATABASE,
         'USER': MYSQL_USER,
         'PASSWORD': MYSQL_PASSWORD,
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
@@ -275,7 +277,9 @@ WEBPUSH_SETTINGS = {
    "VAPID_PRIVATE_KEY": env("VAPID_PRIVATE_KEY", default=""),
    "VAPID_ADMIN_EMAIL": env("VAPID_ADMIN_EMAIL", default="")
 }
-
+# -----------------------------------------------------------------------------
+# PWA
+# -----------------------------------------------------------------------------
 PWA_APP_NAME = 'IxoyeConnect'
 PWA_APP_DESCRIPTION = "IxoyeConnect"
 PWA_APP_THEME_COLOR = '#3DBD90'
@@ -312,3 +316,10 @@ PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'pt-BR'
 
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'core', 'static', 'serviceworker.js')
+
+# -----------------------------------------------------------------------------
+# CELERY
+# -----------------------------------------------------------------------------
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
