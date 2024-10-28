@@ -11,11 +11,11 @@ a.btn-profile-navs{
     width: fit-content;
     padding-inline: 20px;
     justify-content: start;
-    color: var(--green);
+    color: var(--green) !important;
     text-align: start;
 }
 .btn-profile-navs.active{
-    color: var(--green);
+    color: var(--green) !important;
     background-color: var(--green-transparent);
 }
 .profile-navs{

@@ -307,19 +307,18 @@ a.btn, label.btn{
     color: white !important;
 }
 
-.button-outlined{
-    background-color: var(--body-bg);
+.button-outlined, a.button-outlined{
+    background-color: transparent;
     color: var(--green) !important;
     border: 1px solid var(--green);
 }
 
 .button-outlined:hover{
-    background-color: var(--gray-1);
     color: var(--aqua-blue) !important;
     border-color: var(--aqua-blue);
 }
 
-.button-filled-tonal{
+.button-filled-tonal, a.button-filled-tonal{
     background-color: var(--green-transparent);
     color: var(--green) !important;
 }
@@ -504,6 +503,9 @@ a.btn, label.btn{
 a.text-primary:hover{
     color: var(--aqua-blue);
 }
+.table-primary *{
+    background-color: var(--green) !important;
+}
 .alert{
     border-radius: 40px;
 }
@@ -549,7 +551,7 @@ a.text-primary:hover{
     color: var(--gray-3);
 }
 
- #instituicoes-list{
+#instituicoes-list{
     max-height: 20rem;
     overflow-y: scroll;
 }

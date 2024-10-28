@@ -41,7 +41,7 @@
         width: 100%;
     }
     .button-outlined{
-        background-color: var(--gray-1);
+        background-color: transparent;
     }
     .profile-redesocial-grid .btn-model-add{
         width: 50px;

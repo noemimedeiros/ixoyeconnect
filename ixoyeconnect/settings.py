@@ -145,7 +145,8 @@ TEMPLATES = [
                 "evento_passado": "evento.filters",
                 "icone_notificacao": "notificacao.filters",
                 "get_atividade": "relatorios.filters",
-                "instance_name": "core.filters"
+                "instance_name": "core.filters",
+                "culto_com_escalas": "relatorios.filters"
             }
         },
     },

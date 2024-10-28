@@ -334,8 +334,11 @@
     gap: 15px;
 }
 .item-actions-popover a{
-    color: var(--black-1);
+    color: var(--black-1) !important;
     font-size: 1.1rem;
+}
+a.item-edit-link i{
+    color: var(--aqua-blue) !important;
 }
 #foto-preview-div{
     height: 200px;
@@ -503,7 +506,7 @@
     width: 80px;
     height: 40px;
     background-color: var(--green-transparent);
-    color: var(--green);
+    color: var(--green) !important;
     border-radius: var(--rounded-pill);
     display: flex;
     justify-content: space-between;

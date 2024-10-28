@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 {% load get_atividade %}
-
+{% load culto_com_escalas %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'relatorios/css/relatorio_imprimir.css' %}">
 {% endblock css %}
@@ -13,8 +13,8 @@
         <img src="{{ instituicao.logo.url }}" class="logo-relatorio" alt="" />
     </div>
     {% if filtragem.data__gt %}
-    <table class="table table-light mb-0">
-        <tr class="text-center">
+    <table class="table table-primary mb-0">
+        <tr class="table-titulo text-center">
             <th>Período</th>
             <th>
                 {{ filtragem.data__gt }} - {{ filtragem.data__lt|default_if_none:hoje }}
@@ -22,17 +22,17 @@
         </tr>
     </table>
     {% elif filtragem.data__year %}
-    <table class="table table-light mb-0">
-        <tr class="text-center">
-            <th>Por ano</th>
+    <table class="table table-primary mb-0">
+        <tr class="table-titulo text-center">
+            <th>Período por ano</th>
             <th>
                 {{ filtragem.data__year__gt }} - {{ filtragem.data__year__lt|default_if_none:hoje }}
             </th>
         </tr>
     </table>
     {% elif filtragem.data__year__lt %}
-    <table class="table table-light mb-0">
-        <tr class="text-center">
+    <table class="table table-primary mb-0">
+        <tr class="table-titulo text-center">
             <th>Por ano</th>
             <th>
                 {{ filtragem.ano }}
@@ -140,22 +140,24 @@
             <tr class="table-light">
                 <th colspan="6">Escala de Obreiros</th>
             </tr>
-            {% for escala in escalas %}
-                {% if escala.data == relatorio.data %}
+            {% if relatorio|culto_com_escalas:escalas %}
+                {% for escala in escalas %}
+                    {% if escala.data == relatorio.data %}
                     <tr class="table-light">
-                        <th colspan="2">Cargo/Função</th>
-                        <th colspan="4">Nome</th>
+                        <th colspan="3">Cargo/Função</th>
+                        <th colspan="3">Nome</th>
                     </tr>
                     <tr>
-                        <td colspan="2">{{ escala.funcao_membro }}</td>
-                        <td colspan="4">{{ escala.membro }}</td>
-                    </tr>
-                {% endif %}
-            {% empty %}
+                        <td colspan="3">{{ escala.funcao_membro }}</td>
+                        <td colspan="3">{{ escala.membro }}</td>
+                    </tr> 
+                    {% endif %}
+                {% endfor %}
+            {% else %}
             <tr>
-                <td colspan="6">Nenhuma escala definida para este dia.</td>
+                <td colspan="6">Nenhuma escala registrada nesta data.</td>
             </tr>
-            {% endfor %}
+            {% endif %}
         {% endif %}
     </table>
     {% endfor %}
