@@ -1,0 +1,13 @@
+{% if not object_list  %}
+<section>
+    {% if not request.GET %}
+    <div class="my-auto h-100 w-100 text-center">
+        <span>Não há registros de {{ titulo|lower }}.</span>
+    </div>
+    {% else %}
+    <div class="my-auto h-100 w-100 text-center">
+        <span>Não há registros de {{ titulo|lower }} para esta filtragem. <a href="{{ request.path }}">Limpar filtros.</a></span>
+    </div>
+    {% endif %}
+</section>
+{% endif %}

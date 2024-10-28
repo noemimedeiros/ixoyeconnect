@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
+from notificacao.models import Notificacao
 from usuario.models import FuncaoMembro, InstituicaoSede, Membro
 from core.messages_utils import message_delete_registro, message_error_registro, message_create_registro, message_update_registro
 from core.views import MyListViewIxoyeConnect
@@ -72,8 +73,10 @@ def editar_escala(request, pk):
 
 @login_required(login_url="/login/")
 def excluir_escala(request, pk):
+    escala = Escala.objects.get(pk=pk)
     try:
-        Escala.objects.get(pk=pk).delete()
+        Notificacao.objects.filter(id_object=pk, modulo=escala.__class__.__name__).delete()
+        escala.delete()
         message_delete_registro(request)
     except Escala.DoesNotExist:
         message_error_registro(request)
