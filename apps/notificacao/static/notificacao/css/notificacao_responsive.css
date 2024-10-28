@@ -8,9 +8,9 @@
     .dashboard-head-actions .search-input input{
         background-color: var(--body-bg);
     }
-    .notificacoes-section{
+    /* .notificacoes-section{
         margin-top: 1rem;
-    }
+    } */
     .darkmode .dashboard-sidecontent{
         background-color: var(--body-bg);
     }

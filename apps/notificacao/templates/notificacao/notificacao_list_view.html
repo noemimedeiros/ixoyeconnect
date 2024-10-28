@@ -52,15 +52,6 @@
 
 {% block _scripts %}
 <script>
-    const ler_notificacao_url = '{% url "notificacao:ler_notificacao" %}'
-    function lerNotificacao(notificacao_id){
-        $.ajax({
-            url: ler_notificacao_url,
-            data: {
-                notificacao_id: notificacao_id
-            },
-            type: 'GET'
-        })
-    }
+    
 </script>
 {% endblock _scripts %}

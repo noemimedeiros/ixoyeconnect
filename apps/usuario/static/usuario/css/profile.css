@@ -116,6 +116,15 @@ a.btn-deletar-conta.active{
     border-bottom-right-radius: var(--rounded-pill);
     background-color: var(--gray-1);
 }
+#div_id_logo a, #div_id_foto a{
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
 .titulo-perfil-page{
     color: var(--aqua-blue);

@@ -2,6 +2,9 @@
     /* .dashboard-card{
         background-color: var(--gray-1);
     } */
+    .dashboard-head{
+        margin-top: 0;
+    }
     .dashboard-sidecontent{
         background-color: var(--gray-1) !important;
     }

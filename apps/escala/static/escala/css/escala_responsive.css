@@ -1,7 +1,4 @@
 @media (max-width: 768px) {
-    .dashboard-head-actions button{
-        display: none;
-    }
     .escala-filter{
         display: flex;
         gap: 10px;

@@ -297,7 +297,7 @@
 }
 
 .dashboard-head{
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -558,4 +558,19 @@ html:not(.darkmode) .btn-dark-mode-top .circle-darkmode{
 .buttons-form button, .buttons-form a{
     margin-top: auto;
     width: 20%;
+}
+
+#webpush-subscribe-button{
+    display: inline-block;
+    vertical-align: middle;
+    height: calc(3.5rem + calc(var(--bs-border-width)* 2));
+    min-height: calc(3.5rem + calc(var(--bs-border-width)* 2));
+    border-radius: var(--rounded-pill);
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    padding: .375rem 1.5rem;
+    font-weight: 500;
+    background-color: var(--green);
+    color: white !important;
 }

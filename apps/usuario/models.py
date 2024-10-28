@@ -4,7 +4,7 @@ from operator import attrgetter
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from django.db import connection, models
-from django.db.models import Sum
+from django.db.models import Sum, Case, When, IntegerField, F
 from PIL import Image
 from core.models import Endereco
 from django.contrib.auth.models import AbstractUser
@@ -116,13 +116,23 @@ class InstituicaoSede(UsuarioAbstract):
         eventos = list(self.eventos.all()[:10])
         posts = list(self.posts.all()[:10])
         return sorted(chain(eventos, posts), key=attrgetter('data'), reverse=True)
+    
+    def proximo_evento(self):
+        return self.eventos.filter(data__gte=data_atual).order_by('data', 'hora').first()
 
     def proxima_agenda(self):
-        dia_semana = str((datetime.today().isoweekday() % 7) + 1)
-        if self.agendas_semanais.filter(dia_semana=dia_semana):
-            return self.agendas_semanais.filter(dia_semana=dia_semana).order_by('-hora').first()
-        else:
-            return 'Não há programações para hoje.'
+        hoje_dia_semana = int((datetime.today().isoweekday() % 7) + 1)
+        queryset = (
+            self.agendas_semanais.annotate(
+                proximidade=Case(
+                    When(dia_semana__gte=hoje_dia_semana, then=F('dia_semana') - hoje_dia_semana),
+                    default=7 - hoje_dia_semana + F('dia_semana'),
+                    output_field=IntegerField(),
+                )
+            )
+            .order_by('proximidade')
+        )
+        return queryset.first()
     
     def programacoes_hoje(self):
         dia_semana = str((datetime.today().isoweekday() % 7) + 1)
@@ -146,11 +156,11 @@ class InstituicaoSede(UsuarioAbstract):
 
     @property
     def ultimo_evento(self):
-        return self.eventos.order_by('-data', '-hora').last()
+        return self.eventos.order_by('data', 'hora').last()
     
     @property
     def ultimo_post(self):
-        return self.posts.order_by('-data', '-hora').last()
+        return self.posts.order_by('data', 'hora').last()
     
     @property
     def relatorios_mes_atual(self):
@@ -319,11 +329,11 @@ class Membro(UsuarioAbstract):
     
     def proxima_escala(self):
         if self.escalas.all():
-            return self.escalas.filter(data__gte=date.today()).order_by('-data').last()
+            return self.escalas.filter(data__gte=data_atual).order_by('-data').last()
         return None
 
     def ultimas_notificacoes(self):
-        return self.user.notificacoes.all()[:5]
+        return self.user.notificacoes.all()[:3]
 
 class Funcao(models.Model):
     instituicao = models.ForeignKey(InstituicaoSede, on_delete=models.CASCADE, null=True, blank=True)

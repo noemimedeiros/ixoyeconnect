@@ -5,6 +5,7 @@ from usuario.models import User
 class Notificacao(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, related_name="notificacoes")
     modulo = models.CharField(max_length=60, null=False, blank=False)
+    id_object = models.IntegerField(null=False, blank=False)
     mensagem = models.TextField(null=False, blank=False)
     lida = models.BooleanField(default=False)
     data = models.DateTimeField(auto_now_add=True)

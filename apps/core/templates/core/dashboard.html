@@ -46,8 +46,32 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    function askNotificationPermission() {
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    navigator.serviceWorker.register('/service-worker.js');
+                }
+            });
+        }
+    }
+
+    $(function(){
+        askNotificationPermission()
+    })
+    const ler_notificacao_url = '{% url "notificacao:ler_notificacao" %}'
+    function lerNotificacao(notificacao_id){
+        $.ajax({
+            url: ler_notificacao_url,
+            data: {
+                notificacao_id: notificacao_id
+            },
+            type: 'GET'
+        })
+    }
 
     function menu_collapse(){
+        $('html').removeClass('sidenav-collapsed')
         let collapsed = $('.side-nav').toggleClass("collapsed");
         let isMenuCollapsed = $('.side-nav').hasClass('collapsed');
         if ($('.side-nav').hasClass('collapsed')){
@@ -69,6 +93,12 @@
     };
 
     $(function(){
+        if (window.innerWidth > 768) {
+            if (menuCollapsedStatus === 'enabled') {
+                $('.side-nav').addClass("collapsed")
+            }
+        }
+
         $('.item-actions').each(function () {
             $(this).popover('dispose');
 

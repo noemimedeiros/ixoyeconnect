@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse
 
+from notificacao.models import Notificacao
 from evento.filter import EventoFilter
 from core.forms import EnderecoForm
 from core.messages_utils import message_delete_registro, message_error_registro, message_success_generic
@@ -118,7 +119,9 @@ class EventoDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
 @login_required(login_url="/login/")
 def EventoDeleteView(request, pk):
     try:
-        Evento.objects.get(pk=pk).delete()
+        evento = Evento.objects.get(pk=pk)
+        Notificacao.objects.filter(id_object=pk, modulo=evento.__class__.__name__).delete()
+        evento.delete()
         message_delete_registro(request)
     except Evento.DoesNotExist:
         message_error_registro(request)

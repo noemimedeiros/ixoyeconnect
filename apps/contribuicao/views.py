@@ -84,7 +84,8 @@ class ContribuicaoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
 @login_required(login_url="/login/")
 def ContribuicaoDeleteView(request, pk):
     try:
-        Contribuicao.objects.get(pk=pk).delete()
+        contribuicao = Contribuicao.objects.get(pk=pk)
+        contribuicao.delete()
         message_delete_registro(request)
     except Contribuicao.DoesNotExist:
         message_error_registro(request)

@@ -5,7 +5,14 @@
     .darkmode .dashboard-sidecontent{
         background-color: var(--body-bg) !important;
     }
+    .card-proxima-programacao{
+        border-radius: var(--rounded-pill);
+    }
+    .card-membro-ha{
+        display: none;
+    }
     .dashboard-card{
+        margin-top: 0;
         /* background-color: var(--body-bg) !important; */
         box-shadow: none;
     }

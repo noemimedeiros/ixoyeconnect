@@ -6,6 +6,7 @@ from django.template import TemplateDoesNotExist
 from django.urls import reverse
 from django.template.loader import get_template
 
+from notificacao.models import Notificacao
 from posts.filter import PostFilter
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
@@ -163,6 +164,7 @@ def PostDeleteView(request, pk):
     post = Post.objects.get(pk=pk)
     tipo = post.categoria.nome
     try:
+        Notificacao.objects.filter(id_object=pk, modulo=post.__class__.__name__).delete()
         post.delete()
         message_delete_registro(request)
     except Post.DoesNotExist:

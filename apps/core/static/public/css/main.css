@@ -298,51 +298,71 @@ a.btn, label.btn{
     min-height: calc(2rem + calc(var(--bs-border-width)* 2));
 }
 
-.button-filled, a.button-filled, label.button-filled{
+.button-filled,
+a.button-filled,
+label.button-filled{
     background-color: var(--green);
     color: white !important;
 }
-.button-filled:hover{
+.button-filled:hover,
+a.button-filled:hover,
+label.button-filled:hover{
     background-color: var(--aqua-blue);
     color: white !important;
 }
 
-.button-outlined, a.button-outlined, label.button-outlined{
+.button-outlined,
+a.button-outlined,
+label.button-outlined{
     background-color: transparent;
     color: var(--green) !important;
     border: 1px solid var(--green);
 }
 
-.button-outlined:hover{
+.button-outlined:hover,
+a.button-outlined:hover,
+label.button-outlined:hover{
     color: var(--aqua-blue) !important;
     border-color: var(--aqua-blue);
 }
 
-.button-filled-tonal, a.button-filled-tonal, label.button-filled-tonal{
+.button-filled-tonal,
+a.button-filled-tonal,
+label.button-filled-tonal{
     background-color: var(--green-transparent);
     color: var(--green) !important;
 }
 
-.button-filled-tonal:hover{
+.button-filled-tonal:hover,
+a.button-filled-tonal:hover
+label.button-filled-tonal:hover{
     background-color: var(--green-transparent);
     color: var(--aqua-blue) !important;
 }
 
-.button-danger, a.button-danger, label.button-danger{
+.button-danger,
+a.button-danger,
+label.button-danger{
     background-color: brown;
     color: white !important;
 }
-.button-danger:hover{
+.button-danger:hover,
+a.button-danger:hover,
+label.button-danger:hover{
     background-color: rgb(122, 24, 24);
     color: white !important;
 }
-.button-danger-outlined{
+.button-danger-outlined,
+a.button-danger-outlined,
+label.button-danger-outlined{
     background-color: transparent;
     border-color: brown;
     border: 1px solid;
     color: brow !important;
 }
-.button-danger-outlined:hover{
+.button-danger-outlined:hover,
+a.button-danger-outlined:hover,
+label.button-danger-outlined:hover{
     background-color: brown;
     color: white !important;
 }

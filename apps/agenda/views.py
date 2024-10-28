@@ -78,7 +78,8 @@ class AgendaSemanalUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
 @login_required(login_url="/login/")
 def AgendaSemanalDeleteView(request, pk):
     try:
-        AgendaSemanal.objects.get(pk=pk).delete()
+        agenda = AgendaSemanal.objects.get(pk=pk)
+        agenda.delete()
         message_delete_registro(request)
     except AgendaSemanal.DoesNotExist:
         message_error_registro(request)

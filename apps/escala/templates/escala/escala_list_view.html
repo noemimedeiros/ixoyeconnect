@@ -29,14 +29,6 @@
 <section class="escala-section">
     <form method="get">
         <div>
-            <section class="mb-3">
-                {% if filtrado_para %}
-                <span class="escala-titulo-filtro">Escalados para <b>{{ filtrado_para }}</b>.</span>
-                {% else %}
-                <span class="escala-titulo-filtro">Escalados para <b>todos os departamentos.</b></span>
-                {% endif %}
-            </section>
-
             {% if escalas_porvir %}
             <h5 class="titulo-escala-porvir">Escalas por vir</h5>
             <section class="escala-list">

@@ -28,7 +28,7 @@
         <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="card-dashboard card-proxima-programacao">
             <div class="programacao-icone"><i class="fa-solid fa-clock"></i></div>
             <div>
-                <div class="mb-2"><h6>Próxima programação</h6></div>
+                <div class="mb-2"><h6>Próxima programação: {{ instituicao.proxima_agenda.get_dia_semana_display }}</h6></div>
                 <div><h5>{{ instituicao.proxima_agenda.titulo }} às {{ instituicao.proxima_agenda.hora }}</h5></div>
             </div>
         </a>
@@ -42,9 +42,9 @@
                 <small><a href="{% url 'evento:evento_list_view' instituicao.pk %}">Ver todos</a></small>
             </div>
             <div class="">
-                {% if instituicao.ultimo_evento %}
-                <a href="{% url 'evento:evento_detail_view' instituicao.ultimo_evento.pk %}">
-                    {% include "evento/partials/card_evento.html" with evento=instituicao.ultimo_evento %}
+                {% if instituicao.proximo_evento %}
+                <a href="{% url 'evento:evento_detail_view' instituicao.proximo_evento.pk %}">
+                    {% include "evento/partials/card_evento.html" with evento=instituicao.proximo_evento %}
                 </a>
                 {% else %}
                 <small>Ainda não há eventos para os próximos dias.</small>

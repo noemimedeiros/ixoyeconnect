@@ -9,7 +9,6 @@
     <title>{% block title %}Ixoye Connect{% endblock title %}</title>
     <link crossorigin="use-credentials" rel="manifest" href="{% static 'manifest.json' %}"/>
 
-
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'public/img/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'public/img/favicon/favicon-32x32.png' %}">
@@ -35,6 +34,10 @@
 
     <link rel="stylesheet" href="{% static 'public/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'public/css/responsive.css' %}">
+
+    {% progressive_web_app_meta %}
+
+    {% block head %}{% endblock head %}
     {% block css %}{% endblock css %}
 </head>
     
@@ -75,13 +78,13 @@
 <script src="{% static 'public/libs/bootstrap/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'public/libs/bootstrap/js/bootstrap-datepicker.pt-BR.js' %}"></script>
 <script>
-    if ('serviceWorker' in navigator) {
+    {% comment %} if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/serviceworker.js').then(function(reg) {
             console.log('Service Worker registrado com sucesso:', reg);
         }).catch(function(err) {
             console.log('Falha ao registrar o Service Worker:', err);
         });
-    }
+    } {% endcomment %}
     
     if (darkModeStatus === 'enabled') {
         $('.icon-dark-mode').removeClass('fa-moon').addClass('fa-sun')
