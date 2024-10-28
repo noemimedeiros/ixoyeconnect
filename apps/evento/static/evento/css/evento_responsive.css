@@ -33,7 +33,7 @@
     .evento-infos{
         padding: 0;
         background: none;
-        color: white;
+        color: white !important;
     }
 
     .evento-descricao{

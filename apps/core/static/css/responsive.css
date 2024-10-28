@@ -81,7 +81,7 @@
         z-index: 5;
     }
     .top-nav a{
-        color: var(--body-bg);
+        color: var(--body-bg) !important;
         font-size: 2rem;
     }
     .top-nav-left{

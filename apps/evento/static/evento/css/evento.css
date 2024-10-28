@@ -41,6 +41,9 @@
 .evento-dia h6:first-child{
     color: var(--aqua-blue);
 }
+.evento-mes{
+    color: var(--gray-3);
+}
 
 .evento-linha{
     margin-top: 10px;

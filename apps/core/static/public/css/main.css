@@ -61,7 +61,7 @@
 
 html{
     font-size: 82%;
-    color: var(--body-bg);
+    color: var(--bs-body-color) !important;
 }
 
 html, body{
@@ -79,10 +79,13 @@ h1, h2, h3, h4, h5, h6{
 }
 
 a{
-    text-decoration: none;
+    text-decoration: none !important;
     font-weight: normal;
-    color: var(--green);
+    color: var(--green) !important;
     transition: color .15s ease-in-out
+}
+button{
+    color: var(--bs-body-color) !important;
 }
 
 a:hover{
@@ -283,6 +286,7 @@ a.btn, label.btn{
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    color: white !important;
 }
 
 .button i {
@@ -296,52 +300,52 @@ a.btn, label.btn{
 
 .button-filled{
     background-color: var(--green);
-    color: white;
+    color: white !important;
 }
 .button-filled:hover{
     background-color: var(--aqua-blue);
-    color: white;
+    color: white !important;
 }
 
 .button-outlined{
     background-color: var(--body-bg);
-    color: var(--green);
+    color: var(--green) !important;
     border: 1px solid var(--green);
 }
 
 .button-outlined:hover{
     background-color: var(--gray-1);
-    color: var(--aqua-blue);
+    color: var(--aqua-blue) !important;
     border-color: var(--aqua-blue);
 }
 
 .button-filled-tonal{
     background-color: var(--green-transparent);
-    color: var(--green);
+    color: var(--green) !important;
 }
 
 .button-filled-tonal:hover{
     background-color: var(--green-transparent);
-    color: var(--aqua-blue);
+    color: var(--aqua-blue) !important;
 }
 
 .button-danger{
     background-color: brown;
-    color: white;
+    color: white !important;
 }
 .button-danger:hover{
     background-color: rgb(122, 24, 24);
-    color: white;
+    color: white !important;
 }
 .button-danger-outlined{
     background-color: transparent;
     border-color: brown;
     border: 1px solid;
-    color: brown;
+    color: brow !important;
 }
 .button-danger-outlined:hover{
     background-color: brown;
-    color: white;
+    color: white !important;
 }
 
 .toast{

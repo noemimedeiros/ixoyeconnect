@@ -64,7 +64,7 @@
     -webkit-line-clamp: 1;
 }
 .card-post-info{
-    color: var(--gray-3)
+    color: var(--gray-3) !important
 }
 #div_arquivospost{
     display: grid;

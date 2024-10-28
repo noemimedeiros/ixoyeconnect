@@ -64,9 +64,11 @@
     color: brown;
 }
 @media (max-width: 768px) {
+    .dashboard-sidecontent{
+        background-color: var(--light-bg);
+    }
     .dashboard-card{
         padding: 0;
-        background-color: var(--light-bg);
     }
     .dashboard-card{
         padding-bottom: 100px;
