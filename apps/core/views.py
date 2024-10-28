@@ -159,7 +159,7 @@ class MyCadastroView(SignupView):
         else:
             return self.form_invalid(form)
         
-        message_success_generic(request, 'Cadastro realizado com sucesso! Por favor, ative sua conta através do link enviado para o seu e-mail.')
+        message_success_generic(request, 'Cadastro realizado com sucesso!')
         return self.get_success_url()
     
     def form_invalid(self, form):

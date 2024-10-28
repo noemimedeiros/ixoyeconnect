@@ -8,6 +8,9 @@
     margin-bottom: 1rem;
     color: var(--aqua-blue);
 }
+.dashboard-content{
+    padding-top: 0;
+}
 .dashboard-instituicao{
     display: grid;
     row-gap: 20px;
