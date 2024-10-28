@@ -10,7 +10,10 @@
 
 {% block scripts_before_body %}
 <script>
-    
+    var menuCollapsedStatus = localStorage.getItem('menuCollapsed');
+    if (menuCollapsedStatus === 'enabled') {
+        document.querySelector('html').classList.add('sidenav-collapsed');
+    }
 </script>
 {% endblock scripts_before_body %}
 
@@ -43,10 +46,6 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    {% comment %} var menuCollapsedStatus = localStorage.getItem('menuCollapsed');
-    if (menuCollapsedStatus === 'enabled') {
-        $('.side-nav').addClass('collapsed');
-    } {% endcomment %}
 
     function menu_collapse(){
         let collapsed = $('.side-nav').toggleClass("collapsed");

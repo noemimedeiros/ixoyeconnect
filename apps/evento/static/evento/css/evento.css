@@ -18,11 +18,11 @@
 .eventos-grid{
     display: grid;
     grid-template-columns: 60px 1fr;
-    color: inherit;
+    color: inherit !important;
     flex: 1;
 }
 .eventos-grid:hover{
-    color: inherit;
+    color: inherit !important;
 }
 
 .linha-tempo-evento{

@@ -81,6 +81,7 @@
         z-index: 5;
     }
     .top-nav a{
+        background: none;
         color: var(--body-bg) !important;
         font-size: 2rem;
     }
@@ -115,7 +116,7 @@
     }
     .top-nav-item.active i{
         opacity: 1;
-        color: var(--body-bg);
+        color: var(--body-bg) !important;
     }
     .top-nav-user{
         display: flex;

@@ -1,7 +1,7 @@
 @media (max-width: 768px) {
     .logo-login {
-        width: 8rem;
-        height: 8rem;
+        width: 7rem;
+        height: 7rem;
     }
     #dark-mode{
         top: 0;
@@ -16,7 +16,7 @@
         font-size: 1rem;
     }
     .titulo-app{
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     .section-login{
         grid-template-columns: 1fr;
