@@ -17,7 +17,7 @@ class RelatorioCultoFilter(FilterSet):
     apenas_eventos_ou_cultos = ChoiceFilter(choices=EVENTOS_OU_CULTOS, empty_label='Todos', widget=forms.RadioSelect(), method='filter_apenas_eventos_ou_cultos', label='', required=False)
     
     def filter_apenas_eventos_ou_cultos(self, queryset, name, value):
-        if value == 'apenas_cultos':
+        if value == 'apenas_eventos':
             return queryset.filter(evento__isnull=False, culto__isnull=True)
         return queryset.filter(evento__isnull=True, culto__isnull=False)
 
