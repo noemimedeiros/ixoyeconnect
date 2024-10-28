@@ -1,9 +1,11 @@
 @media (max-width: 768px) {
     .logo-login {
-        width: 6rem;
-        height: 6rem;
+        width: 8rem;
+        height: 8rem;
     }
     #dark-mode{
+        top: 0;
+        padding-top: 20px;
         margin-right: 3%;
         color: white;
     }
@@ -13,22 +15,31 @@
     .login-logo-texto h3{
         font-size: 1rem;
     }
+    .titulo-app{
+        font-size: 2rem;
+    }
     .section-login{
         grid-template-columns: 1fr;
-        grid-template-rows: 30% 1fr;
+        grid-template-rows: 45% 1fr;
         background: linear-gradient(180deg, #3DBD90 0%, #2C868C 30%)
     }
-    .titulo-app{
+    /* .titulo-app{
         display: none;
-    }
+    } */
     .section-signup{
-        grid-template-rows: 20% 1fr;
+        grid-template-rows: 20dvh 1fr;
+    }
+    .section-signup .card-login{
+        padding-bottom: 10%;
     }
     .card-signup{
         grid-template-rows: 20vh 1fr;
         height: unset;
         overflow-y: scroll;
-        background: linear-gradient(180deg, #3DBD90 0%, #2C868C 15%)
+        background: linear-gradient(180deg, #3DBD90 0%, #2C868C 85%) !important;
+    }
+    .login-logo-content{
+        justify-content: space-evenly;
     }
     .card-signup .login-logo-content{
         display: none;
@@ -69,13 +80,14 @@
         width: 100%;
         height: 100px;
         top: unset;
-        bottom: -2.3rem;
+        bottom: -1rem;
     }
     .card-signup .wave-divisor{
         display: none;
     }
     .login-form{
-        margin-top: 20px;
+        justify-content: start;
+        margin-top: 30px;
         padding-inline: 6%;
     }
     .signup-desktop-title{
@@ -87,7 +99,7 @@
         top: 0;
     }
     .retornar a{
-        color: white;
+        color: white !important;
         font-size: 2rem;
     }
     .retornar a span{
