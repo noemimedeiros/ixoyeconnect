@@ -196,7 +196,7 @@ input[type=file]::file-selector-button {
     }  
 }
      
-@media (min-width:1025px){
+@media (min-width:768px){
     .wave-divisor::before{ 
         bottom: -0.1vw;
         left: -0.1vw;

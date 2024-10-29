@@ -1,4 +1,9 @@
 @media (max-width: 768px){
+    .dashboard-content{
+        padding-inline: 5%;
+        padding-bottom: 8rem;
+        height: unset;
+    }
     .dashboard-sidecontent{
         background-color: var(--gray-1) !important;
     }
