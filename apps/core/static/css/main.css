@@ -256,21 +256,21 @@
 }
 .side-nav-subitem ul a:hover li::before,
 .side-nav-subitem ul a li.active::before{
-    color: var(--green);
+    color: var(--green) !important;
 }
 .side-nav-item:hover, .side-nav-item.active,
 .side-nav-subitem ul li:hover, .side-nav-subitem ul li.active{
     background-color: var(--green-transparent);
-    color: var(--green);
+    color: var(--green) !important;
     .side-nav-icon, a{
-        color: var(--green);
+        color: var(--green) !important;
     }
 }
 .side-nav-icon{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--gray-2);
+    color: var(--gray-2) !important;
 }
 .side-nav-icon i{
     font-size: 15px;

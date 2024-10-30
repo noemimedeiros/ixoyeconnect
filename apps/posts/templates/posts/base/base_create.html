@@ -27,21 +27,29 @@
 
 <section class="form-posts">
     <form method="POST" enctype="multipart/form-data">
-        {{ arquivos_formset.management_form }}
         {% if object and object.capa %}
         {% include "core/includes/foto_preview.html" with img_src=object.capa.url  %}
         {% else %}
         {% include "core/includes/foto_preview.html"  %}
         {% endif %}
+
         {% crispy form %}
+        
         <div id="lista_arquivos_post" class="mb-3">
+            {{ arquivos_formset.management_form }}
             {% for arquivo_form in arquivos_formset %}
+            {% if not object %}
             <div id="div_arquivospost">
-                <div id="arquivo_0">
-                    <input type="file" name="form-0-arquivo" id="adicionar_arquivo_0" hidden>
+                <div id="arquivo_{{ forloop.counter }}">
+                    <input type="file" name="form-{{ forloop.counter }}-arquivo" id="adicionar_arquivo_{{ forloop.counter }}" hidden>
                 </div>
             </div>
-            <label for="adicionar_arquivo_0" class="btn button-outlined button-upload">Anexar arquivo</label>
+            <label for="adicionar_arquivo_{{ forloop.counter }}" class="btn button-outlined button-upload">Anexar arquivo</label>
+            {% else %}
+            <div>
+                {% crispy arquivo_form %}
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
         <button type="submit" class="btn button-filled w-100">Postar</button>
