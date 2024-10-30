@@ -27,9 +27,11 @@
         <div class="card-dashboard card-media-presenca">
             <div class="d-flex align-items-center gap-2">
                 <h6>Média de Presença</h6>
+                {% if instituicao.calcular_porcentagem.presenca_cultos != 0 %}
                 <span class="porcentagem
                 {% if instituicao.calcular_porcentagem.presenca_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
                 {{ instituicao.calcular_porcentagem.presenca_cultos }}% <i class="fa-solid fa-caret-up "></i>
+                {% endif %}
             </span>
             </div>
             <div class="d-flex gap-1 align-items-end">
@@ -42,9 +44,11 @@
         <div class="card-dashboard card-dizimos">
             <div class="d-flex align-items-center gap-2">
                 <h6>Dízimos (este mês)</h6>
+                {% if instituicao.calcular_porcentagem.dizimo_cultos != 0 %}
                 <span class="porcentagem
                 {% if instituicao.calcular_porcentagem.dizimo_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
                 {{ instituicao.calcular_porcentagem.dizimo_cultos }}% <i class="fa-solid fa-caret-up "></i>
+                {% endif %}
             </span>
             </div>
             <h2>R${{ instituicao.calcular_total.dizimos_mes_atual }}</h2>
@@ -55,9 +59,11 @@
         <div class="card-dashboard card-ofertas">
             <div class="d-flex align-items-center gap-2">
                 <h6>Ofertas (mês atual)</h6>
+                {% if instituicao.calcular_porcentagem.oferta_cultos != 0 %}
                 <span class="porcentagem
                 {% if instituicao.calcular_porcentagem.oferta_cultos < 0 %}negativo{% else %}positivo{% endif %} ">
                 {{ instituicao.calcular_porcentagem.oferta_cultos }}% <i class="fa-solid fa-caret-up "></i>
+                {% endif %}
             </span>
             </div>
             <h2>R${{ instituicao.calcular_total.ofertas_mes_atual }}</h2>

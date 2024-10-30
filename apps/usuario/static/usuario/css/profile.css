@@ -25,11 +25,11 @@ a.btn-profile-navs{
 }
 a.btn-deletar-conta{
     margin-top: 2rem;
-    color: brown;
+    color: brown !important;
 }
 a.btn-deletar-conta.active{
     background-color: rgba(165, 42, 42, 0.096);
-    color: brown;
+    color: brown !important;
 }
 .profile-infos, .senha-seguranca-div{
     display: grid;

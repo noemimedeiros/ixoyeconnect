@@ -43,9 +43,11 @@
                     Nenhuma escala encontrada para esta consulta.
                 </div>
                 {% else %}
+                {% if not escalas_passadas %}
                 <div class="text-muted text-center">
                     Ainda não há nenhuma escala definida.
                 </div>
+                {% endif %}
                 {% endif %}
             {% endif %}
             {% if escalas_passadas %}

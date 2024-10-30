@@ -172,24 +172,30 @@ class InstituicaoSede(UsuarioAbstract):
     
     @property
     def calcular_total(self):
-        pessoas_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_pessoas'))['total_pessoas__sum']
-        media_pessoas_mes_atual = pessoas_mes_atual/self.relatorios_mes_atual.count()
+        pessoas_mes_atual = (self.relatorios_mes_atual.aggregate(Sum('total_pessoas'))['total_pessoas__sum'] or 0)
+        try:
+            media_pessoas_mes_atual = pessoas_mes_atual/self.relatorios_mes_atual.count()
+        except ZeroDivisionError:
+            media_pessoas_mes_atual = 0
 
-        pessoas_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_pessoas'))['total_pessoas__sum']
-        media_pessoas_mes_anterior = pessoas_mes_anterior/self.relatorios_mes_anterior.count()
+        pessoas_mes_anterior = (self.relatorios_mes_anterior.aggregate(Sum('total_pessoas'))['total_pessoas__sum'] or 0)
+        try:
+            media_pessoas_mes_anterior = pessoas_mes_anterior/(self.relatorios_mes_anterior.count() or 0)
+        except ZeroDivisionError:
+            media_pessoas_mes_anterior = 0
 
-        dizimos_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_dizimos'))['total_dizimos__sum']
-        dizimos_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_dizimos'))['total_dizimos__sum']
-        ofertas_mes_atual = self.relatorios_mes_atual.aggregate(Sum('total_ofertas'))['total_ofertas__sum']
-        ofertas_mes_anterior = self.relatorios_mes_anterior.aggregate(Sum('total_ofertas'))['total_ofertas__sum']
+        dizimos_mes_atual = (self.relatorios_mes_atual.aggregate(Sum('total_dizimos'))['total_dizimos__sum'] or 0)
+        dizimos_mes_anterior = (self.relatorios_mes_anterior.aggregate(Sum('total_dizimos'))['total_dizimos__sum'] or 0)
+        ofertas_mes_atual = (self.relatorios_mes_atual.aggregate(Sum('total_ofertas'))['total_ofertas__sum'] or 0)
+        ofertas_mes_anterior = (self.relatorios_mes_anterior.aggregate(Sum('total_ofertas'))['total_ofertas__sum'] or 0)
         
         return {
             "media_pessoas_mes_atual": int(media_pessoas_mes_atual),
             "media_pessoas_mes_anterior": int(media_pessoas_mes_anterior),
-            "dizimos_mes_atual": dizimos_mes_atual,
-            "dizimos_mes_anterior": dizimos_mes_anterior,
-            "ofertas_mes_atual": ofertas_mes_atual,
-            "ofertas_mes_anterior": ofertas_mes_anterior,
+            "dizimos_mes_atual": int(dizimos_mes_atual),
+            "dizimos_mes_anterior": int(dizimos_mes_anterior),
+            "ofertas_mes_atual": int(ofertas_mes_atual),
+            "ofertas_mes_anterior": int(ofertas_mes_anterior),
         }
     
     @property
@@ -198,10 +204,19 @@ class InstituicaoSede(UsuarioAbstract):
         porcentagem_dizimo_cultos = 0
         porcentagem_oferta_cultos = 0
 
-        porcentagem_presenca_cultos = ((self.calcular_total['media_pessoas_mes_atual'] - self.calcular_total['media_pessoas_mes_anterior']) / self.calcular_total['media_pessoas_mes_anterior']) * 100
-        porcentagem_dizimo_cultos = ((self.calcular_total['dizimos_mes_atual'] - self.calcular_total['dizimos_mes_anterior']) / self.calcular_total['dizimos_mes_anterior']) * 100
-        porcentagem_oferta_cultos = ((self.calcular_total['ofertas_mes_atual'] - self.calcular_total['ofertas_mes_anterior']) / self.calcular_total['ofertas_mes_anterior']) * 100
-
+        try:
+            porcentagem_presenca_cultos = ((self.calcular_total['media_pessoas_mes_atual'] - self.calcular_total['media_pessoas_mes_anterior']) / self.calcular_total['media_pessoas_mes_anterior']) * 100
+        except ZeroDivisionError:
+            porcentagem_presenca_cultos = 0
+        try:
+            porcentagem_dizimo_cultos = ((self.calcular_total['dizimos_mes_atual'] - self.calcular_total['dizimos_mes_anterior']) / self.calcular_total['dizimos_mes_anterior']) * 100
+        except ZeroDivisionError:
+            porcentagem_dizimo_cultos = 0
+        try:
+            porcentagem_oferta_cultos = ((self.calcular_total['ofertas_mes_atual'] - self.calcular_total['ofertas_mes_anterior']) / self.calcular_total['ofertas_mes_anterior']) * 100
+        except ZeroDivisionError:
+            porcentagem_oferta_cultos = 0 
+        
         return {
             "presenca_cultos": int(porcentagem_presenca_cultos),
             "dizimo_cultos": int(porcentagem_dizimo_cultos),
