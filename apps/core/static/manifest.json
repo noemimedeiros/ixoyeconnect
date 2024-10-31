@@ -20,16 +20,16 @@
   ],
   "splash_screens": [
       {
-          "src": "/static/img/splash_screen_320x568.png",
-          "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+        "src": "/static/img/splash_screen_320x568.png",
+        "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
       },
       {
-          "src": "/static/img/splash_screen_375x667.png",
-          "media": "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+        "src": "/static/img/splash_screen_375x667.png",
+        "media": "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
       },
       {
-          "src": "/static/img/splash_screen_414x869.png",
-          "media": "(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+        "src": "/static/img/splash_screen_414x869.png",
+        "media": "(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
       }
   ],
   "dir": "ltr",

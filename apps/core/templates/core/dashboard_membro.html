@@ -22,7 +22,7 @@
 {% block dashboard_content %}
 <section class="dashboard-membro">
     <div class="introducao-dashboard">
-        <h4>Bem-vindo(a) {{ usuario }}!</h4>
+        <h4>Bem-vindo(a) {{ usuario.primeiro_nome }}!</h4>
     </div>
     <section class="dashboard-membros-cards">
         <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="card-dashboard card-proxima-programacao">
