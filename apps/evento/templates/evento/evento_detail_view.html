@@ -13,7 +13,7 @@
 {% block dashboard_content %}
 <section class="evento-detail">
     <div class="evento-aberto-header">
-        <img class="card-post" src="{{ evento.capa.url }}" alt="">
+        <a href="{{ evento.capa.url }}"><img class="card-post" src="{{ evento.capa.url }}" alt=""></a>
     </div>
     <div class="card-post-aberto">
         <div class="evento-aberto-content">
@@ -35,8 +35,12 @@
             {{ evento.descricao|safe|default:"" }}
         </div>
         <div>
+            <div class="evento-pessoas evento-localizacao">
+                <i class="fa-solid fa-location-dot fa-lg"></i>
+                <div>{{ evento.endereco }}</div>
+            </div>
             <div class="evento-pessoas">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-users fa-lg"></i>
                 {{ evento.participantes.all.count|default:"0" }} pessoas confirmadas
             </div>
             {% if not request.user.is_admin %}

@@ -7,6 +7,13 @@
 /* .contribuicao-section{
     margin-top: 1rem;
 } */
+@media (min-width: 769px) {
+    .contribuicao-form-section > form:first-child{
+        overflow-y: scroll;
+        height: calc(100vh - 180px);
+        overflow-x: hidden;
+    }
+}
 
 .div-cards-contribuicoes{
     display: flex;

@@ -5,7 +5,13 @@
 /* .evento-section{
     margin-top: 20px;
 } */
-
+@media (min-width: 769px) {
+    .evento-form-section > form:first-child{
+        overflow-y: scroll;
+        height: calc(100vh - 180px);
+        overflow-x: hidden;
+    }
+}
 .evento-form-section{
     display: grid;
     grid-template-columns: calc(50% - 10px) calc(50% - 10px);
@@ -121,6 +127,9 @@
 }
 .evento-pessoas i {
     color: var(--gray-2);
+}
+.evento-localizacao i{
+    color: brown;
 }
 
 .titulo-proximo-evento, .titulo-evento-porvir, .titulo-evento-fim, .titulo-evento-passados{

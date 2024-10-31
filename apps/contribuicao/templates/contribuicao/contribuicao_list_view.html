@@ -9,6 +9,13 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'contribuicao/css/contribuicao.css' %}">
 <link rel="stylesheet" href="{% static 'contribuicao/css/contribuicao_responsive.css' %}">
+<style>
+    @media (min-width: 769px) {
+        .dashboard-card{
+            overflow-y: hidden
+        }
+    }
+</style>
 {% endblock style %}
 
 {% block dashboard_actions %}

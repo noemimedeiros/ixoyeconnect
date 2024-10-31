@@ -36,7 +36,14 @@
 }
 
 .evento-pessoas{
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 1.5rem;
+}
+.evento-pessoas i{
+    text-align: center;
 }
 
 @media (max-width: 768px) {

@@ -58,9 +58,10 @@
     }
 
     .top-nav-mobile{
-        display: flex;
+        display: grid;
         width: 100%;
-        justify-content: space-between;
+        grid-template-columns: 2rem 1fr 2rem;
+        text-align: center;
         align-items: center;
         color: var(--body-bg);
         font-weight: 400;

@@ -2,9 +2,11 @@
 <nav class="top-nav">
     <div class="top-nav-mobile">
         <div>
+            {% if not 'dashboard' in request.path %}
             <a href="javascript:void(0);" onclick="history.back();">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
+            {% endif %}
         </div>
         <div>
             {{ titulo|default:'Página Inicial' }}

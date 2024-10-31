@@ -20,7 +20,7 @@
 <section class="post-detail">
     {% if object.capa %}
     <div class="post-aberto-header">
-        <img class="card-post" src="{{ object.capa.url }}" alt="">
+        <a href="{{ object.capa.url }}"><img class="card-post" src="{{ object.capa.url }}" alt=""></a>
     </div>
     {% endif %}
     <div class="card-post-aberto {% if not object.capa %}card-post-aberto-sem-capa{% endif %}">

@@ -4,6 +4,13 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
+@media (min-width: 769px) {
+    .agenda-form-section > div:first-child{
+        overflow-y: scroll;
+        height: calc(100vh - 180px);
+        overflow-x: hidden;
+    }
+}
 
 .agenda-preview{
     text-align: center;

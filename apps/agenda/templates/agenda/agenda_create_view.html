@@ -72,6 +72,10 @@
     $(function(){
         selecionar_icone('1', 'fa-book', 'Livro')
     })
+    {% elif object and not request.POST %}
+    $(function(){
+        selecionar_icone('{{ object.icone.id }}', '{{ object.icone.icone }}', '{{ object.icone.descricao }}')
+    })
     {% endif %}
 </script>
 {% endblock _scripts %}

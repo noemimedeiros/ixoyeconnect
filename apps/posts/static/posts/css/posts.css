@@ -5,6 +5,13 @@
 .posts-section *, .card-post *{
     font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
 }
+@media (min-width: 769px) {
+    .form-posts > form:first-child{
+        overflow-y: scroll;
+        height: calc(100vh - 180px);
+        overflow-x: hidden;
+    }
+}
 .form-posts{
     /* margin-top: 20px; */
     display: grid;
@@ -45,6 +52,7 @@
     max-width: var(--post-card-height);
     max-height: 40px;
     overflow: hidden;
+    text-align: start;
 }
 .card-post-sem-capa .card-post-descricao{
     max-height: 140px;
