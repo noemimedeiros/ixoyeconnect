@@ -49,6 +49,10 @@
             <div class="side-nav-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="side-nav-text">Contribuições</div>
         </a>
+        <a href="{% url 'escala:escala_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
+            <div class="side-nav-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div class="side-nav-text">Escalas</div>
+        </a>
         {% if request.user.is_admin %}
         <a href="{% url 'relatorio:relatorio_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-file-lines"></i></div>
@@ -59,10 +63,6 @@
             <div class="side-nav-text">Lista de Membros</div>
         </a>
         {% endif %}
-        <a href="{% url 'escala:escala_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
-            <div class="side-nav-icon"><i class="fa-solid fa-clipboard-list"></i></div>
-            <div class="side-nav-text">Escalas</div>
-        </a>
         <a href="/logout/" class="side-nav-item">
             <div class="side-nav-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
             <div class="side-nav-text">Sair</div>

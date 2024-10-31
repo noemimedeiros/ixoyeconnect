@@ -28,7 +28,7 @@ const icons_arquivos = (ext) => {
     }
 }
 
-var arquivo_index = 0;
+
 function adicionar_arquivo(file_name, id=null){
     $(`#arquivo_${arquivo_index}`).append(`
         <div id="id_arquivo_${arquivo_index}" class="arquivopost_card">
@@ -60,6 +60,14 @@ function adicionar_arquivo(file_name, id=null){
     // A partir daqui, funcionamento do formset
     var totalForms = parseInt(totalFormsInput.val());
     totalFormsInput.val(totalForms + 1);
+
+    $('[name$="-arquivo"]').on('change', function(){
+        let id = $(this).prop('id');
+        let file = document.getElementById(id).files.item(0);
+        let file_name = file.name;
+    
+        adicionar_arquivo(file_name)
+    })
 }
 
 $('[name$="-arquivo"]').on('change', function(){
@@ -74,13 +82,13 @@ $('[name$="-arquivo"]').on('change', function(){
 function remover_arquivo(arquivo, id=null){
     if(id != 'null'){
         if ($(`#arquivo_a_excluir_${arquivo}`).length > 0){
-            $(`#id_arquivo_${arquivo}`).find('.fa-rotate-left').removeClass('fa-rotate-left').addClass('fa-times')
-            $(`#id_arquivo_${arquivo}`).removeClass('border-danger')
+            $(`#id_arquivo_${arquivo}`).find('.fa-rotate-left').removeClass('fa-rotate-left').addClass('fa-xmark')
+            $(`#id_arquivo_${arquivo}`).removeClass('border border-danger')
             $(`#arquivo_a_excluir_${arquivo}`).remove()
         }else{
             $('#arquivos-a-excluir').append(`<input id="arquivo_a_excluir_${arquivo}" type="hidden" name="arquivo_a_excluir" value="${id}"/>`)
-            $(`#id_arquivo_${arquivo}`).addClass('border-danger')
-            $(`#id_arquivo_${arquivo}`).find('.fa-times').removeClass('fa-times').addClass('fa-rotate-left')
+            $(`#id_arquivo_${arquivo}`).addClass('border border-danger')
+            $(`#id_arquivo_${arquivo}`).find('.fa-xmark').removeClass('fa-xmark').addClass('fa-rotate-left')
         }
     }else{
         $(`#arquivo_${arquivo}`).remove()

@@ -11,7 +11,7 @@ from posts.filter import PostFilter
 from core.messages_utils import message_delete_registro, message_error_registro
 from core.views import MyCreateViewIxoyeConnect, MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyListViewIxoyeConnect
 
-from .models import CategoriaPost, Curtida, Post, Salvo
+from .models import ArquivoPost, CategoriaPost, Curtida, Post, Salvo
 from .forms import ArquivoPostFormSet, NewPostForm
 
 class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
@@ -116,9 +116,7 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         tipo = post.categoria.nome
         context["titulo"] = f'Editar {tipo}'
         context["active"] = ["conteudo", tipo]
-        context["arquivos_formset"] = ArquivoPostFormSet(queryset=post.arquivos.all())
-        if self.request.POST:
-            context["arquivos_formset"] = ArquivoPostFormSet(self.request.POST, self.request.FILES, queryset=post.arquivos.all())
+        context["arquivos_formset"] = ArquivoPostFormSet()
         return context
     
     def form_valid(self, form):
@@ -128,6 +126,12 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         for arquivo in arquivos:
             arquivo.post = form
             arquivo.save()
+        if self.request.POST.getlist('arquivo_a_excluir'):
+            for i in range (0, len(self.request.POST.getlist('arquivo_a_excluir')), 1):
+                try:
+                    ArquivoPost.objects.get(pk=self.request.POST.getlist('arquivo_a_excluir')[i]).delete()
+                except ArquivoPost.DoesNotExist:
+                    pass
         return HttpResponseRedirect(self.get_success_url())
     
     def form_invalid(self, form):

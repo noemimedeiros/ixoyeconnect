@@ -20,8 +20,8 @@
     }
     .section-login{
         grid-template-columns: 1fr;
-        grid-template-rows: 45% 1fr;
-        background: linear-gradient(180deg, #3DBD90 0%, #2C868C 30%)
+        grid-template-rows: 40% 1fr;
+        background: linear-gradient(180deg, #3DBD90 0%, #2C868C 40%)
     }
     /* .titulo-app{
         display: none;

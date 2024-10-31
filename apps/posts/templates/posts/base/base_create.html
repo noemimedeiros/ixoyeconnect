@@ -1,6 +1,8 @@
 {% extends "core/dashboard.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load file_ext %}
+{% load icons_arquivos %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
@@ -28,30 +30,44 @@
 <section class="form-posts">
     <form method="POST" enctype="multipart/form-data">
         {% if object and object.capa %}
-        {% include "core/includes/foto_preview.html" with img_src=object.capa.url  %}
+            {% include "core/includes/foto_preview.html" with img_src=object.capa.url  %}
         {% else %}
-        {% include "core/includes/foto_preview.html"  %}
+            {% include "core/includes/foto_preview.html"  %}
         {% endif %}
 
         {% crispy form %}
         
         <div id="lista_arquivos_post" class="mb-3">
             {{ arquivos_formset.management_form }}
-            {% for arquivo_form in arquivos_formset %}
-            {% if not object %}
+            
+            {% if object %}
             <div id="div_arquivospost">
-                <div id="arquivo_{{ forloop.counter }}">
-                    <input type="file" name="form-{{ forloop.counter }}-arquivo" id="adicionar_arquivo_{{ forloop.counter }}" hidden>
+                {% for arquivo in object.arquivos.all %}   
+                    <div id="id_arquivo_{{ forloop.counter0 }}" class="arquivopost_card">
+                        <div class="arquivopost_body">
+                            <i class="fa-solid {{ arquivo.arquivo|file_ext|icons_arquivos }}"></i>
+                            <span class="arquivopost_nome">
+                                {{ arquivo }}
+                            </span>
+                        </div>
+                        <div><i role="button" class="fa-solid fa-xmark fa-lg" onclick="remover_arquivo({{ forloop.counter0 }}, {{ arquivo.id }})"></i></div>
+                    </div>
+                {% endfor %}
+                <div id="arquivo_{{ object.arquivos.all|length|add:1 }}">
+                    <input type="file" name="form-{{ object.arquivos.all|length|add:1 }}-arquivo" id="adicionar_arquivo_{{ object.arquivos.all|length|add:1 }}" hidden>
                 </div>
             </div>
-            <label for="adicionar_arquivo_{{ forloop.counter }}" class="btn button-outlined button-upload">Anexar arquivo</label>
+            <label for="adicionar_arquivo_{{ object.arquivos.all|length|add:1 }}" class="btn button-outlined button-upload">Anexar arquivo</label>
             {% else %}
-            <div>
-                {% crispy arquivo_form %}
+            <div id="div_arquivospost">
+                <div id="arquivo_0">
+                    <input type="file" name="form-0-arquivo" id="adicionar_arquivo_0" hidden>
+                </div>
             </div>
+            <label for="adicionar_arquivo_0" class="btn button-outlined button-upload">Anexar arquivo</label>
             {% endif %}
-            {% endfor %}
         </div>
+        <div id="arquivos-a-excluir"></div>
         <button type="submit" class="btn button-filled w-100">Postar</button>
     </form>
     <div>
@@ -64,6 +80,12 @@
 {% endblock dashboard_content %}
 
 {% block _scripts %}
+<script>
+    var arquivo_index = 0;
+    {% if object %}
+    arquivo_index = parseInt('{{ object.arquivos.all|length|add:1 }}')
+    {% endif %}
+</script>
 <script src="{% static 'posts/js/arquivospost.js' %}"></script>
 <script>
     $('#foto-preview-div').click(() => $('#id_capa').trigger('click'));

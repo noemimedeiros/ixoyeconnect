@@ -46,9 +46,11 @@
                 </div>
                 {{ redesocial_form.id }}
                 {% crispy redesocial_form %}
+                {% if forloop.last %}
                 <button class="btn button-outlined px-4" type="button" id="adicionar-redesocial">
                     <i class="fa-solid fa-plus me-2"></i> Adicionar Rede Social
                 </button>
+                {% endif %}
             </div> 
             {% endfor %}
            </div>
