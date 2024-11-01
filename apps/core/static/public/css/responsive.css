@@ -97,7 +97,7 @@
     }
     .retornar{
         position: absolute;
-        left: 0;
+        left: 5px;
         top: 0;
     }
     .retornar a{

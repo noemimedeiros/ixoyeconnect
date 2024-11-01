@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import Case, When, Value, IntegerField
@@ -29,7 +31,7 @@ class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         return qs
 
     def get_context_data(self, **kwargs):
-        hoje = timezone.now().date()
+        hoje = date.today()
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Eventos"
         context["active"] = ["evento"]
