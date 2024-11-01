@@ -54,7 +54,7 @@
             <div class="side-nav-text">Escalas</div>
         </a>
         {% if request.user.is_admin %}
-        <a href="{% url 'relatorio:relatorio_list_view' instituicao.pk %}" class="side-nav-item {% if 'escalas' in active %}active{% endif %}">
+        <a href="{% url 'relatorio:relatorio_list_view' instituicao.pk %}" class="side-nav-item {% if 'relatorios' in active %}active{% endif %}">
             <div class="side-nav-icon"><i class="fa-solid fa-file-lines"></i></div>
             <div class="side-nav-text">Relatórios</div>
         </a>

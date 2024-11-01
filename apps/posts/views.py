@@ -41,7 +41,7 @@ class PostListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         tipo = self.kwargs['tipo']
         context["titulo"] = tipo.capitalize()
         context["tipo"] = tipo
-        context["active"] = ["conteudo", tipo]
+        context["active"] = ["conteudo", tipo.lower()]
         context["filter"] = PostFilter()
         if self.request.GET:
             context["filter"] = PostFilter(self.request.GET)
@@ -70,7 +70,7 @@ class PostCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         context["arquivos_formset"] = ArquivoPostFormSet()
         if self.request.POST:
             context["arquivos_formset"] = ArquivoPostFormSet(self.request.POST, self.request.FILES)
-        context["active"] = ["conteudo", tipo]
+        context["active"] = ["conteudo", tipo.lower()]
         return context
     
     def form_valid(self, form):
@@ -115,8 +115,12 @@ class PostUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         post = self.get_object()
         tipo = post.categoria.nome
         context["titulo"] = f'Editar {tipo}'
-        context["active"] = ["conteudo", tipo]
+        context["active"] = ["conteudo", tipo.lower()]
         context["arquivos_formset"] = ArquivoPostFormSet()
+        quant_arquivos = int(post.arquivos.count())
+        if quant_arquivos != 0:
+            quant_arquivos += 1
+        context["quant_arquivos"] = quant_arquivos
         return context
     
     def form_valid(self, form):
@@ -165,8 +169,9 @@ class PostDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = self.get_object()
+        tipo = post.categoria.nome
         context["titulo"] = post.titulo
-        context["active"] = ["conteudo", post.categoria.nome]
+        context["active"] = ["conteudo", tipo.lower()]
         return context
 
 @login_required(login_url="/login/")

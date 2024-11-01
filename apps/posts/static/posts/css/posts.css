@@ -67,6 +67,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.card-post-sem-capa .card-post-descricao  *:first-child{
+    line-clamp: 7;
+    -webkit-line-clamp: 7;
+}
 .card-post-titulo, .card-post-info{
     line-clamp: 1;
     -webkit-line-clamp: 1;

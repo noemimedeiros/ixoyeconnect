@@ -174,13 +174,13 @@ class InstituicaoSede(UsuarioAbstract):
     def calcular_total(self):
         pessoas_mes_atual = (self.relatorios_mes_atual.aggregate(Sum('total_pessoas'))['total_pessoas__sum'] or 0)
         try:
-            media_pessoas_mes_atual = pessoas_mes_atual/self.relatorios_mes_atual.count()
+            media_pessoas_mes_atual = int(pessoas_mes_atual/self.relatorios_mes_atual.count())
         except ZeroDivisionError:
             media_pessoas_mes_atual = 0
 
         pessoas_mes_anterior = (self.relatorios_mes_anterior.aggregate(Sum('total_pessoas'))['total_pessoas__sum'] or 0)
         try:
-            media_pessoas_mes_anterior = pessoas_mes_anterior/(self.relatorios_mes_anterior.count() or 0)
+            media_pessoas_mes_anterior = int(pessoas_mes_anterior/self.relatorios_mes_anterior.count())
         except ZeroDivisionError:
             media_pessoas_mes_anterior = 0
 

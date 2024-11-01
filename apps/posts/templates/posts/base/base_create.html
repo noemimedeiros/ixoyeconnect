@@ -53,11 +53,11 @@
                         <div><i role="button" class="fa-solid fa-xmark fa-lg" onclick="remover_arquivo({{ forloop.counter0 }}, {{ arquivo.id }})"></i></div>
                     </div>
                 {% endfor %}
-                <div id="arquivo_{{ object.arquivos.all|length|add:1 }}">
-                    <input type="file" name="form-{{ object.arquivos.all|length|add:1 }}-arquivo" id="adicionar_arquivo_{{ object.arquivos.all|length|add:1 }}" hidden>
+                <div id="arquivo_{{ quant_arquivos }}">
+                    <input type="file" name="form-{{ quant_arquivos }}-arquivo" id="adicionar_arquivo_{{ quant_arquivos }}" hidden>
                 </div>
             </div>
-            <label for="adicionar_arquivo_{{ object.arquivos.all|length|add:1 }}" class="btn button-outlined button-upload">Anexar arquivo</label>
+            <label for="adicionar_arquivo_{{ quant_arquivos }}" class="btn button-outlined button-upload">Anexar arquivo</label>
             {% else %}
             <div id="div_arquivospost">
                 <div id="arquivo_0">
@@ -83,7 +83,7 @@
 <script>
     var arquivo_index = 0;
     {% if object %}
-    arquivo_index = parseInt('{{ object.arquivos.all|length|add:1 }}')
+    var arquivo_index = parseInt('{{ quant_arquivos }}')
     {% endif %}
 </script>
 <script src="{% static 'posts/js/arquivospost.js' %}"></script>

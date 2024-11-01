@@ -8,6 +8,12 @@
 .post-detail *{
     font-family: "Averia Serif Libre", serif, 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
 }
+.dashboard-head{
+    margin: 0;
+}
+.dashboard-content{
+    height: unset;
+}
 .dashboard-card{
     margin-bottom: 0;
 }

@@ -35,7 +35,7 @@ class EscalaListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         hoje = date.today()
         instituicao = InstituicaoSede.objects.get(pk=self.kwargs['instituicao_pk'])
         context["titulo"] = "Escala de Obreiros"
-        context["active"] = ["escala"]
+        context["active"] = ["escalas"]
         context["form"] = EscalaForm(instituicao=instituicao, prefix="escala")
         context["filter"] = EscalaFilter(queryset=self.get_queryset())
         context["hoje"] = hoje

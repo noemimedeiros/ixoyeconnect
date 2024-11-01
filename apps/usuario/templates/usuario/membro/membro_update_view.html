@@ -2,6 +2,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title %}
+{{ titulo }}
+{% endblock title %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'usuario/css/membro.css' %}">
 <link rel="stylesheet" href="{% static 'usuario/css/membro_responsive.css' %}">
@@ -72,7 +76,7 @@
         </div>
         <div class="buttons-form">
             <a href="{% url 'usuario:membro_list_view' instituicao.pk %}" class="btn button-outlined" type="button">Cancelar</a>
-            <button class="btn button-filled" type="submit">Salvar</button>
+            <button data-bs-toggle="tooltip" data-bs-title="Salvar" title="Salvar alterações" type="submit" class="btn button-filled">Salvar</button>
         </div>
     </form>
     

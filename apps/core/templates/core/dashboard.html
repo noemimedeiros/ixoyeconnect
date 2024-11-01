@@ -96,6 +96,9 @@
         if (window.innerWidth > 768) {
             if (menuCollapsedStatus === 'enabled') {
                 $('.side-nav').addClass("collapsed")
+                $('.side-nav-subitem a').tooltip('enable')
+            }else{
+                $('.side-nav-subitem a').tooltip('disable')
             }
         }
 
@@ -123,7 +126,6 @@
         });
 
         $("[data-bs-toggle='tooltip']").tooltip()
-        $('.side-nav-subitem a').tooltip('disable')
 
         $("#delete-modal").on("show.bs.modal", event => {
             $('.item-actions').popover('hide')

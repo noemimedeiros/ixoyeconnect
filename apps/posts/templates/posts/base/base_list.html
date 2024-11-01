@@ -1,6 +1,10 @@
 {% extends "core/dashboard.html" %}
 {% load static %}
 
+{% block title %}
+{{ titulo|default:"Posts" }}
+{% endblock title %}
+
 {% block app_title %}
 {{ titulo|default:"Posts" }}
 {% endblock app_title %}

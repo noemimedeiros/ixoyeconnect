@@ -31,7 +31,7 @@ class RelatorioCultoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         instituicao = InstituicaoSede.objects.get(pk=self.kwargs['instituicao_pk'])
         context["titulo"] = "Relatório de Cultos"
-        context["active"] = ["relatorio"]
+        context["active"] = ["relatorios"]
         context["filter"] = RelatorioCultoFilter()
         context["gerar_relatorio"] = GerarRelatorioCultoFilter()
         if self.request.GET:
@@ -47,7 +47,7 @@ class RelatorioCultoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Criar Relatório"
-        context["active"] = ["relatorio"]
+        context["active"] = ["relatorios"]
         return context
     
     def get_form_kwargs(self):
@@ -67,7 +67,7 @@ class RelatorioCultoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Editar Relatório"
-        context["active"] = ["relatorio"]
+        context["active"] = ["relatorios"]
         return context
     
     def get_form_kwargs(self):

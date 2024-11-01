@@ -139,7 +139,7 @@
     .dashboard-content{
         overflow-y: scroll;
         padding: 20px;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 140px);
     }
 }
 /* .dashboard-card::-webkit-scrollbar{

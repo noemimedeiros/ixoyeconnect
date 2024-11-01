@@ -1,7 +1,9 @@
 .titulo-dashboard{
     display: none;
 }
-
+.dashboard-content{
+    height: calc(100vh - 110px);
+}
 .profile-view{
     display: grid;
     grid-template-columns: 15% 1fr;

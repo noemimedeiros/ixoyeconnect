@@ -4,14 +4,16 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input name="q" class="form-primary" type="text" placeholder="Pesquisar" value="{{ request.GET.q }}">
     </div>
-    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#modal_filtar" class="btn button-filled-tonal filter-btn">
-        <i class="fa-solid fa-filter fa-xl"></i>
-        {% if filtros_aplicados %}
-        <div class="possui-filtros-icon">
-            {{ filtros_aplicados }}
-        </div>
-        {% endif %}
-    </button>
+    <span data-bs-toggle="offcanvas" data-bs-target="#modal_filtar">
+        <button type="button" data-bs-toggle="tooltip" data-bs-title="Aplicar filtros"  class="btn button-filled-tonal filter-btn">
+            <i class="fa-solid fa-filter fa-xl"></i>
+            {% if filtros_aplicados %}
+            <div class="possui-filtros-icon">
+                {{ filtros_aplicados }}
+            </div>
+            {% endif %}
+        </button>
+    </span>
     <div class="offcanvas offcanvas-end offcanvas-filter overflow-auto" id="modal_filtar" data-bs-scroll="true" tabindex="-1" aria-labelledby="modal_filtar_label">
         <div class="offcanvas-content p-2">
             <div class="offcanvas-header">

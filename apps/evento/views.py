@@ -34,7 +34,7 @@ class EventoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
         hoje = date.today()
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Eventos"
-        context["active"] = ["evento"]
+        context["active"] = ["eventos"]
         context["filter"] = EventoFilter()
         context["eventos_porvir"] = self.get_queryset().filter(data__gte=hoje).order_by('data')
         context["eventos_passados"] = self.get_queryset().filter(data__lt=hoje).order_by('-data')
@@ -50,7 +50,7 @@ class EventoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Criar Evento"
-        context["active"] = ["evento"]
+        context["active"] = ["eventos"]
         context["endereco_form"] = EnderecoForm()
 
         if self.request.POST:
@@ -90,7 +90,7 @@ class EventoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Editar Evento"
-        context["active"] = ["evento"]
+        context["active"] = ["eventos"]
         context["endereco_form"] = EnderecoForm()
 
         if self.request.POST:
@@ -115,7 +115,7 @@ class EventoDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         evento = self.get_object()
         context["titulo"] = evento.titulo.capitalize()
-        context["active"] = ["evento"]
+        context["active"] = ["eventos"]
         return context
 
 @login_required(login_url="/login/")

@@ -24,7 +24,7 @@ class MembroDetailView(LoginRequiredMixin, MyDetailViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Minha Conta"
-        context["active"] = ["membro"]
+        context["active"] = ["lista-membros"]
         context["usuario"] = self.request.user.conta
         return context
 
@@ -45,7 +45,7 @@ class MembroListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Membros"
-        context["active"] = ["membros"]
+        context["active"] = ["lista-membros"]
         context["filter"] = MembroFilter()
         if self.request.GET:
             context["filter"] = MembroFilter(self.request.GET)
@@ -59,7 +59,7 @@ class MembroCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Criar Membro"
-        context["active"] = ["membros"]
+        context["active"] = ["lista-membros"]
         context["endereco_form"] = EnderecoForm()
         context["user_form"] = MySignUpForm()
 
@@ -109,7 +109,7 @@ class MembroUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Editar Membro"
-        context["active"] = ["membros"]
+        context["active"] = ["lista-membros"]
         membro = self.get_object()
 
         context["endereco_form"] = EnderecoForm(instance=membro.endereco)

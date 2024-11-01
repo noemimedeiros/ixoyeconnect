@@ -20,7 +20,10 @@ class Endereco(models.Model):
     cep = models.CharField(max_length=9, null=False, blank=False)
 
     def __str__(self):
-        return f'{self.rua}, {self.numero}, {self.complemento}, {self.bairro}, {self.cidade} - {self.uf.sigla}'
+        if self.complemento:
+            return f'{self.rua}, {self.numero}, {self.complemento}, {self.bairro}, {self.cidade} - {self.uf.sigla}'
+        else:
+            return f'{self.rua}, {self.numero}, {self.bairro}, {self.cidade} - {self.uf.sigla}'
 
     class Meta:
         db_table = 'endereco'

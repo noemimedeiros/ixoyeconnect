@@ -2,6 +2,10 @@
 {% load static %}
 {% load evento_passado %}
 
+{% block title %}
+{{ titulo }}
+{% endblock title %}
+
 {% block app_title %}
 {{ titulo }}
 {% endblock app_title %}
@@ -34,7 +38,6 @@
         <h4 class="titulo-proximo-evento">Próximo Evento</h4>
         {% elif forloop.counter == 2 %}
         <h5 class="titulo-evento-porvir">Eventos por vir</h6>
-        <div class="evento-linha linha-porvir"></div>
         {% endif %}
         <div class="evento-component">
             {% include "evento/partials/card_evento_grid.html" with evento=evento index=forloop.counter %}
@@ -49,7 +52,6 @@
     
     {% if eventos_passados %}
     <h5 class="titulo-evento-passados">Eventos passados</h6>
-        <div class="evento-linha linha-porvir"></div>
         {% for evento in eventos_passados %}
             <div class="evento-component">
                 {% include "evento/partials/card_evento_grid.html" with evento=evento index=forloop.counter %}

@@ -27,7 +27,7 @@ class ContribuicaoListView(LoginRequiredMixin, MyListViewIxoyeConnect):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Contribuições"
-        context["active"] = ["contribuicao"]
+        context["active"] = ["contribuicoes"]
         context["filter"] = ContribuicaoFilter()
         if self.request.GET:
             context["filter"] = ContribuicaoFilter(self.request.GET)
@@ -42,7 +42,7 @@ class ContribuicaoCreateView(LoginRequiredMixin, MyCreateViewIxoyeConnect):
         context = super().get_context_data(**kwargs)
         instituicao = self.request.user.instituicao
         context["titulo"] = "Criar Contribuição"
-        context["active"] = ["contribuicao"]
+        context["active"] = ["contribuicoes"]
         context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
         return context
     
@@ -69,7 +69,7 @@ class ContribuicaoUpdateView(LoginRequiredMixin, MyUpdateViewIxoyeConnect):
         instituicao = self.request.user.instituicao
         contribuicao = self.get_object()
         context["titulo"] = "Editar Contribuição"
-        context["active"] = ["contribuicao"]
+        context["active"] = ["contribuicoes"]
         context["departamentos_form"] = DepartamentoForm(instituicao=instituicao, prefix="departamento")
         return context
     
