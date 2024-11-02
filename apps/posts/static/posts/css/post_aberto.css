@@ -18,7 +18,6 @@
     height: unset;
 }
 .dashboard-card{
-    overflow-y: scroll;
     margin-bottom: 0;
 }
 .dashboard-card, .dashboard-sidecontent{
@@ -81,7 +80,8 @@
         padding: 0;
     }
     .dashboard-card{
-        padding-bottom: 100px;
+        overflow-y: unset;
+        padding-bottom: 8rem;
     }
     .post-detail{
         height: fit-content;

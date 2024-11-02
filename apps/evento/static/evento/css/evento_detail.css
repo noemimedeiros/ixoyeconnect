@@ -63,7 +63,8 @@
         
     }
     .dashboard-card{
-        padding-bottom: 100px;
+        overflow-y: unset;
+        padding-bottom: 8rem;
     }
     .evento-detail{
         height: fit-content;

@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 from pwa_webpush import send_user_notification
+from concurrent.futures import ThreadPoolExecutor
 
 from notificacao.filters import icone_notificacao
 from escala.models import Escala
@@ -11,47 +12,49 @@ from evento.models import Evento
 from usuario.models import Membro
 from notificacao.models import ConfiguracoesNotificacao, Notificacao
 
-def criar_notificacao(usuario, mensagem, instance, link):
-    if hasattr(usuario, 'notificacoes_configs'):
-        configs = usuario.notificacoes_configs
+executor = ThreadPoolExecutor(max_workers=5)
+
+def notificacao_push_async(notificacao_id):
+    notificacao = Notificacao.objects.get(pk=notificacao_id)
+    icone = "static/public/img/Logo.png"
+    payload = {"head": notificacao.modulo, "body": notificacao.mensagem, "icon": icone, "link": notificacao.link}
+    if hasattr(notificacao.user, 'notificacoes_configs'):
+        configs = notificacao.user.notificacoes_configs
         permitido = configs.habilitado
         if configs.silenciar_inicio and configs.silenciar_final:
             permitido = (date.today() >= configs.silenciar_final or date.today() <= configs.silenciar_final)
-        if permitido:
-            Notificacao.objects.create(
-                user=usuario,
-                mensagem=mensagem,
-                id_object=instance.pk,
-                modulo=instance.__class__.__name__,
-                link=link
-            )
+        if not permitido:
+            return 
     else:
-        ConfiguracoesNotificacao.objects.create(user=usuario)
+        ConfiguracoesNotificacao.objects.create(user=notificacao.user)
+    try:
+        send_user_notification(user=notificacao.user, payload=payload, ttl=100)
+    except:
+        pass
+
+@receiver(post_save, sender=Notificacao)
+def criar_notificacao_push(sender, instance, created, **kwargs):
+    if created:
+        executor.submit(notificacao_push_async, instance.pk)
+
+def enviar_notificacao(instance, link, mensagem, para_todos=True, usuario=None):
+    if para_todos == False:
         Notificacao.objects.create(
-            user=usuario,
+            user=instance.membro.user,
             mensagem=mensagem,
             id_object=instance.pk,
             modulo=instance.__class__.__name__,
             link=link
         )
-
-def enviar_notificacao(instance, link, mensagem, para_todos=True, usuario=None):
-    icone = "static/public/img/Logo.png"
-    payload = {"head": instance.__class__.__name__, "body": mensagem, "icon": icone, "link": link}
-
-    if para_todos == False:
-        criar_notificacao(usuario=usuario, instance=instance, mensagem=mensagem, link=link)
-        try:
-            send_user_notification(user=usuario, payload=payload, ttl=100)
-        except:
-            pass
     else:
         for membro in Membro.objects.filter(sede=instance.instituicao):
-            criar_notificacao(usuario=membro.user, instance=instance, mensagem=mensagem, link=link)
-            try:
-                send_user_notification(user=membro.user, payload=payload, ttl=100)
-            except:
-                pass
+            Notificacao.objects.create(
+                user=membro.user,
+                mensagem=mensagem,
+                id_object=instance.pk,
+                modulo=instance.__class__.__name__,
+                link=link
+            )
 
 @receiver(post_save, sender=Evento)
 def notificar_novo_evento(sender, instance, created, **kwargs):
