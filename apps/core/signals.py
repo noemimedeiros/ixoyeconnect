@@ -41,17 +41,17 @@ def enviar_notificacao(instance, link, mensagem, para_todos=True, usuario=None):
 
     if para_todos == False:
         criar_notificacao(usuario=usuario, instance=instance, mensagem=mensagem, link=link)
-        # try:
-        #     send_user_notification(user=usuario, payload=payload, ttl=1000)
-        # except:
-        #     pass
+        try:
+            send_user_notification(user=usuario, payload=payload, ttl=100)
+        except:
+            pass
     else:
         for membro in Membro.objects.filter(sede=instance.instituicao):
             criar_notificacao(usuario=membro.user, instance=instance, mensagem=mensagem, link=link)
-            # try:
-            #     send_user_notification(user=membro.user, payload=payload, ttl=1000)
-            # except:
-            #     pass
+            try:
+                send_user_notification(user=membro.user, payload=payload, ttl=100)
+            except:
+                pass
 
 @receiver(post_save, sender=Evento)
 def notificar_novo_evento(sender, instance, created, **kwargs):
