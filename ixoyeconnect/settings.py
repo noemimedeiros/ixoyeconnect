@@ -17,8 +17,7 @@ SECRET_KEY = env("DJ_SECRET_KEY", default="")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]
+ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com']
 
 sys.path.append(
     os.path.join(BASE_DIR, "apps")
