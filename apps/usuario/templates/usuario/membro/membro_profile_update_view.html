@@ -22,6 +22,7 @@
             </div>
             <div class="profile-informacoes-grid">
                 {% crispy form %}
+                {% include "core/includes/foto_preview.html" %}
             </div>
         </div>
         <div class="profile-edit-div">
@@ -38,3 +39,12 @@
     </form>
 </section>
 {% endblock profile_content %}
+{% block _scripts %}
+<script>
+    $('#id_foto').change(() => fotoPreview('id_foto'));
+    $('#foto-preview-div').click(() => $('#id_foto').trigger('click'));
+    $(function(){
+        fotoPreview('id_foto');
+    })
+</script>
+{% endblock _scripts %}

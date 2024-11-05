@@ -17,7 +17,7 @@ SECRET_KEY = env("DJ_SECRET_KEY", default="")
 
 DEBUG = env("DEBUG", default=True)
 
-ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com', 'localhost', '127.0.0.1', '18.224.108.98']
+ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com', 'localhost', '127.0.0.1', '18.224.108.98', '*']
 
 sys.path.append(
     os.path.join(BASE_DIR, "apps")

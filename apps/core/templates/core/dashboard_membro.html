@@ -28,8 +28,12 @@
         <a href="{% url 'agenda:agendas_list_view' instituicao.pk %}" class="card-dashboard card-proxima-programacao">
             <div class="programacao-icone"><i class="fa-solid fa-clock"></i></div>
             <div>
+                {% if instituicao.proxima_agenda %}
                 <div class="mb-2"><h6>Próxima programação: {{ instituicao.proxima_agenda.get_dia_semana_display }}</h6></div>
                 <div><h5>{{ instituicao.proxima_agenda.titulo }} às {{ instituicao.proxima_agenda.hora }}</h5></div>
+                {% else %}
+                <h5><i>Ainda não há programações cadastradas na sua igreja.</i></h5>
+                {% endif %}
             </div>
         </a>
         <div class="card-dashboard card-membro-ha">
@@ -83,9 +87,15 @@
                     <i class="fa-solid fa-chevron-right fa-xl"></i>
                 </a>
             {% endfor %}
+            {% if instituicao.atividades %}
             <div class="text-center mt-3">
                 <small >Veja mais atividades em eventos ou conteúdos publicados.</small>
             </div>
+            {% else %}
+            <div class="text-center my-auto">
+                <small >Ainda não há atividades da sua igreja.</small>
+            </div>
+            {% endif %}
         </section>
     </section>
 </section>

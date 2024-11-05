@@ -4,7 +4,11 @@
 {% block profile_content %}
 <section class="profile-infos">
     <div class="profile-generic-infos">
+        {% if membro.foto %}
         <img class="user-profile" src="{% if membro.foto %}{{ membro.foto.url }}{% endif %}" alt="">
+        {% else %}
+        <div class="user-profile"><i class='fa-solid fa-user fa-lg'></i></div>
+        {% endif %}
         <div class="profile-name">
             <h5><b>{{ membro.nome }}</b></h5>
             <h6>{{ membro.user.username }}</h6>

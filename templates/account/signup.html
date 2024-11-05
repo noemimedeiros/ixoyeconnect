@@ -73,7 +73,7 @@
                         <h6>Preencha os dados abaixo</h6>
                     </div>
                     <div class="d-flex gap-2 mb-3">
-                        <input {% if tipo_cadastro and tipo_cadastro == "membro" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_1" name="tipo_cadastro" value="membro" onchange="mudar_formulario(this.value)"/>
+                        <input {% if tipo_cadastro and tipo_cadastro == "membro" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_1" name="tipo_cadastro" value="membro" onchange="mudar_formulario(this.value)" checked/>
                         <input {% if tipo_cadastro and tipo_cadastro == "igreja" %}checked{% endif %} hidden type="radio" id="id_tipo_cadastro_2" name="tipo_cadastro" value="igreja" onchange="mudar_formulario(this.value)"/>
                         <label for="id_tipo_cadastro_1" data-value="membro" class="btn button-filled w-100"><i class="fa-solid fa-circle-user align-middle me-2"></i> Membro</label>
                         <label for="id_tipo_cadastro_2" data-value="igreja" class="btn button-outlined w-100"><i class="fa-solid fa-church align-middle me-2"></i> Igreja</label>

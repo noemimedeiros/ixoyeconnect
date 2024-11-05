@@ -12,6 +12,9 @@
     border-radius: 0;
 }
 .introducao-dashboard{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
     margin-bottom: 1rem;
     color: var(--aqua-blue);
 }
@@ -53,6 +56,14 @@
 }
 .card-quantidade-membros{
     grid-area: a;
+    background-image: linear-gradient(to left, var(--green), var(--aqua-blue));
+}
+.card-codigo{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    color: white !important;
     background-image: linear-gradient(to left, var(--green), var(--aqua-blue));
 }
 .card-media-presenca{

@@ -50,7 +50,11 @@
         </a>
         <div class="user-infos">
             <a class="user-infos" href="{% url 'usuario:meu_perfil' %}">
+                {% if request.user.profile_picture %}
                 <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% endif %}" class="user-profile"></img>
+                {% else %}
+                <div class="user-profile"><i class='fa-solid fa-user fa-lg'></i></div>
+                {% endif %}
                 <div class="user-name">
                     <div>{{ request.user }}</div>
                     <div>{{ request.user.email }}</div>

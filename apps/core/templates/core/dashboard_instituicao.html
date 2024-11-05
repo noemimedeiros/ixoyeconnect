@@ -15,8 +15,15 @@
 
 {% block dashboard_content %}
 <section class="dashboard-instituicao">
-    <div class="introducao-dashboard">
+    <div class="introducao-dashboard mb-0">
         <h4>Bem-vinda, {{ usuario }}!</h4>
+        <div class="card-dashboard card-codigo">
+            <h6><b>Código da sua Igreja </b><i class="fa-regular fa-circle-question" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Esse código deve ser informado pelos membros ao se cadastrarem, vinculando suas contas diretamente à igreja." data-bs-placement="left" data-bs-trigger="hover focus" ></i>:</h6>
+            <div class="d-flex align-items-center gap-2">
+                <h5><b>{{ instituicao.codigo }}</b></h5>
+                <i class="fa-solid fa-copy fa-lg" role="button" onclick="copiarCodigo('{{ instituicao.codigo }}', this)"></i>
+            </div>
+        </div>
     </div>
     <section class="dashboard-cards">
         <div class="card-dashboard bg-primary card-quantidade-membros">
@@ -139,6 +146,17 @@
 </section>
 {% endblock dashboard_content %}
 {% block _scripts %}
+<script>
+    function copiarCodigo(codigo, btn){
+        var codigoText = codigo;
+        navigator.clipboard.writeText(codigoText);
+
+        $(btn).toggleClass('fa-copy').toggleClass('fa-check');
+        setTimeout(function(){
+            $(btn).toggleClass('fa-copy').toggleClass('fa-check');
+        }, 5000)
+    }
+</script>
 <script>
     const porcentagem_presenca_cultos_mes_anterior = '{% url "relatorio:porcentagem_presenca_cultos_mes_anterior" %}';
     const grafico_entradas = '{% url "relatorio:grafico_entradas" %}'

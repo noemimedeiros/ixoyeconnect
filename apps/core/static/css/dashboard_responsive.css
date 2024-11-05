@@ -57,4 +57,13 @@
         background-color: var(--body-bg);
         border-color: var(--body-bg);
     }
+    .introducao-dashboard{
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+    .card-codigo{
+        align-items: start;
+        flex-direction: column;
+        width: 100%;
+    }
 }
