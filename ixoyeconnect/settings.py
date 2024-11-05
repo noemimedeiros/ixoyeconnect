@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJ_SECRET_KEY", default="")
 
-DEBUG = env("DEBUG", default=True)
+DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com', 'localhost', '127.0.0.1', '18.224.108.98']
 CSRF_TRUSTED_ORIGINS  = [
