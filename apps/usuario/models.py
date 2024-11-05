@@ -232,11 +232,26 @@ class InstituicaoSede(UsuarioAbstract):
         total_juniores = (self.relatorios.aggregate(Sum('total_juniores'))['total_juniores__sum'] or 0)
         total_visitantes = (self.relatorios.aggregate(Sum('total_visitantes'))['total_visitantes__sum'] or 0)
 
-        porcentagem_mulheres = (total_mulheres / total_pessoas) * 100
-        porcentagem_homens = (total_homens / total_pessoas) * 100
-        porcentagem_jovens = (total_jovens / total_pessoas) * 100
-        porcentagem_juniores = (total_juniores / total_pessoas) * 100
-        porcentagem_visitantes = (total_visitantes / total_pessoas) * 100
+        try:
+            porcentagem_mulheres = (total_mulheres / total_pessoas) * 100
+        except ZeroDivisionError:
+            porcentagem_mulheres = 0
+        try:
+            porcentagem_homens = (total_homens / total_pessoas) * 100
+        except ZeroDivisionError:
+            porcentagem_homens = 0
+        try:
+            porcentagem_jovens = (total_jovens / total_pessoas) * 100
+        except ZeroDivisionError:
+            porcentagem_jovens = 0
+        try:
+            porcentagem_juniores = (total_juniores / total_pessoas) * 100
+        except ZeroDivisionError:
+            porcentagem_juniores = 0
+        try:
+            porcentagem_visitantes = (total_visitantes / total_pessoas) * 100
+        except ZeroDivisionError:
+            porcentagem_visitantes = 0
         
         return {
             "homens": int(porcentagem_homens),
