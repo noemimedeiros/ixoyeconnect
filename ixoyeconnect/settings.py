@@ -18,6 +18,9 @@ SECRET_KEY = env("DJ_SECRET_KEY", default="")
 DEBUG = env("DEBUG", default=True)
 
 ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com', 'localhost', '127.0.0.1', '18.224.108.98']
+CSRF_TRUSTED_ORIGINS  = [
+    'https://ixoyeconnect.com', 'https://www.ixoyeconnect.com', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://18.224.108.98'
+]
 
 sys.path.append(
     os.path.join(BASE_DIR, "apps")
