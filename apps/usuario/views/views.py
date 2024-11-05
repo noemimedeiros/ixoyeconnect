@@ -18,7 +18,7 @@ from ..forms import DenominacaoForm, DepartamentoForm, InstituicaoForm
 
 def cadastrar_instituicao(request):
     if request.POST:
-        form = InstituicaoForm(request.POST, request.FILES, prefix="instituicao")
+        form = InstituicaoForm(request.POST, prefix="instituicao")
         if form.is_valid():
             form.save()
             message_create_registro(request)

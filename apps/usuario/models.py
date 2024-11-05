@@ -93,7 +93,7 @@ class InstituicaoSede(UsuarioAbstract):
     cnpj = models.CharField(max_length=20, null=False, blank=False, unique=True)
     sigla = models.CharField(max_length=10, null=False, blank=False)
     codigo = models.CharField(max_length=8, null=False, blank=False, unique=True)
-    logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/')
+    logo = models.ImageField(max_length=100, null=False, blank=False, upload_to='instituicao/logo/', default="")
 
     def save(self, *args, **kwargs):
         super(InstituicaoSede, self).save(*args, **kwargs)

@@ -132,7 +132,6 @@ class MyCadastroView(SignupView):
         instituicao_form = InstituicaoSedeForm(request.POST, request.FILES, prefix="sede")
         membro_form = MembroForm(request.POST, request.FILES)
 
-        print(self.request.POST.get('tipo_cadastro'))
         if self.request.POST.get('tipo_cadastro') == "igreja":
             membro_instituicao_form = instituicao_form.is_valid()
         if self.request.POST.get('tipo_cadastro') == "membro":

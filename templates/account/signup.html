@@ -24,6 +24,9 @@
         flex-direction: column;
         justify-content: center;
     }
+    .porque-instituicao{
+        cursor: pointer;
+    }
 
     @media (max-width: 768px) {
         #pages-singup{
@@ -79,7 +82,7 @@
                         <b>Dados Pessoais</b>
                     </h6>
                     <h6 class="mb-3" id="titulo-igreja">
-                        <b>Dados da Igreja (Sede) <i class="fa-solid fa-circle-question text-muted ms-1" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Sua sede precisa estar associada a uma Instituição. Se a Instituição não existir ainda, você pode cadastrá-la facilmente e seguir com o registro da sede." data-bs-placement="left" data-bs-trigger="hover focus" ></i></b>
+                        <b>Dados da Igreja (Sede) </b>
                     </h6>
                     <div>
                         <div id="cadastro-membro">
@@ -93,6 +96,7 @@
                                     <strong>{{ instituicaosede_form.errors.instituicao }}</strong>
                                 </span>
                                 {% endif %}
+                                <small class="text-muted">Por que selecionar uma instituição?</small> <i class="fa-solid fa-circle-question text-muted porque-instituicao" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Sua sede precisa estar associada a uma Instituição (Sede Principal). Se a Instituição não existir ainda, você pode cadastrá-la facilmente e seguir com o registro da sede." data-bs-placement="left" data-bs-trigger="hover focus" ></i>
                             </div>
                             {% crispy instituicaosede_form %}
                         </div>
