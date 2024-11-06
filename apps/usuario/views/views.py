@@ -14,19 +14,19 @@ from core.views import MyDetailViewIxoyeConnect, MyUpdateViewIxoyeConnect, MyVie
 
 from ..forms import FuncaoForm, NewMembroForm
 from core.messages_utils import message_error_generic, message_create_registro
-from ..forms import DenominacaoForm, DepartamentoForm, InstituicaoForm
+from ..forms import DenominacaoForm, DepartamentoForm
 
-def cadastrar_instituicao(request):
-    if request.POST:
-        form = InstituicaoForm(request.POST, prefix="instituicao")
-        if form.is_valid():
-            form.save()
-            message_create_registro(request)
-        else:
-            print(form.errors)
-            message_error_generic(request, 'Houve um erro durante o cadastro. Por favor, tente novamente.')
+# def cadastrar_instituicao(request):
+#     if request.POST:
+#         form = InstituicaoForm(request.POST, prefix="instituicao")
+#         if form.is_valid():
+#             form.save()
+#             message_create_registro(request)
+#         else:
+#             print(form.errors)
+#             message_error_generic(request, 'Houve um erro durante o cadastro. Por favor, tente novamente.')
     
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+#     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def cadastrar_denominacao(request):
     if request.POST:

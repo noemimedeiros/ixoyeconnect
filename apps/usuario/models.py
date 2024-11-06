@@ -71,13 +71,13 @@ class Denominacao(models.Model):
     class Meta:
         db_table = 'denominacao'
 
-class Instituicao(models.Model):
-    nome = models.CharField(max_length=120, null=False, blank=False)
-    denominacao = models.ForeignKey(Denominacao, on_delete=models.CASCADE, null=False, blank=False)
-    sigla = models.CharField(max_length=10, null=True, blank=True)
+# class Instituicao(models.Model):
+#     nome = models.CharField(max_length=120, null=False, blank=False)
+#     denominacao = models.ForeignKey(Denominacao, on_delete=models.CASCADE, null=False, blank=False)
+#     sigla = models.CharField(max_length=10, null=True, blank=True)
 
-    class Meta:
-        db_table = "instituicao"
+#     class Meta:
+#         db_table = "instituicao"
 
 class UsuarioAbstract(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True)
@@ -89,7 +89,7 @@ class UsuarioAbstract(models.Model):
         abstract = True
 
 class InstituicaoSede(UsuarioAbstract):
-    instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE, null=False, blank=False)
+    denominacao = models.ForeignKey(Denominacao, on_delete=models.CASCADE, null=False, blank=False)
     cnpj = models.CharField(max_length=20, null=False, blank=False, unique=True)
     sigla = models.CharField(max_length=10, null=False, blank=False)
     codigo = models.CharField(max_length=8, null=False, blank=False, unique=True)

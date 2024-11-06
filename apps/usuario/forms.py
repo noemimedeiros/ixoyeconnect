@@ -2,7 +2,7 @@ from django import forms
 from django.forms import modelformset_factory
 from core.forms import FormBaseIxoye
 from django.db.models import Q
-from .models import (Denominacao, Departamento, Funcao, FuncaoDepartamento, FuncaoMembro, Instituicao,
+from .models import (Denominacao, Departamento, Funcao, FuncaoDepartamento, FuncaoMembro,
                      InstituicaoSede, Membro, RedeSocialInstituicaoSede, User)
 from crispy_forms.layout import Submit, Layout, Field, Div, Row, Column, Hidden
 from crispy_bootstrap5.bootstrap5 import FloatingField, Switch
@@ -23,18 +23,18 @@ class DenominacaoForm(FormBaseIxoye):
         self.helper.form_action = '/usuario/cadastrar_denominacao/'
         self.helper.add_input(Submit('adicionar-denominacao', 'Adicionar Denominação', css_class='button button-filled w-100'))
 
-class InstituicaoForm(FormBaseIxoye):
-    class Meta:
-        model = Instituicao
-        fields = "__all__"
+# class InstituicaoForm(FormBaseIxoye):
+#     class Meta:
+#         model = Instituicao
+#         fields = "__all__"
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper.form_tag = True
-        self.helper.form_action = '/usuario/cadastrar_instituicao/'
-        self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="btn button-filled w-100"))
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.helper.form_tag = True
+#         self.helper.form_action = '/usuario/cadastrar_instituicao/'
+#         self.helper.add_input(Submit('adicionar-instituicao', 'Cadastrar Instituicao', css_class="btn button-filled w-100"))
 
-        self.helper['denominacao'].wrap(FloatingField, template="usuario/partials/custom_denominacao_select.html")
+#         self.helper['denominacao'].wrap(FloatingField, template="usuario/partials/custom_denominacao_select.html")
 
 class InstituicaoSedeForm(FormBaseIxoye):
     class Meta:
@@ -43,8 +43,7 @@ class InstituicaoSedeForm(FormBaseIxoye):
         exclude = ('user', 'endereco', 'codigo', )
         widgets = {
             'celular': forms.TextInput(attrs={'class': 'phone'}),
-            'cnpj': forms.TextInput(attrs={'class': 'cnpj'}),
-            'instituicao': forms.HiddenInput()
+            'cnpj': forms.TextInput(attrs={'class': 'cnpj'})
         }
         error_messages = {
             'cnpj': {

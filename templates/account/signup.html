@@ -89,7 +89,7 @@
                             {% crispy membro_form %}
                         </div>
                         <div id="cadastro-igreja" style="display: none;">
-                            <div class="mb-3 text-center">
+                            {% comment %} <div class="mb-3 text-center">
                                 <button type="button" id="btn-selecionar-instituicao" class="btn button-filled w-100" data-bs-toggle="modal" data-bs-target="#selecionar-instituicao">Selecione uma Instituicao</button>
                                 {% if instituicaosede_form.errors.instituicao %}
                                 <span class="invalid-feedback d-block">
@@ -97,7 +97,7 @@
                                 </span>
                                 {% endif %}
                                 <small class="text-muted">Por que selecionar uma instituição?</small> <i class="fa-solid fa-circle-question text-muted porque-instituicao" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Sua sede precisa estar associada a uma Instituição (Sede Principal). Se a Instituição não existir ainda, você pode cadastrá-la facilmente e seguir com o registro da sede." data-bs-placement="left" data-bs-trigger="hover focus" ></i>
-                            </div>
+                            </div> {% endcomment %}
                             {% crispy instituicaosede_form %}
                         </div>
                     </div>

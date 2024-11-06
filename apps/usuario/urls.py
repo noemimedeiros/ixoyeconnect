@@ -9,7 +9,7 @@ from .views import views, views_membro, views_instituicao
 app_name = 'usuario'
 
 urlpatterns = [
-    path('cadastrar_instituicao/', views.cadastrar_instituicao, name="cadastrar_instituicao"),
+    # path('cadastrar_instituicao/', views.cadastrar_instituicao, name="cadastrar_instituicao"),
     path('cadastrar_denominacao/', views.cadastrar_denominacao, name="cadastrar_denominacao"),
     path('cadastrar_departamento/', views.cadastrar_departamento, name="cadastrar_departamento"),
     path('cadastrar_funcao/', views.cadastrar_funcao, name="cadastrar_funcao"),
