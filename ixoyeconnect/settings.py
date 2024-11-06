@@ -17,9 +17,9 @@ SECRET_KEY = env("DJ_SECRET_KEY", default="")
 
 DEBUG = env("DEBUG", default=False)
 
-ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com', 'localhost', '127.0.0.1', '18.224.108.98']
+ALLOWED_HOSTS = ['ixoyeconnect.com', 'www.ixoyeconnect.com', 'localhost', '127.0.0.1', '18.231.35.144']
 CSRF_TRUSTED_ORIGINS  = [
-    'https://ixoyeconnect.com', 'https://www.ixoyeconnect.com', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://18.224.108.98'
+    'https://ixoyeconnect.com', 'https://www.ixoyeconnect.com', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://18.231.35.144'
 ]
 
 sys.path.append(
