@@ -286,8 +286,8 @@
     $(function(){
         {% if tipo_cadastro == "igreja" %}
         mudar_formulario('igreja');
-            {% if instituicao_selecionada and instituicao_selecionada != "" %}
-            selecionar_instituicao('{{ instituicao_selecionada }}')
+            {% if denominacao_selecionada and denominacao_selecionada != "" %}
+            selecionar_denominacao('{{ denominacao_selecionada }}')
             {% endif %}
         {% else %}
         mudar_formulario('membro');
@@ -319,7 +319,7 @@
         let denominacao = item.data('denominacao');
 
         $('#id_sede-denominacao').val(denominacao_id);
-        $('#btn-selecionar-denominacao').text(denominacao).removeClass('button-filled').addClass('button-outlined');
+        $('#btn-selecionar-denominacao').text(`Denominação: ${denominacao}`).removeClass('button-filled').addClass('button-outlined');
         $('#selecionar-denominacao').modal('hide')
     }
 </script>

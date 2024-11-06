@@ -112,7 +112,7 @@ class MyCadastroView(SignupView):
             context["tipo_cadastro"] = self.request.POST.get('tipo_cadastro')
             if self.request.POST.get('tipo_cadastro') == "igreja":
                 context["instituicaosede_form"] = InstituicaoSedeForm(self.request.POST, prefix="sede")
-                context["instituicao_selecionada"] = self.request.POST.get('sede-instituicao')
+                context["denominacao_selecionada"] = self.request.POST.get('sede-denominacao')
                 context["membro_form"] = MembroForm()
             if self.request.POST.get('tipo_cadastro') == "membro":
                 context["membro_form"] = MembroForm(self.request.POST)
