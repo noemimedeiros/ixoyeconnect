@@ -33,7 +33,7 @@
             <img class="user-profile" src="{{ igreja.logo.url }}" alt="">
             <div class="profile-name">
                 <h5><b>{{ igreja.nome }}</b></h5>
-                <h6>{{ igreja.instituicao.denominacao }}</h6>
+                <h6>{{ igreja.user.username }}</h6>
             </div>
         </div>
         {% if request.user.is_admin %}

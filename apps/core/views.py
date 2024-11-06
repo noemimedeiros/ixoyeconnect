@@ -15,7 +15,7 @@ from escala.models import Escala
 from notificacao.models import ConfiguracoesNotificacao, Notificacao
 from core.messages_utils import *
 from posts.models import CategoriaPost
-from usuario.models import InstituicaoSede
+from usuario.models import Denominacao, InstituicaoSede
 from usuario.forms import DenominacaoForm, MembroForm
 from usuario.forms import InstituicaoSedeForm
 from core.forms import EnderecoForm, MySignUpForm, MyLoginForm
@@ -104,6 +104,7 @@ class MyCadastroView(SignupView):
         context = super().get_context_data(**kwargs)
         # context["instituicoes"] = Instituicao.objects.all()
         # context["instituicao_form"] = InstituicaoForm(prefix="instituicao")
+        context["denominacoes"] = Denominacao.objects.all()
         context["denominacao_form"] = DenominacaoForm(prefix="denominacao")
 
         if self.request.POST:

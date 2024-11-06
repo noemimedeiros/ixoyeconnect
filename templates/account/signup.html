@@ -82,22 +82,22 @@
                         <b>Dados Pessoais</b>
                     </h6>
                     <h6 class="mb-3" id="titulo-igreja">
-                        <b>Dados da Igreja (Sede) </b>
+                        <b>Dados da Igreja</b>
                     </h6>
                     <div>
                         <div id="cadastro-membro">
                             {% crispy membro_form %}
                         </div>
                         <div id="cadastro-igreja" style="display: none;">
-                            {% comment %} <div class="mb-3 text-center">
-                                <button type="button" id="btn-selecionar-instituicao" class="btn button-filled w-100" data-bs-toggle="modal" data-bs-target="#selecionar-instituicao">Selecione uma Instituicao</button>
-                                {% if instituicaosede_form.errors.instituicao %}
+                            <div class="mb-3 text-center">
+                                <button type="button" id="btn-selecionar-denominacao" class="btn button-filled w-100" data-bs-toggle="modal" data-bs-target="#selecionar-denominacao">Selecione uma denominação</button>
+                                {% if instituicaosede_form.errors.denominacao %}
                                 <span class="invalid-feedback d-block">
                                     <strong>{{ instituicaosede_form.errors.instituicao }}</strong>
                                 </span>
                                 {% endif %}
-                                <small class="text-muted">Por que selecionar uma instituição?</small> <i class="fa-solid fa-circle-question text-muted porque-instituicao" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Sua sede precisa estar associada a uma Instituição (Sede Principal). Se a Instituição não existir ainda, você pode cadastrá-la facilmente e seguir com o registro da sede." data-bs-placement="left" data-bs-trigger="hover focus" ></i>
-                            </div> {% endcomment %}
+                                {% comment %} <small class="text-muted">Por que selecionar uma instituição?</small> <i class="fa-solid fa-circle-question text-muted porque-instituicao" data-bs-toggle="popover" data-bs-container="body" data-bs-content="Sua sede precisa estar associada a uma Instituição (Sede Principal). Se a Instituição não existir ainda, você pode cadastrá-la facilmente e seguir com o registro da sede." data-bs-placement="left" data-bs-trigger="hover focus" ></i> {% endcomment %}
+                            </div>
                             {% crispy instituicaosede_form %}
                         </div>
                     </div>
@@ -120,7 +120,7 @@
         </div>
     </form>
 
-    <div class="modal" id="selecionar-instituicao" tabindex="-1">
+    {% comment %} <div class="modal" id="selecionar-instituicao" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -143,9 +143,35 @@
                 </div>
             </div>
         </div>
+    </div> {% endcomment %}
+
+    <div class="modal" id="selecionar-denominacao" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="search-input">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input id="pesquisar-denominacao" type="text" class="form-control rounded-pill" placeholder="Pesquisar Denominações">
+                    </div>
+                    <div class="pt-4" id="denominacoes-list">
+                        {% for denominacao in denominacoes %}
+                            <div class="denominacao-item mb-3" role="button" data-denominacaopk="{{ denominacao.pk }}" data-denominacao="{{ denominacao.nome }}" onclick="selecionar_denominacao('{{ denominacao.pk }}')">
+                                <b>{{ denominacao.nome }}</b>
+                            </div>
+                        {% empty %}
+                            <span class="text-muted">Ainda não há denominações cadastradas.</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer text-center justify-content-center">
+                    <small>Não encontrou sua denominação?</small>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#criar-denominacao" class="btn button-filled w-100">Adicionar Denominação</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="modal" id="adicionar-instituicao" tabindex="-1">
+    {% comment %} <div class="modal" id="adicionar-instituicao" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header p-4 border-0">
@@ -160,7 +186,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 
     <div class="modal fade" tabindex="-1" id="criar-denominacao">
         <div class="modal-dialog modal-sm modal-dialog-centered">
@@ -182,7 +208,7 @@
 
 {% block scripts %}
 <script>
-    function pesquisarInstituicao() {
+    {% comment %} function pesquisarInstituicao() {
         const pesquisa = $("#pesquisar-instituicao").val().toLowerCase();
         const instituicoes = $("#instituicoes-list .instituicao-item");
     
@@ -191,7 +217,18 @@
             item.style.display = text.includes(pesquisa) ? "" : "none";
         });
     }
-    $('#pesquisar-instituicao').on('input', () => pesquisarInstituicao())
+    $('#pesquisar-instituicao').on('input', () => pesquisarInstituicao()) {% endcomment %}
+
+    function pesquisarDenominacao() {
+        const pesquisa = $("#pesquisar-denominacao").val().toLowerCase();
+        const instituicoes = $("#denominacoes-list .denominacao-item");
+    
+        instituicoes.each((index, item) => {
+            const text = $(item).text().toLowerCase();
+            item.style.display = text.includes(pesquisa) ? "" : "none";
+        });
+    }
+    $('#pesquisar-denominacao').on('input', () => pesquisarDenominacao())
 
     const items = $(".page-singup").toArray();
     function initPagination() {
@@ -264,7 +301,7 @@
         }, 700)
     })
 
-    function selecionar_instituicao(id){
+    {% comment %} function selecionar_instituicao(id){
         let item = $(`[data-instituicaopk="${id}"]`);
 
         let instituicao_id = item.data('instituicaopk');
@@ -273,6 +310,17 @@
         $('#id_sede-instituicao').val(instituicao_id);
         $('#btn-selecionar-instituicao').text(instituicao).removeClass('button-filled').addClass('button-outlined');
         $('#selecionar-instituicao').modal('hide')
+    } {% endcomment %}
+
+    function selecionar_denominacao(id){
+        let item = $(`[data-denominacaopk="${id}"]`);
+
+        let denominacao_id = item.data('denominacaopk');
+        let denominacao = item.data('denominacao');
+
+        $('#id_sede-denominacao').val(denominacao_id);
+        $('#btn-selecionar-denominacao').text(denominacao).removeClass('button-filled').addClass('button-outlined');
+        $('#selecionar-denominacao').modal('hide')
     }
 </script>
 {% endblock scripts %}

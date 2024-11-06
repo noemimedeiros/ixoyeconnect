@@ -55,7 +55,7 @@ class InstituicaoSedeForm(FormBaseIxoye):
         super().__init__(*args, **kwargs)
         self.helper.layout = Layout(
             Div(
-                FloatingField('instituicao', type="hidden"),
+                FloatingField('denominacao', type="hidden"),
                 FloatingField('nome', css_class='form-primary'),
                 Row(
                     Column(FloatingField('cnpj', css_class='form-primary cnpj')),

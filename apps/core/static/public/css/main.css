@@ -73,6 +73,24 @@ html, body{
     overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: var(--green-transparent);
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--green);
+}
+
 h1, h2, h3, h4, h5, h6{
     margin: 0;
     font-weight: inherit;
@@ -576,6 +594,11 @@ a.text-primary:hover{
     max-height: 20rem;
     overflow-y: scroll;
 }
-#instituicoes-list::-webkit-scrollbar{
-    display: none;
+
+#denominacoes-list{
+    max-height: 20rem;
+    overflow-y: scroll;
+}
+.denominacao-item:hover{
+    color: var(--aqua-blue);
 }
