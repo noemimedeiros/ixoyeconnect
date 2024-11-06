@@ -19,6 +19,7 @@
 }
 .dashboard-card{
     margin-bottom: 0;
+    overflow-y: scroll;
 }
 .dashboard-card, .dashboard-sidecontent{
     background-color: transparent;
