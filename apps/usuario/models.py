@@ -27,9 +27,11 @@ class User(AbstractUser):
     
     @property
     def is_admin(self):
-        if hasattr(self, 'instituicaosede') or self.membro.admin:
+        if hasattr(self, 'instituicaosede'):
             return True
         else:
+            if self.membro.admin:
+                return True
             return False
     
     @property
