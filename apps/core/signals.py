@@ -2,7 +2,7 @@ from datetime import date
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
-from pwa_webpush import send_user_notification
+from webpush import send_user_notification
 from concurrent.futures import ThreadPoolExecutor
 
 from notificacao.filters import icone_notificacao

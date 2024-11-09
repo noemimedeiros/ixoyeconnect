@@ -1,0 +1,64 @@
+# ALGUM TÍTULO DESCRITIVO.
+# Copyright (C) ANO TITULAR DOS DIREITOS AUTORAIS DO PACOTE
+# Este arquivo é distribuído sob a mesma licença que o pacote PACKAGE.
+# PRIMEIRO AUTOR <EMAIL@ADDRESS>, ANO.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: VERSÃO DO PACOTE\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-25 10:06-0500\n"
+"PO-Revision-Date: 2023-10-01 12:00-0300\n"
+"Last-Translator: Noemi Medeiros noemimedeiros.acc@gmail.com\n"
+"Language-Team: Portuguese (Brazil) <pt-BR@li.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: static/webpush/webpush.js:31
+msgid "Service workers are not supported in your browser."
+msgstr "Service workers não são suportados no seu navegador."
+
+#: static/webpush/webpush.js:40
+msgid "Showing notifications are not supported in your browser."
+msgstr "Exibir notificações não é suportado no seu navegador."
+
+#: static/webpush/webpush.js:49 static/webpush/webpush.js:173
+msgid "Subscribe to Push Messaging"
+msgstr "Habilitar Notificações Push"
+
+#: static/webpush/webpush.js:51
+msgid "Push notifications are blocked by your browser."
+msgstr "As notificações push estão bloqueadas pelo seu navegador."
+
+#: static/webpush/webpush.js:60
+msgid "Push notifications are not available in your browser."
+msgstr "As notificações push não estão disponíveis no seu navegador."
+
+#: static/webpush/webpush.js:73 static/webpush/webpush.js:120
+#: static/webpush/webpush.js:181
+msgid "Unsubscribe from Push Messaging"
+msgstr "Desabilitar Notificações Push"
+
+#: static/webpush/webpush.js:76 static/webpush/webpush.js:123
+msgid "Successfully subscribed to push notifications."
+msgstr "Habilitação de notificações push realizada com sucesso."
+
+#: static/webpush/webpush.js:129
+msgid "Error while subscribing to push notifications."
+msgstr "Erro ao habilitar notificações push."
+
+#: static/webpush/webpush.js:161
+msgid "Subscription is not available."
+msgstr "A inscrição não está disponível."
+
+#: static/webpush/webpush.js:174
+msgid "Successfully unsubscribed from push notifications."
+msgstr "Habilitação de notificações push cancelada com sucesso."
+
+#: static/webpush/webpush.js:182
+msgid "Error while unsubscribing from push notifications."
+msgstr "Erro ao cancelar a habilitação de notificações push."

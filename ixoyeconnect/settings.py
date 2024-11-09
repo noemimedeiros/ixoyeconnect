@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'extra_views',
     'django_filters',
-    'pwa_webpush',
+    'pwa',
+    'webpush',
 
     # Local,
     'core',
@@ -207,6 +208,15 @@ USE_I18N = True
 USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
+LANGUAGES = [
+    ('pt-br', 'Português (Brasil)'),
+    ('en', 'English'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -315,5 +325,3 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'pt-BR'
-
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'core', 'static', 'serviceworker.js')

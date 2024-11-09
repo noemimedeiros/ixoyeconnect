@@ -1,12 +1,11 @@
 {% extends "usuario/base/profile_base.html" %}
 {% load static %}
 {% load i18n %}
-{% load pwa_webpush %}
+{% load webpush_notifications %}
 {% load crispy_forms_tags %}
 
 {% block head %}
 {% webpush_header %}
-{% comment %} <script src="{% static 'webpush/webpush-pt-br.js' %}"></script> {% endcomment %}
 {% endblock head %}
 
 {% block profile_content %}
@@ -34,10 +33,4 @@
 {% endblock profile_content %}
 
 {% block _scripts %}
-<script>
-    $('#webpush-subscribe-button').text('Habilitar notificações push')
-    $('#webpush-subscribe-button').click(function(){
-        
-    })
-</script>
 {% endblock _scripts %}
